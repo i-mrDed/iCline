@@ -10,6 +10,7 @@ import {
 	isGptOssModelFamily,
 	isNativeToolCallingConfig,
 	isNextGenModelFamily,
+	isNextGenModelProvider,
 	isPoolsideModelFamily,
 	modelDoesntSupportWebp,
 	shouldSkipReasoningForModel,
@@ -141,6 +142,14 @@ describe("isPoolsideModelFamily", () => {
 		isNextGenModelFamily("poolside/laguna-m.1").should.equal(true)
 		isNativeToolCallingConfig(providerInfo("openai-compatible", "poolside/laguna-m.1"), true).should.equal(true)
 		isNativeToolCallingConfig(providerInfo("openai-compatible", "poolside/laguna-m.1"), false).should.equal(false)
+	})
+
+	it("should qualify xAI Grok agent models for next-gen and native tool calling", () => {
+		isNextGenModelProvider(providerInfo("xai", "grok-composer-2.5-fast")).should.equal(true)
+		isNextGenModelFamily("grok-composer-2.5-fast").should.equal(true)
+		isNextGenModelFamily("grok-build").should.equal(true)
+		isNextGenModelFamily("grok-4.3").should.equal(true)
+		isNativeToolCallingConfig(providerInfo("xai", "grok-composer-2.5-fast"), true).should.equal(true)
 	})
 })
 

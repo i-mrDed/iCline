@@ -24,6 +24,7 @@ export function isNextGenModelProvider(providerInfo: ApiProviderInfo): boolean {
 		"baseten",
 		"vercel-ai-gateway",
 		"zenmux",
+		"xai",
 		"deepseek",
 		"oca",
 	].some((id) => providerId === id)
@@ -84,6 +85,16 @@ export function isGemini2dot5ModelFamily(id: string): boolean {
 export function isGrok4ModelFamily(id: string): boolean {
 	const modelId = normalize(id)
 	return modelId.includes("grok-4")
+}
+
+/** Grok Build CLI / agent models (Composer, Build, Code) — require native tool calling. */
+export function isXaiAgentModelFamily(id: string): boolean {
+	const modelId = normalize(id)
+	return (
+		modelId.includes("grok-composer") ||
+		modelId.includes("grok-build") ||
+		modelId.includes("grok-code")
+	)
 }
 
 export function isGPT5ModelFamily(id: string): boolean {
@@ -202,6 +213,7 @@ export function isNextGenModelFamily(id: string): boolean {
 		isClaude4PlusModelFamily(modelId) ||
 		isGemini2dot5ModelFamily(modelId) ||
 		isGrok4ModelFamily(modelId) ||
+		isXaiAgentModelFamily(modelId) ||
 		isGPT5ModelFamily(modelId) ||
 		isGptOssModelFamily(modelId) ||
 		isMinimaxModelFamily(modelId) ||

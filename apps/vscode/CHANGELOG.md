@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.7] - 2026-06-20
+
+### Fixed
+- 🐛 **xAI / Grok models** — register `xai` as a next-gen provider and Grok agent models (Composer, Build, Code) so native tool calling is enabled; fixes `Native tool calling must be enabled to use xAI subscription and CLI models`
+
 ## [0.1.6] - 2026-06-20
 
 ### Changed
