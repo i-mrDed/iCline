@@ -1,7 +1,7 @@
 # iCline
 
 <!-- icline:version -->
-> 📦 **Current version:** `0.1.8` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
+> 📦 **Current version:** `0.1.9` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -10,7 +10,7 @@
 
 🌐 **Languages:** English (this page) · [ภาษาไทย](README.th.md)
 
-**iCline** is a fork of [Cline](https://github.com/cline/cline) packaged as a separate VS Code extension (`i-mrDed.iCline`) — install it alongside the official Cline extension (`saoudrizwan.claude-dev`) without conflicts.
+**iCline** is a fork of [Cline](https://github.com/cline/cline) packaged as a separate VS Code extension (`i-mrded.iCline`) — install it alongside the official Cline extension (`saoudrizwan.claude-dev`) without conflicts.
 
 ---
 
@@ -18,7 +18,7 @@
 
 | | Cline official | iCline |
 |---|---|---|
-| Extension ID | `saoudrizwan.claude-dev` | `i-mrDed.iCline` |
+| Extension ID | `saoudrizwan.claude-dev` | `i-mrded.iCline` |
 | 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
 | ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
 | 🌐 ZenMux (100+ models) | ❌ | ✅ |
@@ -45,7 +45,7 @@
 Download the latest `.vsix` from [GitHub Releases](https://github.com/i-mrDed/iCline/releases), then:
 
 ```bash
-code --install-extension i-mrDed.iCline-0.1.8.vsix --force
+code --install-extension i-mrded.iCline-0.1.9.vsix --force
 ```
 
 Or build locally:
@@ -54,7 +54,7 @@ Or build locally:
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrDed.iCline-0.1.8.vsix --force
+code --install-extension dist/i-mrded.iCline-0.1.9.vsix --force
 ```
 
 ---

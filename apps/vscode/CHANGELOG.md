@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.9] - 2026-06-21
+
+### Changed
+- 🎨 New extension icon (128×128 PNG)
+- 🏪 Marketplace publisher ID **`i-mrded`** — extension ID is now **`i-mrded.iCline`** (VS Marketplace requires lowercase publisher slug)
+
 ## [0.1.8] - 2026-06-20
 
 ### Fixed

@@ -2,7 +2,7 @@
 
 🤖 **iCline** — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.
 
-Install alongside official Cline (`saoudrizwan.claude-dev`) — separate extension ID: **`i-mrDed.iCline`**.
+Install alongside official Cline (`saoudrizwan.claude-dev`) — separate extension ID: **`i-mrded.iCline`**.
 
 ## Features
 

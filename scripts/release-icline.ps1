@@ -31,14 +31,14 @@ Push-Location $ExtRoot
 node $SyncScript
 if (-not $SkipBuild) {
     $ver = Get-PackageVersion
-    $vsixOut = "dist\i-mrDed.iCline-$ver.vsix"
+    $vsixOut = "dist\i-mrded.iCline-$ver.vsix"
     Write-Host "==> Building VSIX -> $vsixOut"
     npm run package:vsix -- --out $vsixOut
 }
 Pop-Location
 
 $ver = Get-PackageVersion
-$vsixPath = Join-Path $ExtRoot "dist\i-mrDed.iCline-$ver.vsix"
+$vsixPath = Join-Path $ExtRoot "dist\i-mrded.iCline-$ver.vsix"
 
 if (-not $SkipPush) {
     Write-Host "==> Git commit + push..."
@@ -66,12 +66,12 @@ import { extractChangelogSection } from './apps/vscode/scripts/sync-icline-docs.
 import fs from 'fs';
 const changelog = fs.readFileSync('./apps/vscode/CHANGELOG.md','utf8');
 const section = extractChangelogSection(changelog, '$ver') ?? 'See CHANGELOG.md';
-const body = `## iCline v$ver\n\n` + section + `\n\n### Install\n\`\`\`powershell\ncode --install-extension i-mrDed.iCline-$ver.vsix --force\n\`\`\`\nThen **Developer: Reload Window**.`;
+const body = `## iCline v$ver\n\n` + section + `\n\n### Install\n\`\`\`powershell\ncode --install-extension i-mrded.iCline-$ver.vsix --force\n\`\`\`\nThen **Developer: Reload Window**.`;
 console.log(body);
 "@
     $releaseBody = node -e $extractJs 2>$null
     if (-not $releaseBody) {
-        $releaseBody = "## iCline v$ver`n`nSee [CHANGELOG](https://github.com/i-mrDed/iCline/blob/main/apps/vscode/CHANGELOG.md).`n`nInstall: ``code --install-extension i-mrDed.iCline-$ver.vsix --force``"
+        $releaseBody = "## iCline v$ver`n`nSee [CHANGELOG](https://github.com/i-mrDed/iCline/blob/main/apps/vscode/CHANGELOG.md).`n`nInstall: ``code --install-extension i-mrded.iCline-$ver.vsix --force``"
     }
 
     $credText = "protocol=https`nhost=github.com`n`n" | git credential fill 2>$null
@@ -97,7 +97,7 @@ console.log(body);
         $release = Invoke-RestMethod -Uri "https://api.github.com/repos/i-mrDed/iCline/releases/tags/v$ver" -Headers $headers
     }
 
-    $uploadUrl = $release.upload_url -replace "\{.*\}", "?name=i-mrDed.iCline-$ver.vsix"
+    $uploadUrl = $release.upload_url -replace "\{.*\}", "?name=i-mrded.iCline-$ver.vsix"
     $uploadHeaders = @{
         Authorization = "Bearer $token"
         Accept = "application/vnd.github+json"
@@ -109,4 +109,4 @@ console.log(body);
 
 Write-Host ""
 Write-Host "Done. iCline v$ver"
-Write-Host "User install: code --install-extension i-mrDed.iCline-$ver.vsix --force"
+Write-Host "User install: code --install-extension i-mrded.iCline-$ver.vsix --force"

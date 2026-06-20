@@ -1,7 +1,7 @@
 # iCline
 
 <!-- icline:version -->
-> 📦 **เวอร์ชันปัจจุบัน:** `0.1.8` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
+> 📦 **เวอร์ชันปัจจุบัน:** `0.1.9` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -10,7 +10,7 @@
 
 🌐 **ภาษา:** ภาษาไทย (หน้านี้) · [English](README.md)
 
-**iCline** คือ fork ของ [Cline](https://github.com/cline/cline) ที่แพ็กเป็น extension แยก (`i-mrDed.iCline`) — ติดตั้งคู่กับ Cline official (`saoudrizwan.claude-dev`) ได้โดยไม่ทับกัน
+**iCline** คือ fork ของ [Cline](https://github.com/cline/cline) ที่แพ็กเป็น extension แยก (`i-mrded.iCline`) — ติดตั้งคู่กับ Cline official (`saoudrizwan.claude-dev`) ได้โดยไม่ทับกัน
 
 ---
 
@@ -18,7 +18,7 @@
 
 | | Cline official | iCline |
 |---|---|---|
-| Extension ID | `saoudrizwan.claude-dev` | `i-mrDed.iCline` |
+| Extension ID | `saoudrizwan.claude-dev` | `i-mrded.iCline` |
 | 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
 | ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
 | 🌐 ZenMux (100+ models) | ❌ | ✅ |
@@ -45,7 +45,7 @@
 ดาวน์โหลด `.vsix` ล่าสุดจาก [GitHub Releases](https://github.com/i-mrDed/iCline/releases) แล้วรัน:
 
 ```bash
-code --install-extension i-mrDed.iCline-0.1.8.vsix --force
+code --install-extension i-mrded.iCline-0.1.9.vsix --force
 ```
 
 หรือ build เอง:
@@ -54,7 +54,7 @@ code --install-extension i-mrDed.iCline-0.1.8.vsix --force
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrDed.iCline-0.1.8.vsix --force
+code --install-extension dist/i-mrded.iCline-0.1.9.vsix --force
 ```
 
 ---

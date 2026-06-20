@@ -1,13 +1,13 @@
 # iCline Release Workflow
 
-Standard release process for the **iCline** VS Code extension (`i-mrDed.iCline`).
+Standard release process for the **iCline** VS Code extension (`i-mrded.iCline`).
 Use this checklist every time — new agent sessions should read this file first.
 
 ## Important: how updates reach users
 
 | Channel | Auto-install? | Notes |
 |---------|---------------|-------|
-| VS Code Marketplace | Only if published under publisher `i-mrDed` | Not set up yet |
+| VS Code Marketplace | Published under publisher `i-mrded` | Auto-update after first publish |
 | GitHub Releases `.vsix` | **No** | User downloads VSIX and runs `code --install-extension` |
 | iCline update toast | **Notify only** | `View Release` opens GitHub — does not install |
 
@@ -50,7 +50,7 @@ Updates automatically:
 
 ```powershell
 cd apps/vscode
-npm run package:vsix -- --out dist/i-mrDed.iCline-<version>.vsix
+npm run package:vsix -- --out dist/i-mrded.iCline-<version>.vsix
 ```
 
 ### 4. Git commit + push
@@ -65,7 +65,7 @@ git push origin main
 ### 5. GitHub Release
 
 - Tag: `v<version>` (must match `package.json`)
-- Attach: `dist/i-mrDed.iCline-<version>.vsix`
+- Attach: `dist/i-mrded.iCline-<version>.vsix`
 - Body: copy from `CHANGELOG.md` section for that version
 - Or run `.\scripts\release-icline.ps1` (creates release via API)
 
@@ -78,16 +78,16 @@ git push origin main
 ### 7. User install command (send to testers)
 
 ```powershell
-code --install-extension i-mrDed.iCline-<version>.vsix --force
+code --install-extension i-mrded.iCline-<version>.vsix --force
 ```
 
 Then **Developer: Reload Window**.
 
 ## Extension identity
 
-- **ID:** `i-mrDed.iCline`
-- **Publisher:** `i-mrDed`
-- **Settings prefix:** `icline.*` (unchanged)
+- **ID:** `i-mrded.iCline`
+- **Publisher:** `i-mrded` (GitHub owner remains `i-mrDed`)
+- **Settings prefix:** `iCline.*` (legacy `icline.icline` used `icline.*`)
 - **Upstream remote:** `upstream` → `cline/cline`
 - **Origin remote:** `origin` → `i-mrDed/iCline`
 

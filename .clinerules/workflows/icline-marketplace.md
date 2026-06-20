@@ -1,18 +1,18 @@
 # iCline — VS Marketplace Publish
 
-Extension ID: **`i-mrDed.iCline`** · Publisher: **`i-mrDed`**
+Extension ID: **`i-mrded.iCline`** · Publisher: **`i-mrded`**
 
 ## Prerequisites (one-time, maintainer)
 
 1. **Create publisher** at [Marketplace Publisher Management](https://marketplace.visualstudio.com/manage)
-   - Publisher ID must be exactly: `i-mrDed` (matches `package.json` → `"publisher"`)
+   - Publisher ID must be exactly: `i-mrded` (matches `package.json` → `"publisher"`)
 2. **Personal Access Token** (Azure DevOps):
    - https://dev.azure.com → User settings → Personal access tokens
    - Scopes: **Marketplace** → **Manage**
 3. **Login vsce** (once per machine):
    ```powershell
    cd apps/vscode
-   npx vsce login i-mrDed
+   npx vsce login i-mrded
    ```
    Paste the PAT when prompted.
 
@@ -53,7 +53,7 @@ npm run publish:marketplace:prerelease
 
 ## Checklist before first publish
 
-- [ ] Publisher `i-mrDed` created and owns extension name `iCline`
+- [ ] Publisher `i-mrded` created and owns extension name `iCline`
 - [ ] `README.marketplace.md` is iCline-specific (not Cline default)
 - [ ] `package.json` version matches latest release
 - [ ] No duplicate legacy `icline.icline` folders on maintainer machine
@@ -63,6 +63,6 @@ npm run publish:marketplace:prerelease
 
 | Error | Fix |
 |-------|-----|
-| `ERROR Publisher 'i-mrDed' is not authorized` | Run `vsce login i-mrDed` with Marketplace PAT |
+| `ERROR Publisher 'i-mrded' is not authorized` | Run `vsce login i-mrded` with Marketplace PAT |
 | `Extension name already taken` | Publisher must own the extension or use a different name |
-| Duplicate view/settings registration | Uninstall **all** `icline.icline-*` versions; keep only `i-mrDed.iCline` |
+| Duplicate view/settings registration | Uninstall **all** `icline.icline-*` and old `i-mrDed.iCline` versions; keep only `i-mrded.iCline` |

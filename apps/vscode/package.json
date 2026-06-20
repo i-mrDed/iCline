@@ -2,7 +2,7 @@
 	"name": "iCline",
 	"displayName": "%extension.displayName%",
 	"description": "🤖 iCline — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"icon": "assets/icons/icon.png",
 	"engines": {
 		"vscode": "^1.84.0"
@@ -12,7 +12,7 @@
 		"url": "https://github.com/i-mrDed"
 	},
 	"license": "Apache-2.0",
-	"publisher": "i-mrDed",
+	"publisher": "i-mrded",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/i-mrDed/iCline"
@@ -409,7 +409,7 @@
 	"scripts": {
 		"vscode:prepublish": "node scripts/sync-icline-docs.mjs && npm run package",
 		"sync:docs": "node scripts/sync-icline-docs.mjs",
-		"package:vsix": "node scripts/sync-icline-docs.mjs && npm run package && vsce package --no-dependencies",
+		"package:vsix": "node scripts/sync-icline-docs.mjs && npm run package && vsce package --no-dependencies --out dist/i-mrded.iCline-${npm_package_version}.vsix",
 		"compile": "npm run check-types && npm run lint && node esbuild.mjs",
 		"compile-standalone": "npm run check-types && npm run lint && node esbuild.mjs --standalone",
 		"postcompile-standalone": "node scripts/package-standalone.mjs",
