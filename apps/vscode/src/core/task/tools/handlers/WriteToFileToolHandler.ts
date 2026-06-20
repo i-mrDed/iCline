@@ -10,6 +10,7 @@ import { getLastApiReqTotalTokens } from "@shared/getApiMetrics"
 import { fileExistsAtPath } from "@utils/fs"
 import { arePathsEqual, getReadablePath, isLocatedInWorkspace } from "@utils/path"
 import { applyPatch } from "diff"
+import { isIclineBuild } from "@/registry"
 import { telemetryService } from "@/services/telemetry"
 import { ClineDefaultTool } from "@/shared/tools"
 import type { ToolResponse } from "../../index"
@@ -361,6 +362,19 @@ export class WriteToFileToolHandler implements IFullyManagedTool {
 			// Save the changes and get the result
 			const { newProblemsMessage, userEdits, autoFormattingEdits, finalContent } =
 				await config.services.diffViewProvider.saveChanges()
+
+			// iCline harness: verify filesystem state matches claimed write
+			if (isIclineBuild()) {
+				const { verifyWrittenFile } = await import("@/icline/harness/guardrails")
+				const verification = await verifyWrittenFile({
+					absolutePath,
+					expectedMinBytes: (finalContent || newContent).trim().length > 0 ? 1 : 0,
+				})
+				if (!verification.ok) {
+					config.taskState.consecutiveMistakeCount++
+					return formatResponse.toolError(verification.message)
+				}
+			}
 
 			// Reset consecutive mistake counter on successful file operation
 			config.taskState.consecutiveMistakeCount = 0

@@ -61,10 +61,8 @@ export function getConfiguredProviders(
 		configured.push("deepseek")
 	}
 
-	// xAI - requires API key
-	if (apiConfiguration.xaiApiKey) {
-		configured.push("xai")
-	}
+	// xAI - OAuth, Grok CLI auth, or API key (always listed; auth validated at runtime)
+	configured.push("xai")
 
 	// Qwen - requires API key
 	if (apiConfiguration.qwenApiKey) {
@@ -174,6 +172,11 @@ export function getConfiguredProviders(
 	// Vercel AI Gateway - requires API key
 	if (apiConfiguration.vercelAiGatewayApiKey) {
 		configured.push("vercel-ai-gateway")
+	}
+
+	// ZenMux - requires API key
+	if (apiConfiguration.zenmuxApiKey) {
+		configured.push("zenmux")
 	}
 
 	// AIHubMix - requires API key

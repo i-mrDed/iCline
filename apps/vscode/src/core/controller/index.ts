@@ -926,6 +926,11 @@ export class Controller {
 		const { openAiCodexOAuthManager } = await import("@/integrations/openai-codex/oauth")
 		const openAiCodexIsAuthenticated = await openAiCodexOAuthManager.isAuthenticated()
 
+		const { xaiOAuthManager } = await import("@/integrations/xai/oauth")
+		const xaiOAuthIsAuthenticated = await xaiOAuthManager.isAuthenticated()
+		const { readGrokCliToken } = await import("@/integrations/xai/grok-cli-auth")
+		const xaiGrokCliIsAuthenticated = !!readGrokCliToken()?.accessToken
+
 		return {
 			version,
 			apiConfiguration,
@@ -1010,6 +1015,8 @@ export class Controller {
 			banners,
 			welcomeBanners,
 			openAiCodexIsAuthenticated,
+			xaiOAuthIsAuthenticated,
+			xaiGrokCliIsAuthenticated,
 		}
 	}
 

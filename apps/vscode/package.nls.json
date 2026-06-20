@@ -1,0 +1,10 @@
+{
+	"extension.displayName": "iCline",
+	"extension.description": "🤖 iCline — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.",
+	"extension.category.ai": "AI",
+	"extension.category.chat": "Chat",
+	"extension.category.programmingLanguages": "Programming Languages",
+	"extension.category.education": "Education",
+	"extension.category.snippets": "Snippets",
+	"extension.category.testing": "Testing"
+}

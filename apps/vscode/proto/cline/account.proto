@@ -44,6 +44,9 @@ service AccountService {
 
   rpc hicapAuthClicked(EmptyRequest) returns (Empty);
 
+  // Opens ZenMux console pages (login, payg, subscription, management)
+  rpc zenmuxAuthClicked(StringRequest) returns (Empty);
+
   // Returns a link the webview can use to redirect back to the user's IDE.
   rpc getRedirectUrl(EmptyRequest) returns (String);
 
@@ -53,6 +56,10 @@ service AccountService {
 
   // Signs out of OpenAI Codex and clears stored credentials
   rpc openAiCodexSignOut(EmptyRequest) returns (Empty);
+
+  // xAI Grok OAuth authentication (SuperGrok / X Premium / Grok Build CLI)
+  rpc xaiOauthSignIn(EmptyRequest) returns (Empty);
+  rpc xaiOauthSignOut(EmptyRequest) returns (Empty);
 
   // Submits a spend limit increase request to the user's org admin.
   // Called when the user hits a SPEND_LIMIT_EXCEEDED (429) error and clicks "Request Increase".

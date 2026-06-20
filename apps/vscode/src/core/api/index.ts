@@ -47,6 +47,7 @@ import { VsCodeLmHandler } from "./providers/vscode-lm"
 import { WandbHandler } from "./providers/wandb"
 import { XAIHandler } from "./providers/xai"
 import { ZAiHandler } from "./providers/zai"
+import { ZenmuxHandler } from "./providers/zenmux"
 import { ApiStream, ApiStreamUsageChunk } from "./transform/stream"
 
 export type CommonApiHandlerOptions = {
@@ -478,6 +479,19 @@ function createHandlerForProvider(
 				onRetryAttempt: options.onRetryAttempt,
 				hicapApiKey: options.hicapApiKey,
 				hicapModelId: mode === "plan" ? options.planModeHicapModelId : options.actModeHicapModelId,
+			})
+		case "zenmux":
+			return new ZenmuxHandler({
+				onRetryAttempt: options.onRetryAttempt,
+				zenmuxApiKey: options.zenmuxApiKey,
+				zenmuxApiProtocol: options.zenmuxApiProtocol,
+				zenmuxProviderRouting: options.zenmuxProviderRouting,
+				zenmuxModelId: mode === "plan" ? options.planModeZenmuxModelId : options.actModeZenmuxModelId,
+				zenmuxModelInfo: mode === "plan" ? options.planModeZenmuxModelInfo : options.actModeZenmuxModelInfo,
+				reasoningEffort: mode === "plan" ? options.planModeReasoningEffort : options.actModeReasoningEffort,
+				thinkingBudgetTokens:
+					mode === "plan" ? options.planModeThinkingBudgetTokens : options.actModeThinkingBudgetTokens,
+				enableParallelToolCalling: options.enableParallelToolCalling,
 			})
 		case "nousResearch":
 			return new NousResearchHandler({

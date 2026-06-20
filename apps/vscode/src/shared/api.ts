@@ -45,8 +45,19 @@ export type ApiProvider =
 	| "hicap"
 	| "nousResearch"
 	| "wandb"
+	| "zenmux"
 
 export const DEFAULT_API_PROVIDER = "openrouter" as ApiProvider
+
+/** ZenMux API protocol — see https://docs.zenmux.ai/guide/quickstart */
+export type ZenmuxApiProtocol = "openai" | "anthropic" | "openai-responses" | "gemini"
+
+export const ZENMUX_API_BASE_URLS: Record<ZenmuxApiProtocol, string> = {
+	openai: "https://zenmux.ai/api/v1",
+	anthropic: "https://zenmux.ai/api/anthropic",
+	"openai-responses": "https://zenmux.ai/api/v1",
+	gemini: "https://zenmux.ai/api/vertex-ai",
+}
 
 export interface ApiHandlerOptions extends Partial<ApiHandlerSettings> {
 	ulid?: string // Used to identify the task in API requests
@@ -1011,6 +1022,10 @@ export const openRouterDefaultModelInfo: ModelInfo = {
 	description:
 		"Claude Sonnet 4.5 delivers superior intelligence across coding, agentic search, and AI agent capabilities. It's a powerful choice for agentic coding, and can complete tasks across the entire software development lifecycle, from initial planning to bug fixes, maintenance to large refactors. It offers strong performance in both planning and solving for complex coding tasks, making it an ideal choice to power end-to-end software development processes.\n\nRead more in the [blog post here](https://www.anthropic.com/claude/sonnet)",
 }
+
+// ZenMux — https://zenmux.ai/models
+export const zenmuxDefaultModelId = "anthropic/claude-sonnet-4.5"
+export const zenmuxDefaultModelInfo: ModelInfo = openRouterDefaultModelInfo
 
 // Cline custom model - Devstral
 export const clineDevstralModelInfo: ModelInfo = {
@@ -3955,8 +3970,73 @@ export const wandbDefaultModelId = "meta-llama/Llama-3.3-70B-Instruct" satisfies
 // X AI
 // https://docs.x.ai/docs/api-reference
 export type XAIModelId = keyof typeof xaiModels
-export const xaiDefaultModelId: XAIModelId = "grok-4"
+export const xaiDefaultModelId: XAIModelId = "grok-composer-2.5-fast"
 export const xaiModels = {
+	"grok-composer-2.5-fast": {
+		maxTokens: 30_000,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsPromptCache: false,
+		inputPrice: 0,
+		outputPrice: 0,
+		description: "Composer 2.5 Fast — agentic coding model via Grok Build CLI (OAuth).",
+		apiFormat: ApiFormat.OPENAI_RESPONSES,
+	},
+	"grok-build": {
+		maxTokens: 30_000,
+		contextWindow: 512_000,
+		supportsImages: true,
+		supportsPromptCache: false,
+		inputPrice: 0,
+		outputPrice: 0,
+		description: "Grok Build — latest xAI coding model via Grok Build CLI (OAuth).",
+		apiFormat: ApiFormat.OPENAI_RESPONSES,
+	},
+	"grok-4.3": {
+		maxTokens: 32_768,
+		contextWindow: 1_000_000,
+		supportsImages: true,
+		supportsPromptCache: true,
+		inputPrice: 3.0,
+		outputPrice: 15.0,
+		description: "Latest flagship Grok model.",
+	},
+	"grok-build-0.1": {
+		maxTokens: 16_384,
+		contextWindow: 256_000,
+		supportsImages: true,
+		supportsPromptCache: true,
+		inputPrice: 0.2,
+		outputPrice: 1.5,
+		description: "Grok Build 0.1 — coding model on the public xAI API.",
+	},
+	"grok-4.20-0309-reasoning": {
+		maxTokens: 32_768,
+		contextWindow: 1_000_000,
+		supportsImages: true,
+		supportsPromptCache: true,
+		inputPrice: 3.0,
+		outputPrice: 15.0,
+		description: "Grok 4.20 reasoning variant.",
+	},
+	"grok-4.20-0309-non-reasoning": {
+		maxTokens: 32_768,
+		contextWindow: 1_000_000,
+		supportsImages: true,
+		supportsPromptCache: true,
+		inputPrice: 0.2,
+		outputPrice: 0.5,
+		description: "Grok 4.20 fast non-reasoning variant.",
+	},
+	"grok-4.20-multi-agent-0309": {
+		maxTokens: 32_768,
+		contextWindow: 1_000_000,
+		supportsImages: true,
+		supportsPromptCache: true,
+		inputPrice: 3.0,
+		outputPrice: 15.0,
+		description: "Grok 4.20 multi-agent variant.",
+	},
 	"grok-4-1-fast-reasoning": {
 		contextWindow: 2_000_000,
 		supportsImages: false,
@@ -4148,6 +4228,48 @@ export const xaiModels = {
 		description: "X AI's Grok Beta model (legacy) with 131K context window",
 	},
 } as const satisfies Record<string, ModelInfo>
+
+/** Grok Build CLI proxy models (Composer / Grok Build). */
+export const xaiCliModelIds = ["grok-composer-2.5-fast", "grok-build"] as const
+
+export function isXaiCliModelId(modelId: string): boolean {
+	return (xaiCliModelIds as readonly string[]).includes(modelId)
+}
+
+/** @deprecated Use isXaiCliModelId */
+export function isXaiSubscriptionModel(modelId: string): boolean {
+	return isXaiCliModelId(modelId)
+}
+
+function getXaiCliModels(): Record<string, ModelInfo> {
+	return Object.fromEntries(Object.entries(xaiModels).filter(([id]) => isXaiCliModelId(id)))
+}
+
+function getXaiApiKeyModels(): Record<string, ModelInfo> {
+	return Object.fromEntries(Object.entries(xaiModels).filter(([id]) => !isXaiCliModelId(id)))
+}
+
+/** Filter xAI models by active credentials (subscription OAuth/CLI vs API key). */
+export function getXaiModelsForAuth(options: {
+	subscriptionAuthenticated: boolean
+	hasApiKey: boolean
+	xaiSubscriptionModels?: Record<string, ModelInfo>
+}): Record<string, ModelInfo> {
+	const { subscriptionAuthenticated, hasApiKey, xaiSubscriptionModels = {} } = options
+	const cliModels = getXaiCliModels()
+	const apiKeyModels = getXaiApiKeyModels()
+
+	if (subscriptionAuthenticated && hasApiKey) {
+		return { ...cliModels, ...xaiSubscriptionModels, ...apiKeyModels }
+	}
+	if (subscriptionAuthenticated) {
+		return { ...cliModels, ...xaiSubscriptionModels }
+	}
+	if (hasApiKey) {
+		return apiKeyModels
+	}
+	return cliModels
+}
 
 // SambaNova
 // https://docs.sambanova.ai/cloud/docs/get-started/supported-models

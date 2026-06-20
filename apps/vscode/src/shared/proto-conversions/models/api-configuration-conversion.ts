@@ -15,6 +15,7 @@ import {
 	BedrockModelId,
 	ModelInfo,
 	OcaModelInfo,
+	ZenmuxApiProtocol,
 } from "../../api"
 import { OpenaiReasoningEffort } from "../../storage/types"
 
@@ -326,6 +327,8 @@ function convertApiProviderToProto(provider: string | undefined): ProtoApiProvid
 			return ProtoApiProvider.MINIMAX
 		case "hicap":
 			return ProtoApiProvider.HICAP
+		case "zenmux":
+			return ProtoApiProvider.ZENMUX
 		case "nousResearch":
 			return ProtoApiProvider.NOUSRESEARCH
 		case "openai-codex":
@@ -412,6 +415,8 @@ export function convertProtoToApiProvider(provider: ProtoApiProvider): ApiProvid
 			return "zai"
 		case ProtoApiProvider.HICAP:
 			return "hicap"
+		case ProtoApiProvider.ZENMUX:
+			return "zenmux"
 		case ProtoApiProvider.DIFY:
 			return "dify"
 		case ProtoApiProvider.OCA:
@@ -518,6 +523,10 @@ export function convertApiConfigurationToProto(config: ApiConfiguration): ProtoA
 		aihubmixAppCode: config.aihubmixAppCode,
 		hicapApiKey: config.hicapApiKey,
 		hicapModelId: config.hicapModelId,
+		zenmuxApiKey: config.zenmuxApiKey,
+		zenmuxManagementApiKey: config.zenmuxManagementApiKey,
+		zenmuxApiProtocol: config.zenmuxApiProtocol,
+		zenmuxProviderRouting: config.zenmuxProviderRouting,
 
 		// Plan mode configurations
 		planModeApiProvider: config.planModeApiProvider ? convertApiProviderToProto(config.planModeApiProvider) : undefined,
@@ -564,6 +573,8 @@ export function convertApiConfigurationToProto(config: ApiConfiguration): ProtoA
 		planModeNousResearchModelId: config.planModeNousResearchModelId,
 		planModeVercelAiGatewayModelId: config.planModeVercelAiGatewayModelId,
 		planModeVercelAiGatewayModelInfo: convertModelInfoToProtoOpenRouter(config.planModeVercelAiGatewayModelInfo),
+		planModeZenmuxModelId: config.planModeZenmuxModelId,
+		planModeZenmuxModelInfo: convertModelInfoToProtoOpenRouter(config.planModeZenmuxModelInfo),
 
 		// Act mode configurations
 		actModeApiProvider: config.actModeApiProvider ? convertApiProviderToProto(config.actModeApiProvider) : undefined,
@@ -610,6 +621,8 @@ export function convertApiConfigurationToProto(config: ApiConfiguration): ProtoA
 		actModeNousResearchModelId: config.actModeNousResearchModelId,
 		actModeVercelAiGatewayModelId: config.actModeVercelAiGatewayModelId,
 		actModeVercelAiGatewayModelInfo: convertModelInfoToProtoOpenRouter(config.actModeVercelAiGatewayModelInfo),
+		actModeZenmuxModelId: config.actModeZenmuxModelId,
+		actModeZenmuxModelInfo: convertModelInfoToProtoOpenRouter(config.actModeZenmuxModelInfo),
 	}
 }
 
@@ -700,6 +713,10 @@ export function convertProtoToApiConfiguration(protoConfig: ProtoApiConfiguratio
 		minimaxApiLine: protoConfig.minimaxApiLine,
 		hicapApiKey: protoConfig.hicapApiKey,
 		hicapModelId: protoConfig.hicapModelId,
+		zenmuxApiKey: protoConfig.zenmuxApiKey,
+		zenmuxManagementApiKey: protoConfig.zenmuxManagementApiKey,
+		zenmuxApiProtocol: protoConfig.zenmuxApiProtocol as ZenmuxApiProtocol | undefined,
+		zenmuxProviderRouting: protoConfig.zenmuxProviderRouting,
 		nousResearchApiKey: protoConfig.nousResearchApiKey,
 		clineApiKey: protoConfig.clineApiKey,
 
@@ -751,6 +768,8 @@ export function convertProtoToApiConfiguration(protoConfig: ProtoApiConfiguratio
 		planModeNousResearchModelId: protoConfig.planModeNousResearchModelId,
 		planModeVercelAiGatewayModelId: protoConfig.planModeVercelAiGatewayModelId,
 		planModeVercelAiGatewayModelInfo: convertProtoToModelInfo(protoConfig.planModeVercelAiGatewayModelInfo),
+		planModeZenmuxModelId: protoConfig.planModeZenmuxModelId,
+		planModeZenmuxModelInfo: convertProtoToModelInfo(protoConfig.planModeZenmuxModelInfo),
 
 		// Act mode configurations
 		actModeApiProvider:
@@ -798,5 +817,7 @@ export function convertProtoToApiConfiguration(protoConfig: ProtoApiConfiguratio
 		actModeNousResearchModelId: protoConfig.actModeNousResearchModelId,
 		actModeVercelAiGatewayModelId: protoConfig.actModeVercelAiGatewayModelId,
 		actModeVercelAiGatewayModelInfo: convertProtoToModelInfo(protoConfig.actModeVercelAiGatewayModelInfo),
+		actModeZenmuxModelId: protoConfig.actModeZenmuxModelId,
+		actModeZenmuxModelInfo: convertProtoToModelInfo(protoConfig.actModeZenmuxModelInfo),
 	}
 }

@@ -3,6 +3,7 @@ import { Mode } from "@shared/storage/types"
 import { VSCodeButton } from "@vscode/webview-ui-toolkit/react"
 import { useExtensionState } from "@/context/ExtensionStateContext"
 import { AccountServiceClient } from "@/services/grpc-client"
+import { AuthConnectionBadge } from "../common/AuthConnectionBadge"
 import { ModelInfoView } from "../common/ModelInfoView"
 import { ModelSelector } from "../common/ModelSelector"
 import ReasoningEffortSelector from "../ReasoningEffortSelector"
@@ -46,14 +47,21 @@ export const OpenAiCodexProvider = ({ showModelOptions, isPopup, currentMode }: 
 		<div>
 			<div style={{ marginBottom: "15px" }}>
 				{openAiCodexIsAuthenticated ? (
-					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-						<span style={{ color: "var(--vscode-descriptionForeground)" }}>Signed in to OpenAI Codex</span>
-						<VSCodeButton appearance="secondary" onClick={handleSignOut}>
-							Sign Out
-						</VSCodeButton>
+					<div>
+						<AuthConnectionBadge
+							detail="ChatGPT Plus / Pro subscription models"
+							label="Connected — OpenAI Codex"
+							variant="oauth"
+						/>
+						<div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
+							<VSCodeButton appearance="secondary" onClick={handleSignOut}>
+								Sign Out
+							</VSCodeButton>
+						</div>
 					</div>
 				) : (
 					<div>
+						<AuthConnectionBadge label="Not connected to OpenAI Codex" variant="disconnected" />
 						<p
 							style={{
 								fontSize: "12px",

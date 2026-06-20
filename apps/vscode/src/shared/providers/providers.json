@@ -45,6 +45,10 @@
 			"label": "OpenRouter"
 		},
 		{
+			"value": "zenmux",
+			"label": "ZenMux"
+		},
+		{
 			"value": "ollama",
 			"label": "Ollama"
 		},
@@ -134,7 +138,7 @@
 		},
 		{
 			"value": "xai",
-			"label": "xAI"
+			"label": "xAI · Grok (OAuth & Subscription)"
 		},
 		{
 			"value": "sambanova",

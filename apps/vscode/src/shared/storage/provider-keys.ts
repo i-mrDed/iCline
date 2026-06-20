@@ -20,6 +20,7 @@ import {
 	nousResearchDefaultModelId,
 	openAiNativeDefaultModelId,
 	openRouterDefaultModelId,
+	zenmuxDefaultModelId,
 	requestyDefaultModelId,
 	sapAiCoreDefaultModelId,
 	wandbDefaultModelId,
@@ -47,6 +48,7 @@ const ProviderKeyMap: Partial<Record<ApiProvider, string>> = {
 	hicap: "HicapModelId",
 	nousResearch: "NousResearchModelId",
 	"vercel-ai-gateway": "VercelAiGatewayModelId",
+	zenmux: "ZenmuxModelId",
 } as const
 
 export const ProviderToApiKeyMap: Partial<Record<ApiProvider, keyof Secrets | (keyof Secrets)[]>> = {
@@ -88,6 +90,7 @@ export const ProviderToApiKeyMap: Partial<Record<ApiProvider, keyof Secrets | (k
 	nousResearch: "nousResearchApiKey",
 	sapaicore: ["sapAiCoreClientId", "sapAiCoreClientSecret"],
 	wandb: "wandbApiKey",
+	zenmux: "zenmuxApiKey",
 } as const
 
 const ProviderDefaultModelMap: Partial<Record<ApiProvider, string>> = {
@@ -113,6 +116,7 @@ const ProviderDefaultModelMap: Partial<Record<ApiProvider, string>> = {
 	hicap: "",
 	nousResearch: nousResearchDefaultModelId,
 	"vercel-ai-gateway": openRouterDefaultModelId,
+	zenmux: zenmuxDefaultModelId,
 	xai: xaiDefaultModelId,
 	gemini: geminiDefaultModelId,
 	minimax: minimaxDefaultModelId,

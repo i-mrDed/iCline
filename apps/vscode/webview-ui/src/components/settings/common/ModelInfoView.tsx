@@ -170,6 +170,8 @@ interface ModelInfoViewProps {
 	selectedModelId: string
 	modelInfo: ModelInfo
 	isPopup?: boolean
+	/** Hide per-token pricing and show subscription label instead */
+	subscriptionIncluded?: boolean
 	// Provider routing props (optional - only shown for Cline provider)
 	providerSorting?: string
 	onProviderSortingChange?: (value: string) => void
@@ -182,6 +184,7 @@ export const ModelInfoView = ({
 	selectedModelId,
 	modelInfo,
 	isPopup,
+	subscriptionIncluded,
 	providerSorting,
 	onProviderSortingChange,
 	showProviderRouting,
@@ -215,21 +218,32 @@ export const ModelInfoView = ({
 						<InfoValue>{formatCompactContext(modelInfo.contextWindow)}</InfoValue>
 					</InfoItem>
 				)}
-				{modelInfo.inputPrice !== undefined && (
+				{subscriptionIncluded ? (
 					<InfoItem>
-						<InfoLabel>Input: </InfoLabel>
-						<InfoValue>{formatCompactPrice(modelInfo.inputPrice)}</InfoValue>
-					</InfoItem>
-				)}
-				{modelInfo.outputPrice !== undefined && (
-					<InfoItem>
-						<InfoLabel>Output: </InfoLabel>
-						<InfoValue>
-							{hasThinkingConfig && modelInfo.thinkingConfig?.outputPrice !== undefined
-								? formatCompactPrice(modelInfo.thinkingConfig.outputPrice)
-								: formatCompactPrice(modelInfo.outputPrice)}
+						<InfoLabel>Pricing: </InfoLabel>
+						<InfoValue style={{ color: "var(--vscode-terminal-ansiGreen)" }}>
+							Included in subscription
 						</InfoValue>
 					</InfoItem>
+				) : (
+					<>
+						{modelInfo.inputPrice !== undefined && (
+							<InfoItem>
+								<InfoLabel>Input: </InfoLabel>
+								<InfoValue>{formatCompactPrice(modelInfo.inputPrice)}</InfoValue>
+							</InfoItem>
+						)}
+						{modelInfo.outputPrice !== undefined && (
+							<InfoItem>
+								<InfoLabel>Output: </InfoLabel>
+								<InfoValue>
+									{hasThinkingConfig && modelInfo.thinkingConfig?.outputPrice !== undefined
+										? formatCompactPrice(modelInfo.thinkingConfig.outputPrice)
+										: formatCompactPrice(modelInfo.outputPrice)}
+								</InfoValue>
+							</InfoItem>
+						)}
+					</>
 				)}
 			</InfoRow>
 

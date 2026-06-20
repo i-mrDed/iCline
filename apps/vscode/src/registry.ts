@@ -1,7 +1,18 @@
 import { name, publisher, version } from "../package.json"
 import { HostProvider } from "./hosts/host-provider"
 
-const prefix = name === "claude-dev" ? "cline" : name
+/** True for iCline fork builds (any package name / publisher variant). */
+export function isIclineBuild(): boolean {
+	return name === "icline" || name === "iCline" || publisher === "i-mrDed"
+}
+
+/** Stable command/config prefix — keeps `icline.*` settings when marketplace id is `i-mrDed.iCline`. */
+const prefix = name === "claude-dev" ? "cline" : isIclineBuild() ? "icline" : name
+
+export const ExtensionContextKeys = {
+	isDevMode: `${prefix}.isDevMode`,
+	isGeneratingCommit: `${prefix}.isGeneratingCommit`,
+} as const
 
 /**
  * List of commands with the name of the extension they are registered under.
@@ -26,6 +37,7 @@ const ClineCommands = {
 	GenerateCommit: prefix + ".generateGitCommitMessage",
 	AbortCommit: prefix + ".abortGitCommitMessage",
 	ReconstructTaskHistory: prefix + ".reconstructTaskHistory",
+	CheckForUpdates: prefix + ".checkForUpdates",
 	// Jupyter Notebook commands
 	JupyterGenerateCell: prefix + ".jupyterGenerateCell",
 	JupyterExplainCell: prefix + ".jupyterExplainCell",

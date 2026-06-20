@@ -6,6 +6,7 @@ import {
 	ModelInfo,
 	type OcaModelInfo,
 	OpenAiCompatibleModelInfo,
+	type ZenmuxApiProtocol,
 } from "@shared/api"
 import { BrowserSettings, DEFAULT_BROWSER_SETTINGS } from "@shared/BrowserSettings"
 import { ClineRulesToggles } from "@shared/cline-rules"
@@ -103,6 +104,8 @@ const API_HANDLER_SETTINGS_FIELDS = {
 	openAiHeaders: { default: {} as Record<string, string> },
 	anthropicBaseUrl: { default: undefined as string | undefined },
 	openRouterProviderSorting: { default: undefined as string | undefined },
+	zenmuxApiProtocol: { default: "openai" as ZenmuxApiProtocol },
+	zenmuxProviderRouting: { default: undefined as string | undefined },
 	awsRegion: { default: undefined as string | undefined },
 	awsUseCrossRegionInference: { default: undefined as boolean | undefined },
 	awsUseGlobalInference: { default: undefined as boolean | undefined },
@@ -188,6 +191,8 @@ const API_HANDLER_SETTINGS_FIELDS = {
 	planModeNousResearchModelId: { default: undefined as string | undefined },
 	planModeVercelAiGatewayModelId: { default: undefined as string | undefined },
 	planModeVercelAiGatewayModelInfo: { default: undefined as ModelInfo | undefined },
+	planModeZenmuxModelId: { default: undefined as string | undefined },
+	planModeZenmuxModelInfo: { default: undefined as ModelInfo | undefined },
 
 	// Act mode configurations
 	actModeApiModelId: { default: undefined as string | undefined },
@@ -234,6 +239,8 @@ const API_HANDLER_SETTINGS_FIELDS = {
 	actModeNousResearchModelId: { default: undefined as string | undefined },
 	actModeVercelAiGatewayModelId: { default: undefined as string | undefined },
 	actModeVercelAiGatewayModelInfo: { default: undefined as ModelInfo | undefined },
+	actModeZenmuxModelId: { default: undefined as string | undefined },
+	actModeZenmuxModelInfo: { default: undefined as ModelInfo | undefined },
 
 	// Model-specific settings
 	planModeApiProvider: { default: DEFAULT_API_PROVIDER as ApiProvider },
@@ -346,6 +353,8 @@ const SECRETS_KEYS = [
 	"difyApiKey",
 	"minimaxApiKey",
 	"hicapApiKey",
+	"zenmuxApiKey",
+	"zenmuxManagementApiKey",
 	"aihubmixApiKey",
 	"nousResearchApiKey",
 	"remoteLiteLlmApiKey",
@@ -353,6 +362,7 @@ const SECRETS_KEYS = [
 	"ocaRefreshToken",
 	"mcpOAuthSecrets",
 	"openai-codex-oauth-credentials", // JSON blob containing OAuth tokens for OpenAI Codex (ChatGPT subscription)
+	"xai-oauth-credentials", // JSON blob containing OAuth tokens for xAI Grok (SuperGrok / X Premium)
 	"wandbApiKey",
 ] as const
 

@@ -7,6 +7,7 @@ import {
 	fromProtobufOcaModelInfo,
 	fromProtobufOpenAiCompatibleModelInfo,
 } from "@shared/proto-conversions/models/typeConversion";
+import type { ZenmuxApiProtocol } from "@shared/api";
 import type { OpenaiReasoningEffort } from "@shared/storage/types";
 import { buildApiHandler } from "@/core/api";
 import { Logger } from "@/shared/services/Logger";
@@ -177,6 +178,9 @@ export async function updateApiConfigurationProto(
 				| undefined,
 			actModeReasoningEffort: protoApiConfiguration.actModeReasoningEffort as
 				| OpenaiReasoningEffort
+				| undefined,
+			zenmuxApiProtocol: protoApiConfiguration.zenmuxApiProtocol as
+				| ZenmuxApiProtocol
 				| undefined,
 		};
 

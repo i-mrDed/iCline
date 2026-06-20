@@ -1,209 +1,47 @@
-# Contributing to Cline
+# Contributing to iCline
 
-We're thrilled you're interested in contributing to Cline. Whether you're fixing a bug, adding a feature, or improving our docs, every contribution makes Cline smarter! To keep our community vibrant and welcoming, all members must adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
+Thank you for your interest in iCline!
 
-## Reporting Bugs or Issues
+## Who can change `main`?
 
-Bug reports help make Cline better for everyone! Before creating a new issue, please [search existing ones](https://github.com/cline/cline/issues) to avoid duplicates. When you're ready to report a bug, head over to our [issues page](https://github.com/cline/cline/issues/new/choose) where you'll find a template to help you with filling out the relevant information.
+This repository is **public**, but direct pushes to `main` are limited to the maintainer ([@i-mrDed](https://github.com/i-mrDed)) and invited collaborators.
 
-<blockquote class='warning-note'>
-     🔐 <b>Important:</b> If you discover a security vulnerability, please use the <a href="https://github.com/cline/cline/security/advisories/new">Github security tool to report it privately</a>.
-</blockquote>
+Everyone else should:
 
+1. Fork the repository
+2. Create a feature branch
+3. Open a Pull Request
 
-## Before Contributing
+The maintainer reviews and merges PRs.
 
-All contributions must begin with a GitHub Issue, unless the change is for small bug fixes, typo corrections, minor wording improvements, or simple type fixes that don't change functionality.
-**For features and contributions**:
-- First check the [Feature Requests discussions board](https://github.com/cline/cline/discussions/categories/feature-requests) for similar ideas
-- If your idea is new, create a new feature request  
-- Wait for approval from core maintainers before starting implementation
-- Once approved, feel free to begin working on a PR with the help of our community!
+## Development setup
 
-**PRs without approved issues may be closed.**
+```powershell
+cd apps/vscode
+npm install
+npm run protos
+npm run sync:docs
+npm run package:vsix
+```
 
+## Scope
 
-## Deciding What to Work On
+- **iCline-specific changes** belong in `apps/vscode/` (and related scripts under `apps/vscode/scripts/`)
+- Upstream Cline changes should be merged via `scripts/sync-upstream.ps1`, then iCline customizations re-applied
 
-Looking for a good first contribution? Check out issues labeled ["good first issue"](https://github.com/cline/cline/labels/good%20first%20issue) or ["help wanted"](https://github.com/cline/cline/labels/help%20wanted). These are specifically curated for new contributors and areas where we'd love some help!
+## Pull request guidelines
 
-We also welcome contributions to our [documentation](https://github.com/cline/cline/tree/main/docs)! Whether it's fixing typos, improving existing guides, or creating new educational content - we'd love to build a community-driven repository of resources that helps everyone get the most out of Cline. You can start by diving into `/docs` and looking for areas that need improvement.
+- One logical change per PR
+- Update `CHANGELOG.md` under `apps/vscode/` for user-visible changes
+- Run `npm run sync:docs` before packaging
+- Do not commit secrets, `.env`, `*.vsix`, or `node_modules`
 
-## Development Setup
+## Languages / i18n
 
+- Extension marketplace README: `apps/vscode/README.md` (English) + `apps/vscode/README.th.md` (Thai)
+- VS Code UI strings: `package.nls.json` + `package.nls.th.json`
+- Repo overview: root `README.md` + `README.th.md`
 
-### Local Development Instructions
+## Questions
 
-1. Clone the repository _(Requires [git-lfs](https://git-lfs.com/))_:
-    ```bash
-    git clone https://github.com/cline/cline.git
-    ```
-2. Open the project in VSCode:
-    ```bash
-    code cline
-    ```
-3. Install [bun](https://bun.com)
-4. Install the necessary dependencies for the extension and webview-gui:
-    ```bash
-    cd apps/vscode && npm run install:all && cd ../..
-    cd sdk && bun run build && cd ..
-    ```
-5. Generate Protocol Buffer files (required before first build):
-6. Launch by pressing `F5` (or `Run`->`Start Debugging`) to open a new VSCode window with the extension loaded. (You may need to install the [esbuild problem matchers extension](https://marketplace.visualstudio.com/items?itemName=connor4312.esbuild-problem-matchers) if you run into issues building the project.)
-
-
-
-
-### Creating a Pull Request
-
-1. Commit your changes.
-
-2. Push your branch and create a PR on GitHub. Our CI will:
-   - Run tests and checks
-3. Testing
-    - Run `cd apps/vscode && npm run test` to run tests locally. 
-    - Before submitting PR, run `npm run format:fix` to format your code
-
-### Extension
-
-1. **VS Code Extensions**
-
-    - When opening the project, VS Code will prompt you to install recommended extensions
-    - These extensions are required for development - please accept all installation prompts
-    - If you dismissed the prompts, you can install them manually from the Extensions panel
-
-2. **Local Development**
-    - cd into the vscode extension, `cd apps/vscode`
-    - Run `npm run install:all` to install dependencies
-    - Run `npm run protos` to generate Protocol Buffer files (required before first build)
-    - Run `npm run test` to run tests locally
-    - Run → Start Debugging or `>Debug: Select and Start Debugging` and wait for a new VS Code instance to open
-    - **Terminal Workflow**: Use `npm run dev` (generates protos + runs watch mode) or `npm run watch` (if protos already generated)
-    - Before submitting PR, run `npm run format:fix` to format your code
-
-3. **Linux-specific Setup**
-    VS Code extension tests on Linux require the following system libraries:
-
-    - `dbus`
-    - `libasound2`
-    - `libatk-bridge2.0-0`
-    - `libatk1.0-0`
-    - `libdrm2`
-    - `libgbm1`
-    - `libgtk-3-0`
-    - `libnss3`
-    - `libx11-xcb1`
-    - `libxcomposite1`
-    - `libxdamage1`
-    - `libxfixes3`
-    - `libxkbfile1`
-    - `libxrandr2`
-    - `xvfb`
-
-    These libraries provide necessary GUI components and system services for the test environment.
-
-    For example, on Debian-based distributions (e.g., Ubuntu), you can install these libraries using apt:
-    ```bash
-    sudo apt update
-    sudo apt install -y \
-      dbus \
-      libasound2 \
-      libatk-bridge2.0-0 \
-      libatk1.0-0 \
-      libdrm2 \
-      libgbm1 \
-      libgtk-3-0 \
-      libnss3 \
-      libx11-xcb1 \
-      libxcomposite1 \
-      libxdamage1 \
-      libxfixes3 \
-      libxkbfile1 \
-      libxrandr2 \
-      xvfb
-    ```
-
-## Writing and Submitting Code
-
-Anyone can contribute code to Cline, but we ask that you follow these guidelines to ensure your contributions can be smoothly integrated:
-
-1. **Keep Pull Requests Focused**
-
-    - Limit PRs to a single feature or bug fix
-    - Split larger changes into smaller, related PRs
-    - Break changes into logical commits that can be reviewed independently
-
-2. **Code Quality**
-
-    - Run `npm run lint` to check code style
-    - Run `npm run format` to automatically format code
-    - All PRs must pass CI checks which include both linting and formatting
-    - Address any warnings or errors from linter before submitting
-    - Follow TypeScript best practices and maintain type safety
-
-3. **Testing**
-
-    - Add tests for new features
-    - Run `npm test` to ensure all tests pass
-    - Update existing tests if your changes affect them
-    - Include both unit tests and integration tests where appropriate
-
-    **End-to-End (E2E) Testing**
-    
-    Cline includes comprehensive E2E tests using Playwright that simulate real user interactions with the extension in VS Code:
-    
-    - **Running E2E tests:**
-      ```bash
-      npm run test:e2e        # Build and run all E2E tests
-      npm run e2e             # Run tests without rebuilding
-      npm run test:e2e -- --debug  # Run with interactive debugger
-      ```
-    
-    - **Writing E2E tests:**
-      - Tests are located in `src/test/e2e/`
-      - Use the `e2e` fixture for single-root workspace tests
-      - Use `e2eMultiRoot` fixture for multi-root workspace tests
-      - Follow existing patterns in `auth.test.ts`, `chat.test.ts`, `diff.test.ts`, and `editor.test.ts`
-      - See `src/test/e2e/README.md` for detailed documentation
-    
-    - **Debug mode features:**
-      - Interactive Playwright Inspector for step-by-step debugging
-      - Record new interactions and generate test code automatically
-      - Visual VS Code instance for manual testing
-      - Element inspection and selector validation
-    
-    - **Test environment:**
-      - Automated VS Code setup with Cline extension loaded
-      - Mock API server for backend testing
-      - Temporary workspaces with test fixtures
-      - Video recording for failed tests
-
-4. **Versioning & Changelog Notes**
-
-    - Contributors do not need to create changelog-entry files as part of PRs.
-    - Maintainers handle release versioning and changelog curation during the release process.
-
-5. **Commit Guidelines**
-
-    - Write clear, descriptive commit messages
-    - Use conventional commit format (e.g., "feat:", "fix:", "docs:")
-    - Reference relevant issues in commits using #issue-number
-
-6. **Before Submitting**
-
-    - Rebase your branch on the latest main
-    - Ensure your branch builds successfully
-    - Double-check all tests are passing
-    - Review your changes for any debugging code or console logs
-
-7. **Pull Request Description**
-    - Clearly describe what your changes do
-    - Include steps to test the changes
-    - List any breaking changes
-    - Add screenshots for UI changes
-
-## Contribution Agreement
-
-By submitting a pull request, you agree that your contributions will be licensed under the same license as the project ([Apache 2.0](LICENSE)).
-
-Remember: Contributing to Cline isn't just about writing code - it's about being part of a community that's shaping the future of AI-assisted development. Let's build something amazing together! 🚀
+Open a [GitHub Discussion](https://github.com/i-mrDed/iCline/discussions) or file an issue.

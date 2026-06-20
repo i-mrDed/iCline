@@ -24,6 +24,8 @@ import {
 	openRouterDefaultModelInfo,
 	requestyDefaultModelId,
 	requestyDefaultModelInfo,
+	zenmuxDefaultModelId,
+	zenmuxDefaultModelInfo,
 } from "../../../src/shared/api"
 import { Environment } from "../../../src/shared/config-types"
 import type { McpMarketplaceCatalog, McpServer, McpViewTab } from "../../../src/shared/mcp"
@@ -37,6 +39,8 @@ export interface ExtensionStateContextType extends ExtensionState {
 	openRouterModels: Record<string, ModelInfo>
 	vercelAiGatewayModels: Record<string, ModelInfo>
 	hicapModels: Record<string, ModelInfo>
+	zenmuxModels: Record<string, ModelInfo>
+	xaiSubscriptionModels: Record<string, ModelInfo>
 	liteLlmModels: Record<string, ModelInfo>
 	openAiModels: string[]
 	requestyModels: Record<string, ModelInfo>
@@ -93,6 +97,8 @@ export interface ExtensionStateContextType extends ExtensionState {
 	refreshOpenRouterModels: () => void
 	refreshVercelAiGatewayModels: () => void
 	refreshHicapModels: () => void
+	refreshZenmuxModels: () => void
+	refreshXaiSubscriptionModels: () => void
 	refreshLiteLlmModels: () => Promise<void>
 	setUserInfo: (userInfo?: UserInfo) => void
 
@@ -304,6 +310,10 @@ export const ExtensionStateContextProvider: React.FC<{
 	})
 	const [vercelAiGatewayModels, setVercelAiGatewayModels] = useState<Record<string, ModelInfo>>({})
 	const [hicapModels, setHicapModels] = useState<Record<string, ModelInfo>>({})
+	const [zenmuxModels, setZenmuxModels] = useState<Record<string, ModelInfo>>({
+		[zenmuxDefaultModelId]: zenmuxDefaultModelInfo,
+	})
+	const [xaiSubscriptionModels, setXaiSubscriptionModels] = useState<Record<string, ModelInfo>>({})
 	const [liteLlmModels, setLiteLlmModels] = useState<Record<string, ModelInfo>>({})
 	const [totalTasksSize, setTotalTasksSize] = useState<number | null>(null)
 	const [availableTerminalProfiles, setAvailableTerminalProfiles] = useState<TerminalProfile[]>([])
@@ -713,6 +723,26 @@ export const ExtensionStateContextProvider: React.FC<{
 			.catch((error: Error) => console.error("Failed to refresh Hicap models:", error))
 	}, [])
 
+	const refreshZenmuxModels = useCallback(() => {
+		ModelsServiceClient.refreshZenmuxModelsRpc(EmptyRequest.create({}))
+			.then((response: OpenRouterCompatibleModelInfo) => {
+				const models = fromProtobufModels(response.models)
+				setZenmuxModels({
+					[zenmuxDefaultModelId]: zenmuxDefaultModelInfo,
+					...models,
+				})
+			})
+			.catch((error: Error) => console.error("Failed to refresh ZenMux models:", error))
+	}, [])
+
+	const refreshXaiSubscriptionModels = useCallback(() => {
+		ModelsServiceClient.refreshXaiSubscriptionModelsRpc(EmptyRequest.create({}))
+			.then((response: OpenRouterCompatibleModelInfo) => {
+				setXaiSubscriptionModels(fromProtobufModels(response.models))
+			})
+			.catch((error: Error) => console.error("Failed to refresh xAI subscription models:", error))
+	}, [])
+
 	const refreshLiteLlmModels = useCallback(() => {
 		return ModelsServiceClient.refreshLiteLlmModelsRpc(EmptyRequest.create({}))
 			.then((response: OpenRouterCompatibleModelInfo) => {
@@ -750,6 +780,15 @@ export const ExtensionStateContextProvider: React.FC<{
 		if (!vercelAiGatewayModels || Object.keys(vercelAiGatewayModels).length === 0) {
 			refreshVercelAiGatewayModels()
 		}
+		if (!zenmuxModels || Object.keys(zenmuxModels).length <= 1) {
+			refreshZenmuxModels()
+		}
+		if (
+			(state.xaiOAuthIsAuthenticated || state.xaiGrokCliIsAuthenticated) &&
+			Object.keys(xaiSubscriptionModels).length === 0
+		) {
+			refreshXaiSubscriptionModels()
+		}
 		if (state.apiConfiguration?.basetenApiKey) {
 			refreshBasetenModels()
 		}
@@ -759,6 +798,12 @@ export const ExtensionStateContextProvider: React.FC<{
 	}, [
 		refreshOpenRouterModels,
 		refreshVercelAiGatewayModels,
+		refreshZenmuxModels,
+		zenmuxModels,
+		refreshXaiSubscriptionModels,
+		xaiSubscriptionModels,
+		state?.xaiOAuthIsAuthenticated,
+		state?.xaiGrokCliIsAuthenticated,
 		state?.apiConfiguration?.basetenApiKey,
 		refreshBasetenModels,
 		state?.apiConfiguration?.liteLlmApiKey,
@@ -794,6 +839,8 @@ export const ExtensionStateContextProvider: React.FC<{
 		openRouterModels,
 		vercelAiGatewayModels,
 		hicapModels,
+		zenmuxModels,
+		xaiSubscriptionModels,
 		liteLlmModels,
 		openAiModels,
 		requestyModels,
@@ -917,6 +964,8 @@ export const ExtensionStateContextProvider: React.FC<{
 		refreshOpenRouterModels,
 		refreshVercelAiGatewayModels,
 		refreshHicapModels,
+		refreshZenmuxModels,
+		refreshXaiSubscriptionModels,
 		refreshLiteLlmModels,
 		onRelinquishControl,
 		setUserInfo: (userInfo?: UserInfo) => setState((prevState) => ({ ...prevState, userInfo })),

@@ -89,6 +89,8 @@ export class StateManager {
 		aihubmixModels: { data: Record<string, ModelInfo>; timestamp: number } | null
 		liteLlmModels: { data: Record<string, ModelInfo>; timestamp: number } | null
 		vercelModels: { data: Record<string, ModelInfo>; timestamp: number } | null
+		zenmuxModels: { data: Record<string, ModelInfo>; timestamp: number } | null
+		xaiSubscriptionModels: { data: Record<string, ModelInfo>; timestamp: number } | null
 	} = {
 		clineModels: null,
 		openRouterModels: null,
@@ -101,6 +103,8 @@ export class StateManager {
 		aihubmixModels: null,
 		liteLlmModels: null,
 		vercelModels: null,
+		zenmuxModels: null,
+		xaiSubscriptionModels: null,
 	}
 
 	// Debounced persistence state
@@ -465,7 +469,9 @@ export class StateManager {
 			| "hicap"
 			| "aihubmix"
 			| "liteLlm"
-			| "vercel",
+			| "vercel"
+			| "zenmux"
+			| "xaiSubscription",
 		models: Record<string, ModelInfo>,
 	): void {
 		const cacheKey = `${provider}Models` as keyof typeof this.modelInfoCache
@@ -484,7 +490,9 @@ export class StateManager {
 			| "hicap"
 			| "aihubmix"
 			| "liteLlm"
-			| "vercel",
+			| "vercel"
+			| "zenmux"
+			| "xaiSubscription",
 	): Record<string, ModelInfo> | null {
 		const cacheKey = `${provider}Models` as keyof typeof this.modelInfoCache
 		const cached = this.modelInfoCache[cacheKey]
@@ -515,7 +523,10 @@ export class StateManager {
 			| "huaweiCloudMaas"
 			| "hicap"
 			| "aihubmix"
-			| "liteLlm",
+			| "liteLlm"
+			| "zenmux"
+			| "xaiSubscription"
+			| "vercel",
 		modelId: string,
 	): ModelInfo | undefined {
 		const cacheKey = `${provider}Models` as keyof typeof this.modelInfoCache

@@ -51,9 +51,7 @@ export function validateApiConfiguration(currentMode: Mode, apiConfiguration?: A
 				}
 				break
 			case "xai":
-				if (!apiConfiguration.xaiApiKey) {
-					return "You must provide a valid API key or choose a different provider."
-				}
+				// OAuth, Grok CLI auth, or API key — validated at runtime in the handler
 				break
 			case "qwen":
 				if (!apiConfiguration.qwenApiKey) {

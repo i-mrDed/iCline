@@ -1,0 +1,35 @@
+{
+	"extensionId": "i-mrDed.iCline",
+	"github": {
+		"owner": "i-mrDed",
+		"repo": "iCline",
+		"url": "https://github.com/i-mrDed/iCline"
+	},
+	"description": "🤖 iCline — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.",
+	"keywords": [
+		"icline",
+		"cline",
+		"grok",
+		"xai",
+		"zenmux",
+		"composer",
+		"mcp",
+		"openrouter",
+		"coding",
+		"agent",
+		"autonomous",
+		"ai",
+		"llm"
+	],
+	"providers": {
+		"xai": "xAI · Grok (OAuth & Subscription)",
+		"zenmux": "ZenMux"
+	},
+	"featureHighlights": [
+		"🔐 xAI Grok — OAuth (SuperGrok / X Premium) + API key + Grok CLI auth",
+		"⚡ Composer 2.5 Fast & Grok Build models",
+		"🌐 ZenMux — 100+ models, multi-protocol, PAYG & Subscription keys",
+		"🛡️ Agent harness — verify-before-claim, post-write verification",
+		"🔄 Dual-channel updates — iCline releases + Cline upstream notifications"
+	]
+}

@@ -12,6 +12,8 @@ import { refreshGroqModels } from "../models/refreshGroqModels"
 import { refreshHicapModels } from "../models/refreshHicapModels"
 import { refreshLiteLlmModels } from "../models/refreshLiteLlmModels"
 import { refreshOpenRouterModels } from "../models/refreshOpenRouterModels"
+import { refreshXaiSubscriptionModels } from "../models/refreshXaiSubscriptionModels"
+import { refreshZenmuxModelsRpc } from "../models/refreshZenmuxModelsRpc"
 import { sendOpenRouterModelsEvent } from "../models/subscribeToOpenRouterModels"
 
 /**
@@ -238,6 +240,49 @@ export async function initializeWebview(controller: Controller, _request: EmptyR
 				}
 			}
 		})
+
+		// Refresh ZenMux models (public API, no key required)
+		refreshZenmuxModelsRpc(controller, EmptyRequest.create()).then(async (response) => {
+			if (response?.models) {
+				const apiConfiguration = controller.stateManager.getApiConfiguration()
+				const planActSeparateModelsSetting = controller.stateManager.getGlobalSettingsKey("planActSeparateModelsSetting")
+				const currentMode = controller.stateManager.getGlobalSettingsKey("mode")
+				const updates: Partial<GlobalStateAndSettings> = {}
+
+				if (planActSeparateModelsSetting) {
+					const modelIdField = currentMode === "plan" ? "planModeZenmuxModelId" : "actModeZenmuxModelId"
+					const modelInfoField = currentMode === "plan" ? "planModeZenmuxModelInfo" : "actModeZenmuxModelInfo"
+					const modelId = apiConfiguration[modelIdField]
+					if (modelId && response.models[modelId]) {
+						updates[modelInfoField] = response.models[modelId] as any
+						controller.stateManager.setGlobalStateBatch(updates)
+						await controller.postStateToWebview()
+					}
+				} else {
+					const planModelId = apiConfiguration.planModeZenmuxModelId
+					const actModelId = apiConfiguration.actModeZenmuxModelId
+					if (planModelId && response.models[planModelId]) {
+						updates.planModeZenmuxModelInfo = response.models[planModelId] as any
+					}
+					if (actModelId && response.models[actModelId]) {
+						updates.actModeZenmuxModelInfo = response.models[actModelId] as any
+					}
+					if (Object.keys(updates).length > 0) {
+						controller.stateManager.setGlobalStateBatch(updates)
+						await controller.postStateToWebview()
+					}
+				}
+			}
+		})
+
+		// Refresh xAI subscription models when OAuth / Grok CLI auth is active
+		const { xaiOAuthManager } = await import("@/integrations/xai/oauth")
+		const { readGrokCliToken } = await import("@/integrations/xai/grok-cli-auth")
+		if ((await xaiOAuthManager.isAuthenticated()) || readGrokCliToken()?.accessToken) {
+			refreshXaiSubscriptionModels(controller).catch((error) =>
+				Logger.error("Failed to prefetch xAI subscription models:", error),
+			)
+		}
 
 		const liteLlmBaseUrl = controller.stateManager.getGlobalSettingsKey("liteLlmBaseUrl")
 		const liteLlmApiKey = controller.stateManager.getSecretKey("liteLlmApiKey")

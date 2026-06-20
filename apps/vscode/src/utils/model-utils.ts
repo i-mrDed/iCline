@@ -23,6 +23,7 @@ export function isNextGenModelProvider(providerInfo: ApiProviderInfo): boolean {
 		"openai-codex",
 		"baseten",
 		"vercel-ai-gateway",
+		"zenmux",
 		"deepseek",
 		"oca",
 	].some((id) => providerId === id)

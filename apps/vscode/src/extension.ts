@@ -49,7 +49,8 @@ import { VscodeTerminalManager } from "./hosts/vscode/terminal/VscodeTerminalMan
 import { VscodeDiffViewProvider } from "./hosts/vscode/VscodeDiffViewProvider"
 import { VscodeWebviewProvider } from "./hosts/vscode/VscodeWebviewProvider"
 import { exportVSCodeStorageToSharedFiles } from "./hosts/vscode/vscode-to-file-migration"
-import { ExtensionRegistryInfo } from "./registry"
+import { UpdateService } from "./icline/updates/UpdateService"
+import { ExtensionContextKeys, ExtensionRegistryInfo, isIclineBuild } from "./registry"
 import { AuthService } from "./services/auth/AuthService"
 import { LogoutReason } from "./services/auth/types"
 import { telemetryService } from "./services/telemetry"
@@ -183,7 +184,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// Register size testing commands in development mode
 	if (IS_DEV) {
-		vscode.commands.executeCommand("setContext", "cline.isDevMode", IS_DEV)
+		vscode.commands.executeCommand("setContext", ExtensionContextKeys.isDevMode, IS_DEV)
 		// Use dynamic import to avoid loading the module in production
 		import("./dev/commands/tasks")
 			.then((module) => {
@@ -543,7 +544,16 @@ ${ctx.cellJson || "{}"}
 	})
 	context.subscriptions.push({ dispose: unsubSecrets })
 
-	Logger.log(`[Cline] extension activated in ${performance.now() - activationStartTime} ms`)
+	const updateService = new UpdateService(context)
+	context.subscriptions.push(
+		vscode.commands.registerCommand(commands.CheckForUpdates, () => updateService.showUpdateStatus()),
+	)
+	if (isIclineBuild()) {
+		void updateService.maybeNotify()
+	}
+
+	const brand = isIclineBuild() ? "iCline" : "Cline"
+	Logger.log(`[${brand}] extension activated in ${performance.now() - activationStartTime} ms`)
 
 	return createClineAPI(webview.controller)
 }

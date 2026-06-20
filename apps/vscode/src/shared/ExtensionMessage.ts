@@ -113,6 +113,8 @@ export interface ExtensionState {
 	banners?: BannerCardData[]
 	welcomeBanners?: BannerCardData[]
 	openAiCodexIsAuthenticated?: boolean
+	xaiOAuthIsAuthenticated?: boolean
+	xaiGrokCliIsAuthenticated?: boolean
 }
 
 export interface ClineMessage {

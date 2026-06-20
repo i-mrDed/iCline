@@ -72,6 +72,7 @@ import {
 	wandbModels,
 	xaiDefaultModelId,
 	xaiModels,
+	zenmuxDefaultModelInfo,
 } from "@shared/api";
 import type { Mode } from "@shared/storage/types";
 import * as reasoningSupport from "@shared/utils/reasoning-support";
@@ -172,6 +173,7 @@ export function getModelsForProvider(
 		case "hicap":
 		case "dify":
 		case "vercel-ai-gateway":
+		case "zenmux":
 		case "oca":
 		case "aihubmix":
 		case "together":
@@ -574,6 +576,22 @@ export function normalizeApiConfiguration(
 				selectedModelInfo: vercelModelInfo || openRouterDefaultModelInfo,
 			};
 		}
+		case "zenmux": {
+			// ZenMux uses its own model fields
+			const zenmuxModelId =
+				currentMode === "plan"
+					? apiConfiguration?.planModeZenmuxModelId
+					: apiConfiguration?.actModeZenmuxModelId;
+			const zenmuxModelInfo =
+				currentMode === "plan"
+					? apiConfiguration?.planModeZenmuxModelInfo
+					: apiConfiguration?.actModeZenmuxModelInfo;
+			return {
+				selectedProvider: provider,
+				selectedModelId: zenmuxModelId || "",
+				selectedModelInfo: zenmuxModelInfo || zenmuxDefaultModelInfo,
+			};
+		}
 		case "zai": {
 			const zaiModels =
 				apiConfiguration?.zaiApiLine === "china"
@@ -687,6 +705,7 @@ export function getModeSpecificFields(
 			aihubmixModelId: undefined,
 			nousResearchModelId: undefined,
 			vercelAiGatewayModelId: undefined,
+			zenmuxModelId: undefined,
 
 			// Model info objects
 			openAiModelInfo: undefined,
@@ -820,6 +839,10 @@ export function getModeSpecificFields(
 			mode === "plan"
 				? apiConfiguration.planModeVercelAiGatewayModelId
 				: apiConfiguration.actModeVercelAiGatewayModelId,
+		zenmuxModelId:
+			mode === "plan"
+				? apiConfiguration.planModeZenmuxModelId
+				: apiConfiguration.actModeZenmuxModelId,
 
 		// Model info objects
 		openAiModelInfo:
@@ -865,6 +888,10 @@ export function getModeSpecificFields(
 			mode === "plan"
 				? apiConfiguration.planModeVercelAiGatewayModelInfo
 				: apiConfiguration.actModeVercelAiGatewayModelInfo,
+		zenmuxModelInfo:
+			mode === "plan"
+				? apiConfiguration.planModeZenmuxModelInfo
+				: apiConfiguration.actModeZenmuxModelInfo,
 
 		// AWS Bedrock fields
 		awsBedrockCustomSelected:
@@ -1066,6 +1093,14 @@ export async function syncModeConfigurations(
 				sourceFields.vercelAiGatewayModelInfo;
 			updates.actModeVercelAiGatewayModelInfo =
 				sourceFields.vercelAiGatewayModelInfo;
+			break;
+
+		case "zenmux":
+			// ZenMux uses its own model fields
+			updates.planModeZenmuxModelId = sourceFields.zenmuxModelId;
+			updates.actModeZenmuxModelId = sourceFields.zenmuxModelId;
+			updates.planModeZenmuxModelInfo = sourceFields.zenmuxModelInfo;
+			updates.actModeZenmuxModelInfo = sourceFields.zenmuxModelInfo;
 			break;
 		case "oca":
 			updates.planModeOcaModelId = sourceFields.ocaModelId;

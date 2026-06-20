@@ -1,25 +1,38 @@
 # Security Policy
 
-## Supported Versions
+## Supported versions
 
-We actively patch only the most recent minor release of Cline. Older versions receive fixes at our discretion.
+| Version | Supported |
+| ------- | --------- |
+| 0.1.x   | ✅        |
 
-## Reporting a Vulnerability
+## Reporting a vulnerability
 
-We appreciate your efforts to responsibly disclose your findings and will make every effort to acknowledge your contributions.
+Please **do not** open public GitHub issues for security vulnerabilities.
 
-To report a security issue, please submit your report through our [Bugcrowd Vulnerability Disclosure Program](https://bugcrowd.com/engagements/clinebot-vdp-ess). Bugcrowd will manage communication and triage on our behalf.
+Email or DM the maintainer via GitHub ([@i-mrDed](https://github.com/i-mrDed)) with:
 
-When reporting, please include:
+- Description of the issue
+- Steps to reproduce
+- Impact assessment (if known)
 
-- A short summary of the issue
-- Steps to reproduce or a proof of concept
-- Any logs, stack traces, or screenshots that might help us understand the problem
+We aim to respond within 7 days.
 
-Please keep the details private until a resolution has been reached.
+## Secrets handling
 
-## Escalation
+**Never commit:**
 
-If you are unable to submit through Bugcrowd, you may send an email to security@cline.bot.
+- API keys (xAI, ZenMux, Anthropic, OpenAI, etc.)
+- `.env`, `secrets.json`, `*evals.env`
+- OAuth refresh tokens or `~/.grok/auth.json` contents
+- GitHub personal access tokens
 
-Thank you for helping us keep Cline users safe.
+iCline stores user credentials in **VS Code Secret Storage** and reads Grok CLI auth from the user's home directory only at runtime.
+
+## OAuth client ID
+
+The xAI OAuth client ID in `apps/vscode/src/integrations/xai/constants.ts` is a **public PKCE client identifier** — not a secret. It is safe to publish in source code.
+
+## Fork lineage
+
+iCline is derived from [Cline](https://github.com/cline/cline) (Apache-2.0). Security fixes in upstream Cline should be merged via `scripts/sync-upstream.ps1`.

@@ -1,0 +1,133 @@
+# iCline
+
+<!-- icline:version -->
+> 📦 **เวอร์ชันปัจจุบัน:** `0.1.6` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
+<!-- /icline:version -->
+
+<!-- icline:repo -->
+🔗 **GitHub:** [i-mrDed/iCline](https://github.com/i-mrDed/iCline)
+<!-- /icline:repo -->
+
+🌐 **ภาษา:** ภาษาไทย (หน้านี้) · [English](README.md)
+
+**iCline** คือ fork ของ [Cline](https://github.com/cline/cline) ที่แพ็กเป็น extension แยก (`i-mrDed.iCline`) — ติดตั้งคู่กับ Cline official (`saoudrizwan.claude-dev`) ได้โดยไม่ทับกัน
+
+---
+
+## ✨ ทำไมต้องใช้ iCline?
+
+| | Cline official | iCline |
+|---|---|---|
+| Extension ID | `saoudrizwan.claude-dev` | `i-mrDed.iCline` |
+| 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
+| ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
+| 🌐 ZenMux (100+ models) | ❌ | ✅ |
+| 🛡️ Harness guardrails (verify-before-claim) | ❌ | ✅ |
+| 🔄 Dual-channel updates (iCline + upstream) | ❌ | ✅ |
+
+---
+
+## 🚀 เริ่มต้นใช้งาน
+
+1. เปิด **Activity Bar** แล้วคลิกไอคอน iCline (หรือ `Ctrl+Shift+P` → `iCline: Open In New Tab`)
+2. ไปที่ **Settings** ⚙️ → เลือก Provider
+3. เลือก **xAI · Grok (OAuth & Subscription)** แล้วกด **Sign in to xAI Grok** สำหรับ OAuth  
+   หรือใส่ **API Key** / ใช้ auth จาก **Grok CLI** (`~/.grok/auth.json`)
+4. เลือกโมเดล เช่น **Composer 2.5 Fast** หรือ **Grok Build**
+5. พิมพ์งานที่ต้องการ — iCline จะวางแผน อ่านโค้ด แก้ไฟล์ และรันคำสั่ง (หลังคุณอนุมัติ)
+
+> 💡 **เคล็ดลับ:** เปิด iCline ใน sidebar ด้านขวาเพื่อดูการเปลี่ยนแปลงไฟล์แบบ side-by-side กับ Explorer
+
+---
+
+## 📥 ติดตั้งจาก VSIX
+
+ดาวน์โหลด `.vsix` ล่าสุดจาก [GitHub Releases](https://github.com/i-mrDed/iCline/releases) แล้วรัน:
+
+```bash
+code --install-extension icline-0.1.6.vsix --force
+```
+
+หรือ build เอง:
+
+```powershell
+cd apps/vscode
+npm install
+npm run package:vsix
+code --install-extension dist/icline-0.1.6.vsix --force
+```
+
+---
+
+## 🤖 โมเดล xAI ที่รองรับ
+
+- ⚡ **Composer 2.5 Fast** — โมเดลหลักสำหรับ coding agent
+- 🔨 **Grok Build** — โมเดลสำหรับงาน build / implement
+- 🧠 **Grok 4.3** และรุ่น Grok อื่นๆ ตามที่ xAI เปิดให้ใช้
+
+---
+
+## 🎯 ฟีเจอร์เพิ่มจาก Cline official
+
+### 🔐 xAI · Grok (OAuth & Subscription)
+- Sign in ผ่าน browser (PKCE OAuth) — SuperGrok / X Premium
+- รองรับ token refresh อัตโนมัติ
+- อ่าน session จาก Grok CLI ได้ถ้ามี login อยู่แล้ว
+- ใส่ API key จาก console.x.ai ได้ (Pay-as-you-go)
+
+### 🛡️ Agent harness (Fable-style guardrails)
+- **Verify-before-claim** — ห้ามอ้างว่าทำสำเร็จก่อนตรวจสอบจริง
+- **Post-write verification** — ตรวจไฟล์หลัง save
+- **Compaction threshold clamp** — จำกัด threshold ระหว่าง 0.5–0.95
+
+### 🔄 Dual-channel updates
+- ตรวจ **iCline release** จาก GitHub Releases
+- แจ้งเตือน **Cline upstream** เวอร์ชันใหม่ (ไม่ auto-merge)
+- คำสั่ง: `iCline: Check for Updates (iCline & Cline upstream)`
+
+---
+
+## ⚙️ Settings
+
+| Setting | คำอธิบาย | ค่าเริ่มต้น |
+|---|---|---|
+| `icline.updates.enabled` | เปิดตรวจอัปเดต | `true` |
+| `icline.updates.releasesUrl` | URL GitHub Releases API | `https://api.github.com/repos/i-mrDed/iCline/releases/latest` |
+| `icline.updates.notifyUpstreamCline` | แจ้ง Cline upstream | `true` |
+| `icline.updates.checkIntervalHours` | ช่วงตรวจ (ชั่วโมง) | `24` |
+
+---
+
+## 🌐 ZenMux
+
+Provider **ZenMux** รองรับครบตามที่ ZenMux ให้บริการ:
+
+- 👤 **บัญชี**: Sign in (Email / GitHub / Google) ผ่านลิงก์ใน Settings
+- 🔑 **API Key**: Pay As You Go (`sk-ai-v1-`) และ Builder Subscription (`sk-ss-v1-`)
+- 📊 **Management API Key**: แสดง PAYG balance และ subscription quota
+- 🔌 **โปรโตคอล**: OpenAI Chat, Anthropic Messages, OpenAI Responses, Google Gemini/Vertex
+- 📋 **โมเดล**: ดึงรายการอัตโนมัติจาก ZenMux (100+ models)
+
+## 🔌 Providers อื่นๆ
+
+นอกจาก xAI และ ZenMux แล้ว iCline ยังรองรับ providers เดิมของ Cline ทั้งหมด เช่น Anthropic, OpenAI, OpenRouter, Google Gemini, AWS Bedrock, Azure, LM Studio/Ollama และ MCP
+
+---
+
+## 🔒 อัปเดตปลอดภัย
+
+- อัปเดต Cline official **จะไม่ลบ** iCline
+- อัปเดต iCline **จะไม่ลบ** Cline official
+- ดึงโค้ดจาก upstream: `scripts/sync-upstream.ps1`
+
+---
+
+## 📄 เอกสารอัปเดตอัตโนมัติ
+
+ทุกครั้งที่ build/package extension (`npm run package:vsix` หรือ `vscode:prepublish`) สคริปต์ `scripts/sync-icline-docs.mjs` จะ sync README, CHANGELOG, package.json และ provider labels
+
+---
+
+## 📜 License
+
+Apache-2.0 — อิงจาก [Cline](https://github.com/cline/cline)
