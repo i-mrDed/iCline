@@ -45,7 +45,7 @@
 ดาวน์โหลด `.vsix` ล่าสุดจาก [GitHub Releases](https://github.com/i-mrDed/iCline/releases) แล้วรัน:
 
 ```bash
-code --install-extension icline-0.1.6.vsix --force
+code --install-extension i-mrDed.iCline-0.1.7.vsix --force
 ```
 
 หรือ build เอง:
@@ -54,7 +54,7 @@ code --install-extension icline-0.1.6.vsix --force
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/icline-0.1.6.vsix --force
+code --install-extension dist/i-mrDed.iCline-0.1.7.vsix --force
 ```
 
 ---

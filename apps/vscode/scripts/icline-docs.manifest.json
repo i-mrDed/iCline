@@ -1,5 +1,6 @@
 {
 	"extensionId": "i-mrDed.iCline",
+	"vsixFileName": "i-mrDed.iCline",
 	"github": {
 		"owner": "i-mrDed",
 		"repo": "iCline",

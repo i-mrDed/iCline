@@ -14,6 +14,11 @@ Everyone else should:
 
 The maintainer reviews and merges PRs.
 
+## iCline releases
+
+See **[.clinerules/workflows/icline-release.md](.clinerules/workflows/icline-release.md)** for the full checklist.  
+Quick command: `.\scripts\release-icline.ps1`
+
 ## Development setup
 
 ```powershell

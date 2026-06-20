@@ -1,7 +1,7 @@
 # iCline
 
 <!-- icline:version -->
-> 📦 **เวอร์ชันปัจจุบัน:** `0.1.7` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
+> 📦 **Current version:** `0.1.7` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -45,7 +45,7 @@
 Download the latest `.vsix` from [GitHub Releases](https://github.com/i-mrDed/iCline/releases), then:
 
 ```bash
-code --install-extension icline-0.1.6.vsix --force
+code --install-extension i-mrDed.iCline-0.1.7.vsix --force
 ```
 
 Or build locally:
@@ -54,7 +54,7 @@ Or build locally:
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/icline-0.1.6.vsix --force
+code --install-extension dist/i-mrDed.iCline-0.1.7.vsix --force
 ```
 
 ---

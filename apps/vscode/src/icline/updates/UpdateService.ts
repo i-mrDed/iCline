@@ -165,7 +165,7 @@ export class UpdateService {
 
 		if (result.iclineUpdateAvailable && result.icline && dismissedIcline !== result.icline.tag_name) {
 			const action = await vscode.window.showInformationMessage(
-				`iCline ${result.icline.tag_name} is available (you have ${this.currentVersion}).`,
+				`iCline ${result.icline.tag_name} is available (installed: ${this.currentVersion}). Download the .vsix from Releases and reinstall — VS Code does not auto-update iCline.`,
 				"View Release",
 				"Dismiss",
 			)
