@@ -61,14 +61,15 @@ if (-not $SkipRelease) {
 
     Write-Host "==> Creating GitHub Release v$ver..."
     $changelog = Get-Content $Changelog -Raw
-    $extractJs = @"
+    $extractJs = @'
 import { extractChangelogSection } from './apps/vscode/scripts/sync-icline-docs.mjs';
 import fs from 'fs';
+const ver = 'VER_PLACEHOLDER';
 const changelog = fs.readFileSync('./apps/vscode/CHANGELOG.md','utf8');
-const section = extractChangelogSection(changelog, '$ver') ?? 'See CHANGELOG.md';
-const body = `## iCline v$ver\n\n` + section + `\n\n### Install\n\`\`\`powershell\ncode --install-extension i-mrded.iCline-$ver.vsix --force\n\`\`\`\nThen **Developer: Reload Window**.`;
+const section = extractChangelogSection(changelog, ver) ?? 'See CHANGELOG.md';
+const body = '## iCline v' + ver + '\n\n' + section + '\n\n### Install\n```powershell\ncode --install-extension i-mrded.iCline-' + ver + '.vsix --force\n```\nThen **Developer: Reload Window**.';
 console.log(body);
-"@
+'@ -replace 'VER_PLACEHOLDER', $ver
     $releaseBody = node -e $extractJs 2>$null
     if (-not $releaseBody) {
         $releaseBody = "## iCline v$ver`n`nSee [CHANGELOG](https://github.com/i-mrDed/iCline/blob/main/apps/vscode/CHANGELOG.md).`n`nInstall: ``code --install-extension i-mrded.iCline-$ver.vsix --force``"
