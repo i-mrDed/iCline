@@ -14,7 +14,7 @@ A Cline fork for VS Code with xAI Grok OAuth, ZenMux, and hardened agent harness
 
 <!-- icline:version -->
 <p align="center">
-  <strong>Version</strong> <code>0.1.7</code> ·
+  <strong>Version</strong> <code>0.1.8</code> ·
   <a href="https://github.com/i-mrDed/iCline/releases">Releases</a> ·
   Extension ID <code>i-mrDed.iCline</code>
 </p>
@@ -25,7 +25,7 @@ A Cline fork for VS Code with xAI Grok OAuth, ZenMux, and hardened agent harness
 ## Quick start
 
 1. Download the latest `.vsix` from [Releases](https://github.com/i-mrDed/iCline/releases)
-2. Install: `code --install-extension i-mrDed.iCline-0.1.7.vsix --force`
+2. Install: `code --install-extension i-mrDed.iCline-0.1.8.vsix --force`
 3. Open iCline from the Activity Bar → Settings → sign in to **xAI · Grok** or add your API key
 
 Full extension docs: **[apps/vscode/README.md](apps/vscode/README.md)** · Thai: **[apps/vscode/README.th.md](apps/vscode/README.th.md)**
@@ -36,7 +36,7 @@ Full extension docs: **[apps/vscode/README.md](apps/vscode/README.md)** · Thai:
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrDed.iCline-0.1.7.vsix --force
+code --install-extension dist/i-mrDed.iCline-0.1.8.vsix --force
 ```
 
 ## iCline vs Cline official

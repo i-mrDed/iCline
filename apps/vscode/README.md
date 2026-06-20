@@ -1,7 +1,7 @@
 # iCline
 
 <!-- icline:version -->
-> 📦 **Current version:** `0.1.7` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
+> 📦 **Current version:** `0.1.8` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -45,7 +45,7 @@
 Download the latest `.vsix` from [GitHub Releases](https://github.com/i-mrDed/iCline/releases), then:
 
 ```bash
-code --install-extension i-mrDed.iCline-0.1.7.vsix --force
+code --install-extension i-mrDed.iCline-0.1.8.vsix --force
 ```
 
 Or build locally:
@@ -54,7 +54,7 @@ Or build locally:
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrDed.iCline-0.1.7.vsix --force
+code --install-extension dist/i-mrDed.iCline-0.1.8.vsix --force
 ```
 
 ---
@@ -91,10 +91,10 @@ code --install-extension dist/i-mrDed.iCline-0.1.7.vsix --force
 
 | Setting | Description | Default |
 |---|---|---|
-| `icline.updates.enabled` | Enable update checks | `true` |
-| `icline.updates.releasesUrl` | GitHub Releases API URL | `https://api.github.com/repos/i-mrDed/iCline/releases/latest` |
-| `icline.updates.notifyUpstreamCline` | Notify Cline upstream | `true` |
-| `icline.updates.checkIntervalHours` | Check interval (hours) | `24` |
+| `iCline.updates.enabled` | Enable update checks | `true` |
+| `iCline.updates.releasesUrl` | GitHub Releases API URL | `https://api.github.com/repos/i-mrDed/iCline/releases/latest` |
+| `iCline.updates.notifyUpstreamCline` | Notify Cline upstream | `true` |
+| `iCline.updates.checkIntervalHours` | Check interval (hours) | `24` |
 
 ---
 

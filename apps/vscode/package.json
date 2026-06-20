@@ -2,7 +2,7 @@
 	"name": "iCline",
 	"displayName": "%extension.displayName%",
 	"description": "🤖 iCline — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"icon": "assets/icons/icon.png",
 	"engines": {
 		"vscode": "^1.84.0"
@@ -113,17 +113,17 @@
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"id": "icline-ActivityBar",
+					"id": "iCline-ActivityBar",
 					"title": "iCline",
 					"icon": "assets/icons/icon.svg"
 				}
 			]
 		},
 		"views": {
-			"icline-ActivityBar": [
+			"iCline-ActivityBar": [
 				{
 					"type": "webview",
-					"id": "icline.SidebarProvider",
+					"id": "iCline.SidebarProvider",
 					"name": "",
 					"icon": "assets/icons/icon.svg"
 				}
@@ -131,120 +131,120 @@
 		},
 		"commands": [
 			{
-				"command": "icline.plusButtonClicked",
+				"command": "iCline.plusButtonClicked",
 				"title": "New Task",
 				"icon": "$(add)"
 			},
 			{
-				"command": "icline.mcpButtonClicked",
+				"command": "iCline.mcpButtonClicked",
 				"title": "MCP Servers",
 				"icon": "$(server)"
 			},
 			{
-				"command": "icline.historyButtonClicked",
+				"command": "iCline.historyButtonClicked",
 				"title": "History",
 				"icon": "$(history)"
 			},
 			{
-				"command": "icline.accountButtonClicked",
+				"command": "iCline.accountButtonClicked",
 				"title": "Account",
 				"icon": "$(account)"
 			},
 			{
-				"command": "icline.settingsButtonClicked",
+				"command": "iCline.settingsButtonClicked",
 				"title": "Settings",
 				"icon": "$(settings-gear)"
 			},
 			{
-				"command": "icline.dev.createTestTasks",
+				"command": "iCline.dev.createTestTasks",
 				"title": "Create Test Tasks",
 				"category": "iCline",
-				"when": "icline.isDevMode"
+				"when": "iCline.isDevMode"
 			},
 			{
-				"command": "icline.dev.expireMcpOAuthTokens",
+				"command": "iCline.dev.expireMcpOAuthTokens",
 				"title": "Expire MCP OAuth Tokens (for testing)",
 				"category": "iCline",
-				"when": "icline.isDevMode"
+				"when": "iCline.isDevMode"
 			},
 			{
-				"command": "icline.addToChat",
+				"command": "iCline.addToChat",
 				"title": "Add to iCline",
 				"category": "iCline"
 			},
 			{
-				"command": "icline.addTerminalOutputToChat",
+				"command": "iCline.addTerminalOutputToChat",
 				"title": "Add to iCline",
 				"category": "iCline"
 			},
 			{
-				"command": "icline.focusChatInput",
+				"command": "iCline.focusChatInput",
 				"title": "Jump to Chat Input",
 				"category": "iCline"
 			},
 			{
-				"command": "icline.generateGitCommitMessage",
+				"command": "iCline.generateGitCommitMessage",
 				"title": "Generate Commit Message with iCline",
 				"category": "iCline",
 				"icon": "$(cline-icon)"
 			},
 			{
-				"command": "icline.abortGitCommitMessage",
+				"command": "iCline.abortGitCommitMessage",
 				"title": "Generate Commit Message with iCline - Stop",
 				"category": "iCline",
 				"icon": "$(debug-stop)"
 			},
 			{
-				"command": "icline.explainCode",
+				"command": "iCline.explainCode",
 				"title": "Explain with iCline",
 				"category": "iCline"
 			},
 			{
-				"command": "icline.improveCode",
+				"command": "iCline.improveCode",
 				"title": "Improve with iCline",
 				"category": "iCline"
 			},
 			{
-				"command": "icline.jupyterGenerateCell",
+				"command": "iCline.jupyterGenerateCell",
 				"title": "Generate Jupyter Cell with iCline",
 				"category": "iCline",
 				"icon": "$(sparkle)"
 			},
 			{
-				"command": "icline.jupyterExplainCell",
+				"command": "iCline.jupyterExplainCell",
 				"title": "Explain Jupyter Cell with iCline",
 				"category": "iCline",
 				"icon": "$(question)"
 			},
 			{
-				"command": "icline.jupyterImproveCell",
+				"command": "iCline.jupyterImproveCell",
 				"title": "Improve Jupyter Cell with iCline",
 				"category": "iCline",
 				"icon": "$(lightbulb)"
 			},
 			{
-				"command": "icline.openWalkthrough",
+				"command": "iCline.openWalkthrough",
 				"title": "Open Walkthrough",
 				"category": "iCline"
 			},
 			{
-				"command": "icline.reconstructTaskHistory",
+				"command": "iCline.reconstructTaskHistory",
 				"title": "Reconstruct Task History",
 				"category": "iCline"
 			},
 			{
-				"command": "icline.checkForUpdates",
+				"command": "iCline.checkForUpdates",
 				"title": "Check for Updates (iCline & Cline upstream)",
 				"category": "iCline"
 			},
 			{
-				"command": "icline.reviewComment.reply",
+				"command": "iCline.reviewComment.reply",
 				"title": "Reply",
 				"category": "iCline",
 				"enablement": "!commentIsEmpty"
 			},
 			{
-				"command": "icline.reviewComment.addToChat",
+				"command": "iCline.reviewComment.addToChat",
 				"title": "Add to iCline Chat",
 				"category": "iCline",
 				"icon": "$(link-external)"
@@ -257,7 +257,7 @@
 				"when": "commentEditorFocused && commentController == cline-ai-review && !commentIsEmpty"
 			},
 			{
-				"command": "icline.addToChat",
+				"command": "iCline.addToChat",
 				"key": "cmd+'",
 				"mac": "cmd+'",
 				"win": "ctrl+'",
@@ -265,11 +265,11 @@
 				"when": "editorHasSelection"
 			},
 			{
-				"command": "icline.generateGitCommitMessage",
+				"command": "iCline.generateGitCommitMessage",
 				"when": "config.git.enabled && scmProvider == git"
 			},
 			{
-				"command": "icline.focusChatInput",
+				"command": "iCline.focusChatInput",
 				"key": "cmd+'",
 				"mac": "cmd+'",
 				"win": "ctrl+'",
@@ -280,99 +280,99 @@
 		"menus": {
 			"view/title": [
 				{
-					"command": "icline.plusButtonClicked",
+					"command": "iCline.plusButtonClicked",
 					"group": "navigation@1",
-					"when": "view == icline.SidebarProvider"
+					"when": "view == iCline.SidebarProvider"
 				},
 				{
-					"command": "icline.mcpButtonClicked",
+					"command": "iCline.mcpButtonClicked",
 					"group": "navigation@2",
-					"when": "view == icline.SidebarProvider"
+					"when": "view == iCline.SidebarProvider"
 				},
 				{
-					"command": "icline.historyButtonClicked",
+					"command": "iCline.historyButtonClicked",
 					"group": "navigation@3",
-					"when": "view == icline.SidebarProvider"
+					"when": "view == iCline.SidebarProvider"
 				},
 				{
-					"command": "icline.accountButtonClicked",
+					"command": "iCline.accountButtonClicked",
 					"group": "navigation@5",
-					"when": "view == icline.SidebarProvider"
+					"when": "view == iCline.SidebarProvider"
 				},
 				{
-					"command": "icline.settingsButtonClicked",
+					"command": "iCline.settingsButtonClicked",
 					"group": "navigation@6",
-					"when": "view == icline.SidebarProvider"
+					"when": "view == iCline.SidebarProvider"
 				}
 			],
 			"editor/context": [
 				{
-					"command": "icline.addToChat",
+					"command": "iCline.addToChat",
 					"group": "navigation",
 					"when": "editorHasSelection"
 				}
 			],
 			"terminal/context": [
 				{
-					"command": "icline.addTerminalOutputToChat",
+					"command": "iCline.addTerminalOutputToChat",
 					"group": "navigation"
 				}
 			],
 			"scm/title": [
 				{
-					"command": "icline.generateGitCommitMessage",
+					"command": "iCline.generateGitCommitMessage",
 					"group": "navigation",
 					"when": "config.git.enabled && scmProvider == git && !icline.isGeneratingCommit"
 				},
 				{
-					"command": "icline.abortGitCommitMessage",
+					"command": "iCline.abortGitCommitMessage",
 					"group": "navigation",
 					"when": "config.git.enabled && scmProvider == git && icline.isGeneratingCommit"
 				}
 			],
 			"notebook/toolbar": [
 				{
-					"command": "icline.jupyterGenerateCell",
+					"command": "iCline.jupyterGenerateCell",
 					"group": "navigation/add@1",
 					"when": "notebookType == 'jupyter-notebook'"
 				}
 			],
 			"notebook/cell/title": [
 				{
-					"command": "icline.jupyterExplainCell",
+					"command": "iCline.jupyterExplainCell",
 					"group": "inline@1",
 					"when": "notebookType == 'jupyter-notebook'"
 				},
 				{
-					"command": "icline.jupyterImproveCell",
+					"command": "iCline.jupyterImproveCell",
 					"group": "inline@2",
 					"when": "notebookType == 'jupyter-notebook'"
 				}
 			],
 			"commandPalette": [
 				{
-					"command": "icline.generateGitCommitMessage",
+					"command": "iCline.generateGitCommitMessage",
 					"when": "config.git.enabled && !icline.isGeneratingCommit"
 				},
 				{
-					"command": "icline.abortGitCommitMessage",
+					"command": "iCline.abortGitCommitMessage",
 					"when": "config.git.enabled && icline.isGeneratingCommit"
 				},
 				{
-					"command": "icline.reviewComment.reply",
+					"command": "iCline.reviewComment.reply",
 					"when": "false"
 				}
 			],
 			"comments/commentThread/context": [
 				{
-					"command": "icline.reviewComment.reply",
+					"command": "iCline.reviewComment.reply",
 					"group": "inline",
 					"when": "commentController == cline-ai-review"
 				}
 			],
 			"comments/commentThread/title": [
 				{
-					"command": "icline.reviewComment.addToChat",
+					"command": "iCline.reviewComment.addToChat",
 					"group": "inline",
 					"when": "commentController == cline-ai-review"
 				}
@@ -381,22 +381,22 @@
 		"configuration": {
 			"title": "iCline",
 			"properties": {
-				"icline.updates.enabled": {
+				"iCline.updates.enabled": {
 					"type": "boolean",
 					"default": true,
 					"description": "Check for iCline releases and optional Cline upstream notifications on startup."
 				},
-				"icline.updates.releasesUrl": {
+				"iCline.updates.releasesUrl": {
 					"type": "string",
 					"default": "https://api.github.com/repos/i-mrDed/iCline/releases/latest",
 					"description": "GitHub Releases API URL for iCline builds (.vsix)."
 				},
-				"icline.updates.notifyUpstreamCline": {
+				"iCline.updates.notifyUpstreamCline": {
 					"type": "boolean",
 					"default": true,
 					"description": "Notify when official Cline releases a newer version (for upstream sync planning)."
 				},
-				"icline.updates.checkIntervalHours": {
+				"iCline.updates.checkIntervalHours": {
 					"type": "number",
 					"default": 24,
 					"minimum": 1,

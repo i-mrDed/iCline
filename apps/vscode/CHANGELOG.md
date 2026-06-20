@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.8] - 2026-06-20
+
+### Fixed
+- 🐛 **Extension collision** — migrate commands/views/settings to `iCline.*` prefix so `i-mrDed.iCline` no longer conflicts with legacy `icline.icline` installs (fixes missing sidebar / duplicate registration errors)
+
+### Added
+- 📦 VS Marketplace docs: `README.marketplace.md`, `.clinerules/workflows/icline-marketplace.md`
+
+### Changed
+- ⚙️ Settings keys: `icline.updates.*` → `iCline.updates.*`
+
 ## [0.1.7] - 2026-06-20
 
 ### Fixed

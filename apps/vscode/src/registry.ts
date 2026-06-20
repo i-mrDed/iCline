@@ -6,8 +6,15 @@ export function isIclineBuild(): boolean {
 	return name === "icline" || name === "iCline" || publisher === "i-mrDed"
 }
 
-/** Stable command/config prefix — keeps `icline.*` settings when marketplace id is `i-mrDed.iCline`. */
-const prefix = name === "claude-dev" ? "cline" : isIclineBuild() ? "icline" : name
+/** Command/view/settings prefix. `i-mrDed.iCline` uses `iCline.*` to avoid colliding with legacy `icline.icline`. */
+function iclinePrefix(): string {
+	if (publisher === "i-mrDed") {
+		return "iCline"
+	}
+	return "icline"
+}
+
+const prefix = name === "claude-dev" ? "cline" : isIclineBuild() ? iclinePrefix() : name
 
 export const ExtensionContextKeys = {
 	isDevMode: `${prefix}.isDevMode`,

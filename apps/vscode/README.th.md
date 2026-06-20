@@ -1,7 +1,7 @@
 # iCline
 
 <!-- icline:version -->
-> 📦 **เวอร์ชันปัจจุบัน:** `0.1.7` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
+> 📦 **เวอร์ชันปัจจุบัน:** `0.1.8` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -45,7 +45,7 @@
 ดาวน์โหลด `.vsix` ล่าสุดจาก [GitHub Releases](https://github.com/i-mrDed/iCline/releases) แล้วรัน:
 
 ```bash
-code --install-extension i-mrDed.iCline-0.1.7.vsix --force
+code --install-extension i-mrDed.iCline-0.1.8.vsix --force
 ```
 
 หรือ build เอง:
@@ -54,7 +54,7 @@ code --install-extension i-mrDed.iCline-0.1.7.vsix --force
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrDed.iCline-0.1.7.vsix --force
+code --install-extension dist/i-mrDed.iCline-0.1.8.vsix --force
 ```
 
 ---
@@ -91,10 +91,10 @@ code --install-extension dist/i-mrDed.iCline-0.1.7.vsix --force
 
 | Setting | คำอธิบาย | ค่าเริ่มต้น |
 |---|---|---|
-| `icline.updates.enabled` | เปิดตรวจอัปเดต | `true` |
-| `icline.updates.releasesUrl` | URL GitHub Releases API | `https://api.github.com/repos/i-mrDed/iCline/releases/latest` |
-| `icline.updates.notifyUpstreamCline` | แจ้ง Cline upstream | `true` |
-| `icline.updates.checkIntervalHours` | ช่วงตรวจ (ชั่วโมง) | `24` |
+| `iCline.updates.enabled` | เปิดตรวจอัปเดต | `true` |
+| `iCline.updates.releasesUrl` | URL GitHub Releases API | `https://api.github.com/repos/i-mrDed/iCline/releases/latest` |
+| `iCline.updates.notifyUpstreamCline` | แจ้ง Cline upstream | `true` |
+| `iCline.updates.checkIntervalHours` | ช่วงตรวจ (ชั่วโมง) | `24` |
 
 ---
 

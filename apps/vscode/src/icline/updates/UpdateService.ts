@@ -33,7 +33,7 @@ const UPSTREAM_CLINE_RELEASES_URL = "https://api.github.com/repos/cline/cline/re
 
 function iclineReleasesUrl(): string {
 	return (
-		vscode.workspace.getConfiguration("icline").get<string>("updates.releasesUrl") ||
+		vscode.workspace.getConfiguration("iCline").get<string>("updates.releasesUrl") ||
 		DEFAULT_ICLINE_RELEASES_URL
 	)
 }
@@ -101,7 +101,7 @@ export class UpdateService {
 	}
 
 	async checkForUpdates(options?: { force?: boolean }): Promise<UpdateCheckResult> {
-		const config = vscode.workspace.getConfiguration("icline")
+		const config = vscode.workspace.getConfiguration("iCline")
 		const checkUpstream = config.get<boolean>("updates.notifyUpstreamCline", true)
 		const minIntervalHours = config.get<number>("updates.checkIntervalHours", 24)
 
@@ -154,7 +154,7 @@ export class UpdateService {
 	}
 
 	async maybeNotify(): Promise<void> {
-		const config = vscode.workspace.getConfiguration("icline")
+		const config = vscode.workspace.getConfiguration("iCline")
 		if (!config.get<boolean>("updates.enabled", true)) {
 			return
 		}
@@ -202,7 +202,7 @@ export class UpdateService {
 			`iCline version: ${result.currentVersion}`,
 			result.icline
 				? `Latest iCline release: ${result.icline.tag_name}${result.iclineUpdateAvailable ? " (update available)" : ""}`
-				: "Latest iCline release: unavailable (configure icline.updates.releasesUrl)",
+				: "Latest iCline release: unavailable (configure iCline.updates.releasesUrl)",
 			result.upstreamCline
 				? `Latest Cline official: ${result.upstreamCline.tag_name}${result.upstreamAhead ? " (ahead of iCline)" : ""}`
 				: "Latest Cline official: unavailable",

@@ -116,8 +116,8 @@ function patchReadme(readme, { version, manifest, releasesUrl, vsixName, isThai 
 	)
 
 	next = next.replace(
-		/\| `icline\.updates\.releasesUrl` \| URL GitHub Releases API \| .*? \|/,
-		`| \`icline.updates.releasesUrl\` | URL GitHub Releases API | \`${releasesUrl}\` |`,
+		/\| `iCline\.updates\.releasesUrl` \| URL GitHub Releases API \| .*? \|/,
+		`| \`iCline.updates.releasesUrl\` | URL GitHub Releases API | \`${releasesUrl}\` |`,
 	)
 
 	next = next.replace(
@@ -126,6 +126,7 @@ function patchReadme(readme, { version, manifest, releasesUrl, vsixName, isThai 
 	)
 
 	next = next.replace(/เลือก \*\*xAI\*\* แล้วกด/, `เลือก **${manifest.providers.xai}** แล้วกด`)
+	next = next.replace(/`icline\.updates/g, "`iCline.updates")
 
 	return patchVsixInstallCommands(next, vsixName)
 }
@@ -153,8 +154,8 @@ function patchIclineMd(source, { version, manifest, releasesUrl, vsixName }) {
 		`<!-- icline:version -->\n> 📦 เวอร์ชัน \`${version}\` — [Releases](${url}/releases)\n<!-- /icline:version -->`,
 	)
 	next = next.replace(
-		/- `icline\.updates\.releasesUrl`/,
-		`- \`icline.updates.releasesUrl\` (default: \`${releasesUrl}\`)`,
+		/- `iCline\.updates\.releasesUrl`/,
+		`- \`iCline.updates.releasesUrl\` (default: \`${releasesUrl}\`)`,
 	)
 	next = patchVsixInstallCommands(next, vsixName)
 	return next
@@ -192,8 +193,8 @@ function sync() {
 	pkg.repository = { type: "git", url }
 	pkg.homepage = url
 	pkg.keywords = manifest.keywords
-	if (pkg.contributes?.configuration?.properties?.["icline.updates.releasesUrl"]) {
-		pkg.contributes.configuration.properties["icline.updates.releasesUrl"].default = releasesUrl
+	if (pkg.contributes?.configuration?.properties?.["iCline.updates.releasesUrl"]) {
+		pkg.contributes.configuration.properties["iCline.updates.releasesUrl"].default = releasesUrl
 	}
 	writeJson(PACKAGE_PATH, pkg)
 
