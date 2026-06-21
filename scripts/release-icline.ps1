@@ -227,19 +227,17 @@ if (-not $SkipRelease) {
     Write-Host "==> Creating GitHub Release v$ver (prerelease=$prLabel)..."
     $isPrerelease = $Channel -eq "Beta"
 
-    $extractScript = Join-Path $env:TEMP "icline-release-notes-$ver.mjs"
-    $extractSource = @"
-import { extractChangelogSection } from '$($SyncScript.Replace('\', '/'))';
-import fs from 'node:fs';
-const ver = process.argv[2];
-const changelog = fs.readFileSync('$($Changelog.Replace('\', '/'))', 'utf8');
-const section = extractChangelogSection(changelog, ver) ?? 'See CHANGELOG.md';
-const body = '## iCline v' + ver + '\n\n' + section + '\n\n### Install\n```powershell\ncode --install-extension i-mrdedchai.iCline-' + ver + '.vsix --force\n```\nThen **Developer: Reload Window**.';
-process.stdout.write(body);
-"@
+    $extractScript = Join-Path $RepoRoot "scripts\extract-release-notes.mjs"
+    Push-Location $RepoRoot
+    try {
+        $releaseBody = & node $extractScript $ver 2>&1 | Out-String
+        if ($LASTEXITCODE -ne 0) {
+            $releaseBody = ""
+        }
+    } finally {
+        Pop-Location
+    }
     $utf8NoBom = New-Object System.Text.UTF8Encoding $false
-    [System.IO.File]::WriteAllText($extractScript, $extractSource, $utf8NoBom)
-    $releaseBody = node $extractScript $ver 2>$null
     if (-not $releaseBody) {
         $releaseBody = "## iCline v$ver`n`nSee [CHANGELOG](https://github.com/$($gh.Owner)/$($gh.Repo)/blob/main/apps/vscode/CHANGELOG.md)."
     }
