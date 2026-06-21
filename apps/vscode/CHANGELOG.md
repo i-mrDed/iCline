@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.14] - 2026-06-21
+
+### Fixed
+- 🐛 **Marketplace Details page** — ship full `README.marketplace.md` (comparison table, preview screenshots, Thai link) instead of the minimal stub; sync absolute image URLs for Marketplace rendering
+- 🐛 **Webview ServiceWorker error on Windows** — defer sidebar HTML assignment on cold start (VS Code race; see cline/cline#8920); README tip to **Reload Window** if it still appears once after install
+
 ## [0.1.13] - 2026-06-21
 
 ### Added

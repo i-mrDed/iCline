@@ -1,8 +1,59 @@
 # iCline — Cline Fork
 
+<!-- icline:version -->
+> 📦 **Current version:** `0.1.14` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
+<!-- /icline:version -->
+
+<!-- icline:repo -->
+🔗 **GitHub:** [i-mrDedchai/iCline](https://github.com/i-mrDedchai/iCline)
+<!-- /icline:repo -->
+
+🌐 **Languages:** English (this page) · [ภาษาไทย](README.th.md)
+
 **Cline fork for VS Code** — install alongside official Cline (`saoudrizwan.claude-dev`). Separate extension ID: **`i-mrdedchai.iCline`**.
 
 🤖 xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.
+
+---
+
+## ✨ Why iCline?
+
+| | Cline official | iCline |
+|---|---|---|
+| Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| ⚡ Quick Provider & Model picker on chat | ❌ | ✅ |
+| 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
+| ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
+| 🌐 ZenMux (100+ models) | ❌ | ✅ |
+| 🛡️ Harness guardrails (verify-before-claim) | ❌ | ✅ |
+| 🔄 Dual-channel updates (iCline + upstream) | ❌ | ✅ |
+
+### ⚡ Quick Provider & Model picker (chat)
+
+Switch providers and models **without leaving the chat** — search all providers, collapse/expand model lists, set **Thinking / Effort per model** on hover, and refresh dynamic catalogs.
+
+<p align="center">
+  <img src="https://github.com/i-mrDedchai/iCline/raw/main/apps/vscode/assets/docs/Preview-Settings-iCline-menu-Providers-Models.jpg" alt="iCline quick model picker on the chat input" width="720" />
+</p>
+
+The full provider catalog and deep model settings remain in **Settings → API Configuration**:
+
+<p align="center">
+  <img src="https://github.com/i-mrDedchai/iCline/raw/main/apps/vscode/assets/docs/Preview-Settings-iCline-Providers-Models.jpg" alt="iCline Settings — Providers and Models" width="720" />
+</p>
+
+---
+
+## 🚀 Getting started
+
+1. Click the **iCline** icon in the Activity Bar (or `Ctrl+Shift+P` → `iCline: Open In New Tab`)
+2. Open **Settings** ⚙️ → choose **xAI · Grok (OAuth & Subscription)** or another provider
+3. Sign in or add an API key, pick a model such as **Composer 2.5 Fast** or **Grok Build**
+4. Describe your task — iCline plans, reads code, edits files, and runs commands (after your approval)
+
+> 💡 **Tip:** If the sidebar shows *Error loading webview* right after install, run **Developer: Reload Window** once and open iCline again (known VS Code on Windows timing issue).
+
+---
 
 ## Features
 
@@ -12,15 +63,9 @@
 - 🛡️ Agent harness guardrails (verify-before-claim, post-write verification)
 - 🔄 Dual-channel update notifications (iCline + Cline upstream)
 
-## Getting started
-
-1. Click the **iCline** icon in the Activity Bar
-2. Open **Settings** → choose **xAI · Grok (OAuth & Subscription)** or another provider
-3. Sign in or add an API key, pick a model, start a task
-
 ## Updates
 
-- **From VS Marketplace:** VS Code / Cursor auto-check the Marketplace for new versions (after this extension is published).
+- **VS Marketplace:** VS Code / Cursor auto-check for new versions
 - **GitHub Releases:** [github.com/i-mrDedchai/iCline/releases](https://github.com/i-mrDedchai/iCline/releases)
 
 ## Links

@@ -59,10 +59,7 @@ export class VscodeWebviewProvider extends WebviewProvider implements vscode.Web
 			localResourceRoots: [vscode.Uri.file(HostProvider.get().extensionFsPath)],
 		}
 
-		webviewView.webview.html =
-			this.context.extensionMode === vscode.ExtensionMode.Development
-				? await this.getHMRHtmlContent()
-				: this.getHtmlContent()
+		await this.setWebviewHtml(webviewView.webview)
 
 		// Sets up an event listener to listen for messages passed from the webview view context
 		// and executes code based on the message that is received
@@ -150,6 +147,20 @@ export class VscodeWebviewProvider extends WebviewProvider implements vscode.Web
 			null,
 			this.disposables,
 		)
+	}
+
+	/**
+	 * Assign webview HTML after a short delay to avoid VS Code Windows ServiceWorker races on cold start.
+	 */
+	private async setWebviewHtml(webview: vscode.Webview, options: { delayMs?: number } = {}): Promise<void> {
+		const delayMs = options.delayMs ?? 50
+		if (delayMs > 0) {
+			await new Promise((resolve) => setTimeout(resolve, delayMs))
+		}
+		webview.html =
+			this.context.extensionMode === vscode.ExtensionMode.Development
+				? await this.getHMRHtmlContent()
+				: this.getHtmlContent()
 	}
 
 	/**

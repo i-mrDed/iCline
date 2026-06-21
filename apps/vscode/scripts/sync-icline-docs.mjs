@@ -15,6 +15,7 @@ const repoRoot = path.join(extRoot, "../..")
 const MANIFEST_PATH = path.join(__dirname, "icline-docs.manifest.json")
 const PACKAGE_PATH = path.join(extRoot, "package.json")
 const README_PATH = path.join(extRoot, "README.md")
+const README_MARKETPLACE_PATH = path.join(extRoot, "README.marketplace.md")
 const README_TH_PATH = path.join(extRoot, "README.th.md")
 const ROOT_README_PATH = path.join(repoRoot, "README.md")
 const ROOT_README_TH_PATH = path.join(repoRoot, "README.th.md")
@@ -141,6 +142,12 @@ function patchReadme(readme, { version, manifest, releasesUrl, vsixName, isThai 
 	next = next.replace(/`icline\.updates/g, "`iCline.updates")
 
 	return patchVsixInstallCommands(next, vsixName)
+}
+
+/** Marketplace + extension Details need absolute image URLs; VSIX still ships assets/docs for offline. */
+function patchReadmeImages(readme, manifest) {
+	const base = `${manifest.github.url}/raw/main/apps/vscode`
+	return readme.replace(/src="assets\/docs\/([^"]+)"/g, `src="${base}/assets/docs/$1"`)
 }
 
 function patchRootReadme(readme, { version, manifest, vsixName, isThai = false }) {
@@ -291,15 +298,19 @@ function sync() {
 	writeJson(PROVIDERS_PATH, patchProviders(providers, manifest))
 
 	const readmeCtx = { version, manifest, releasesUrl, vsixName }
-	for (const readmePath of [README_PATH, README_TH_PATH, ROOT_README_PATH, ROOT_README_TH_PATH]) {
+	for (const readmePath of [README_PATH, README_MARKETPLACE_PATH, README_TH_PATH, ROOT_README_PATH, ROOT_README_TH_PATH]) {
 		if (!fs.existsSync(readmePath)) continue
 		const readme = fs.readFileSync(readmePath, "utf-8")
 		const isRootThai = readmePath === ROOT_README_TH_PATH
 		const isExtThai = readmePath === README_TH_PATH
-		const patched =
+		const isMarketplace = readmePath === README_MARKETPLACE_PATH
+		let patched =
 			readmePath === ROOT_README_PATH || readmePath === ROOT_README_TH_PATH
 				? patchRootReadme(readme, { ...readmeCtx, isThai: isRootThai })
 				: patchReadme(readme, { ...readmeCtx, isThai: isExtThai })
+		if (isMarketplace) {
+			patched = patchReadmeImages(patched, manifest)
+		}
 		fs.writeFileSync(readmePath, patched, "utf-8")
 	}
 
