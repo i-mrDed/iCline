@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.12] - 2026-06-21
+
+### Fixed
+- 🐛 **Webview blank / UI not loading** — remove dev-only `localhost:8097` script and broken `node_modules` codicon link from production HTML (codicons already bundled in `index.css`)
+
 ## [0.1.11] - 2026-06-21
 
 ### Fixed

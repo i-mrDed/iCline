@@ -14,7 +14,7 @@ Fork ของ Cline สำหรับ VS Code พร้อม xAI Grok OAuth, 
 
 <!-- icline:version -->
 <p align="center">
-  <strong>เวอร์ชัน</strong> <code>0.1.11</code> ·
+  <strong>เวอร์ชัน</strong> <code>0.1.12</code> ·
   <a href="https://github.com/i-mrDedchai/iCline/releases">Releases</a> ·
   Extension ID <code>i-mrdedchai.iCline</code>
 </p>
@@ -25,7 +25,7 @@ Fork ของ Cline สำหรับ VS Code พร้อม xAI Grok OAuth, 
 ## เริ่มต้นอย่างรวดเร็ว
 
 1. ดาวน์โหลด `.vsix` ล่าสุดจาก [Releases](https://github.com/i-mrDedchai/iCline/releases)
-2. ติดตั้ง: `code --install-extension i-mrdedchai.iCline-0.1.11.vsix --force`
+2. ติดตั้ง: `code --install-extension i-mrdedchai.iCline-0.1.12.vsix --force`
 3. เปิด iCline จาก Activity Bar → Settings → Sign in **xAI · Grok** หรือใส่ API key
 
 เอกสาร extension เต็ม: **[apps/vscode/README.th.md](apps/vscode/README.th.md)** · English: **[apps/vscode/README.md](apps/vscode/README.md)**
@@ -36,7 +36,7 @@ Fork ของ Cline สำหรับ VS Code พร้อม xAI Grok OAuth, 
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrdedchai.iCline-0.1.11.vsix --force
+code --install-extension dist/i-mrdedchai.iCline-0.1.12.vsix --force
 ```
 
 ## iCline vs Cline official

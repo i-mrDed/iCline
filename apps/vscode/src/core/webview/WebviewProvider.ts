@@ -81,11 +81,7 @@ export abstract class WebviewProvider {
 		// The CSS file from the React build output
 		const stylesUrl = this.getExtensionUrl("webview-ui", "build", "assets", "index.css")
 
-		// The codicon font from the React build output
-		// https://github.com/microsoft/vscode-extension-samples/blob/main/webview-codicons-sample/src/extension.ts
-		// we installed this package in the extension so that we can access it how its intended from the extension (the font file is likely bundled in vscode), and we just import the css fileinto our react app we don't have access to it
-		// don't forget to add font-src ${webview.cspSource};
-		const codiconsUrl = this.getExtensionUrl("node_modules", "@vscode", "codicons", "dist", "codicon.css")
+		// Codicons are bundled into webview-ui/build/assets/index.css (vite inlines @font-face + codicon.ttf).
 
 		// Use a nonce to only allow a specific script to be run.
 		/*
@@ -109,7 +105,6 @@ export abstract class WebviewProvider {
 				<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 				<meta name="theme-color" content="#000000">
 				<link rel="stylesheet" type="text/css" href="${stylesUrl}">
-				<link href="${codiconsUrl}" rel="stylesheet" />
 				<meta http-equiv="Content-Security-Policy" content="default-src 'none';
 					connect-src https://*.posthog.com https://*.cline.bot; 
 					font-src ${this.getCspSource()} data:; 
@@ -122,7 +117,6 @@ export abstract class WebviewProvider {
 				<noscript>You need to enable JavaScript to run this app.</noscript>
 				<div id="root"></div>
 				<script type="module" nonce="${nonce}" src="${scriptUrl}"></script>
-				<script src="http://localhost:8097"></script> 
 			</body>
 		</html>
 		`
