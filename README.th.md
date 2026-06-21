@@ -16,6 +16,7 @@ Fork ของ Cline สำหรับ VS Code พร้อม xAI Grok OAuth, 
 <p align="center">
   <strong>เวอร์ชัน</strong> <code>0.1.13</code> ·
   <a href="https://github.com/i-mrDedchai/iCline/releases">Releases</a> ·
+  <a href="https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md">Changelog</a> ·
   Extension ID <code>i-mrdedchai.iCline</code>
 </p>
 <!-- /icline:version -->

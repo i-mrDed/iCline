@@ -4,7 +4,7 @@ Thank you for your interest in iCline!
 
 ## Who can change `main`?
 
-This repository is **public** at [i-mrDedchai/iCline](https://github.com/i-mrDedchai/iCline). Direct pushes to `main` are limited to the maintainer ([@i-mrDed](https://github.com/i-mrDed)) and org collaborators.
+This repository is **public** at [i-mrDedchai/iCline](https://github.com/i-mrDedchai/iCline). Direct pushes to `main` are limited to the maintainer ([@i-mrDedchai](https://github.com/i-mrDedchai)) and org collaborators.
 
 Everyone else should:
 

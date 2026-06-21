@@ -1,8 +1,8 @@
-# iCline
+# iCline — Cline Fork
 
-🤖 **iCline** — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.
+**Cline fork for VS Code** — install alongside official Cline (`saoudrizwan.claude-dev`). Separate extension ID: **`i-mrdedchai.iCline`**.
 
-Install alongside official Cline (`saoudrizwan.claude-dev`) — separate extension ID: **`i-mrdedchai.iCline`**.
+🤖 xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.
 
 ## Features
 

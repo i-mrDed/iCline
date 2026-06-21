@@ -10,7 +10,7 @@
 
 Please **do not** open public GitHub issues for security vulnerabilities.
 
-Email or DM the maintainer via GitHub ([@i-mrDed](https://github.com/i-mrDed)) with:
+Email or DM the maintainer via GitHub ([@i-mrDedchai](https://github.com/i-mrDedchai)) with:
 
 - Description of the issue
 - Steps to reproduce

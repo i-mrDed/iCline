@@ -16,6 +16,7 @@ A Cline fork for VS Code with xAI Grok OAuth, ZenMux, and hardened agent harness
 <p align="center">
   <strong>Version</strong> <code>0.1.13</code> ·
   <a href="https://github.com/i-mrDedchai/iCline/releases">Releases</a> ·
+  <a href="https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md">Changelog</a> ·
   Extension ID <code>i-mrdedchai.iCline</code>
 </p>
 <!-- /icline:version -->

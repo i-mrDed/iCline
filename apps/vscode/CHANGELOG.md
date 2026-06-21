@@ -2,8 +2,15 @@
 
 ## [0.1.13] - 2026-06-21
 
+### Added
+- ⚙️ **Settings → About** — iCline + Cline (Official) sections; shows upstream Cline version synced in this fork
+- 🔗 Root **README** — Changelog link beside Releases
+- 🏷️ **GitHub repo topics** script — `scripts/set-github-repo-topics.ps1`
+
 ### Changed
+- 🏪 **Marketplace SEO** — displayName `iCline — Cline Fork (Grok & ZenMux)`, description leads with “Cline fork”, expanded keywords (`cline-fork`, `coding-assistant`, `vscode-extension`, …)
 - 🏷️ VS Marketplace search tags — `grok-build`, `composer-2.5-fast`, `grok-4`, `grok-code`, `grok-cli`, `supergrok` (plus existing `composer`, `grok`, `xai`)
+- 📄 **SECURITY.md / CONTRIBUTING.md** — maintainer contact → [@i-mrDedchai](https://github.com/i-mrDedchai)
 
 ## [0.1.12] - 2026-06-21
 

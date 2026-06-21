@@ -30,6 +30,18 @@ git push origin main
 
 Settings → **Repository name** → `icline` → then update `icline-docs.manifest.json` `"repo": "icline"` and run `npm run sync:docs`.
 
+## GitHub repo topics (sidebar tags)
+
+Topics are **not** set from `package.json` keywords — they require the GitHub API.
+
+After changing `github.topics` in `apps/vscode/scripts/icline-docs.manifest.json`:
+
+```powershell
+.\scripts\set-github-repo-topics.ps1
+```
+
+Requires [GitHub CLI](https://cli.github.com/) (`gh auth login`). Max **20** topics.
+
 ## Identity map
 
 | System | ID |

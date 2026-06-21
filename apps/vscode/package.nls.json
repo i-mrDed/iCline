@@ -1,6 +1,6 @@
 {
-	"extension.displayName": "iCline",
-	"extension.description": "🤖 iCline — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.",
+	"extension.displayName": "iCline — Cline Fork (Grok & ZenMux)",
+	"extension.description": "🤖 Cline fork for VS Code — install alongside official Cline. xAI Grok OAuth & Subscription, ZenMux, dual-channel updates, and hardened agent harness.",
 	"extension.category.ai": "AI",
 	"extension.category.chat": "Chat",
 	"extension.category.programmingLanguages": "Programming Languages",
