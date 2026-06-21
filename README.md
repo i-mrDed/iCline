@@ -76,6 +76,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Changes to `main` are made by the mainta
 
 See [SECURITY.md](SECURITY.md). Never commit API keys, `.env`, or `~/.grok/auth.json`.
 
+## Maintainer
+
+Session handoff, release workflow, and troubleshooting: **[releases/MAINTAINER-HANDOFF.md](releases/MAINTAINER-HANDOFF.md)**
+
 ## License
 
 [Apache-2.0](LICENSE) — derived from [Cline](https://github.com/cline/cline).
