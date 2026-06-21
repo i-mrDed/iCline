@@ -37,7 +37,7 @@ function releasesApiUrl(manifest) {
 }
 
 function vsixFileName(manifest, version) {
-	const base = manifest.vsixFileName || manifest.extensionId || "i-mrded.iCline"
+	const base = manifest.vsixFileName || manifest.extensionId || "i-mrdedchai.iCline"
 	return `${base}-${version}.vsix`
 }
 
@@ -82,8 +82,10 @@ function extractChangelogSection(changelog, version) {
 function patchVsixInstallCommands(text, vsixName) {
 	let next = text
 	// dist/ and bare filenames
+	next = next.replace(/i-mrdedchai\.iCline-\d+\.\d+\.\d+\.vsix/g, vsixName)
 	next = next.replace(/i-mrd?ed\.iCline-\d+\.\d+\.\d+\.vsix/g, vsixName)
 	next = next.replace(/icline-\d+\.\d+\.\d+\.vsix/g, vsixName)
+	next = next.replace(/dist\/i-mrdedchai\.iCline-\d+\.\d+\.\d+\.vsix/g, `dist/${vsixName}`)
 	next = next.replace(/dist\/i-mrd?ed\.iCline-\d+\.\d+\.\d+\.vsix/g, `dist/${vsixName}`)
 	next = next.replace(/dist\/icline-\d+\.\d+\.\d+\.vsix/g, `dist/${vsixName}`)
 	return next
@@ -93,7 +95,7 @@ function patchReadme(readme, { version, manifest, releasesUrl, vsixName, isThai 
 	const { url } = manifest.github
 	let next = readme
 
-	const extId = manifest.extensionId || "i-mrded.iCline"
+	const extId = manifest.extensionId || "i-mrdedchai.iCline"
 	const versionLine = isThai
 		? `> 📦 **เวอร์ชันปัจจุบัน:** \`${version}\` · [Releases](${url}/releases) · [Repo](${url})`
 		: `> 📦 **Current version:** \`${version}\` · [Releases](${url}/releases) · [Repo](${url})`
@@ -110,6 +112,9 @@ function patchReadme(readme, { version, manifest, releasesUrl, vsixName, isThai 
 	next = next.replace(/\| `icline\.icline` \|/g, `| \`${extId}\` |`)
 	next = next.replace(/\(`icline\.icline`\)/g, `(\`${extId}\`)`)
 	next = next.replace(/i-mrDed\.iCline/g, extId)
+	next = next.replace(/i-mrded\.iCline/g, extId)
+	next = next.replace(/https:\/\/github\.com\/i-mrDed\/iCline/g, url)
+	next = next.replace(/https:\/\/api\.github\.com\/repos\/i-mrDed\/iCline\/releases\/latest/g, releasesUrl)
 
 	next = next.replace(
 		/<!-- icline:repo -->[\s\S]*?<!-- \/icline:repo -->/,
@@ -134,7 +139,7 @@ function patchReadme(readme, { version, manifest, releasesUrl, vsixName, isThai 
 
 function patchRootReadme(readme, { version, manifest, vsixName, isThai = false }) {
 	const { url } = manifest.github
-	const extId = manifest.extensionId || "i-mrded.iCline"
+	const extId = manifest.extensionId || "i-mrdedchai.iCline"
 	const versionLabel = isThai ? "เวอร์ชัน" : "Version"
 
 	let next = readme
@@ -144,6 +149,8 @@ function patchRootReadme(readme, { version, manifest, vsixName, isThai = false }
 	)
 
 	next = next.replace(/i-mrDed\.iCline/g, extId)
+	next = next.replace(/i-mrded\.iCline/g, extId)
+	next = next.replace(/github\.com\/i-mrDed\/iCline/g, `github.com/${manifest.github.owner}/${manifest.github.repo}`)
 	return patchVsixInstallCommands(next, vsixName)
 }
 
@@ -159,7 +166,11 @@ function patchIclineMd(source, { version, manifest, releasesUrl, vsixName }) {
 		/- `iCline\.updates\.releasesUrl`/,
 		`- \`iCline.updates.releasesUrl\` (default: \`${releasesUrl}\`)`,
 	)
-	next = next.replace(/i-mrDed\.iCline/g, manifest.extensionId || "i-mrded.iCline")
+	next = next.replace(/i-mrDed\.iCline/g, manifest.extensionId || "i-mrdedchai.iCline")
+	next = next.replace(/i-mrded\.iCline/g, manifest.extensionId || "i-mrdedchai.iCline")
+	next = next.replace(/https:\/\/github\.com\/i-mrDed\/iCline/g, url)
+	next = next.replace(/https:\/\/api\.github\.com\/repos\/i-mrDed\/iCline\/releases\/latest/g, releasesUrl)
+	next = next.replace(/Marketplace publisher `i-mrded`/g, "Marketplace publisher `i-mrdedchai`")
 	next = patchVsixInstallCommands(next, vsixName)
 	return next
 }

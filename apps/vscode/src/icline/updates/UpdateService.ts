@@ -28,7 +28,7 @@ export interface UpdateCheckResult {
 	upstreamAhead: boolean
 }
 
-const DEFAULT_ICLINE_RELEASES_URL = "https://api.github.com/repos/i-mrDed/iCline/releases/latest"
+const DEFAULT_ICLINE_RELEASES_URL = "https://api.github.com/repos/i-mrDedchai/iCline/releases/latest"
 const UPSTREAM_CLINE_RELEASES_URL = "https://api.github.com/repos/cline/cline/releases/latest"
 
 function iclineReleasesUrl(): string {

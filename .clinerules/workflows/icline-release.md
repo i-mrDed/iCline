@@ -1,13 +1,13 @@
 # iCline Release Workflow
 
-Standard release process for the **iCline** VS Code extension (`i-mrded.iCline`).
+Standard release process for the **iCline** VS Code extension (`i-mrdedchai.iCline`).
 Use this checklist every time — new agent sessions should read this file first.
 
 ## Important: how updates reach users
 
 | Channel | Auto-install? | Notes |
 |---------|---------------|-------|
-| VS Code Marketplace | Published under publisher `i-mrded` | Auto-update after first publish |
+| VS Code Marketplace | Published under publisher `i-mrdedchai` | Auto-update after first publish |
 | GitHub Releases `.vsix` | **No** | User downloads VSIX and runs `code --install-extension` |
 | iCline update toast | **Notify only** | `View Release` opens GitHub — does not install |
 
@@ -21,7 +21,7 @@ From repo root (`cline-temp/`):
 .\scripts\release-icline.ps1
 ```
 
-Optional flags: `-Version 0.1.8`, `-SkipPush`, `-SkipRelease`, `-SkipBuild`
+Optional flags: `-Version 0.1.10`, `-SkipPush`, `-SkipRelease`, `-SkipBuild`
 
 ## Manual checklist (same order every time)
 
@@ -50,7 +50,7 @@ Updates automatically:
 
 ```powershell
 cd apps/vscode
-npm run package:vsix -- --out dist/i-mrded.iCline-<version>.vsix
+npm run package:vsix -- --out dist/i-mrdedchai.iCline-<version>.vsix
 ```
 
 ### 4. Git commit + push
@@ -65,31 +65,32 @@ git push origin main
 ### 5. GitHub Release
 
 - Tag: `v<version>` (must match `package.json`)
-- Attach: `dist/i-mrded.iCline-<version>.vsix`
+- Attach: `dist/i-mrdedchai.iCline-<version>.vsix`
 - Body: copy from `CHANGELOG.md` section for that version
 - Or run `.\scripts\release-icline.ps1` (creates release via API)
 
 ### 6. Verify sync (before telling user "done")
 
-- [ ] https://github.com/i-mrDed/iCline — root README shows correct version
-- [ ] https://github.com/i-mrDed/iCline/releases — latest tag + VSIX asset
+- [ ] https://github.com/i-mrDedchai/iCline — root README shows correct version
+- [ ] https://github.com/i-mrDedchai/iCline/releases — latest tag + VSIX asset
 - [ ] `apps/vscode/CHANGELOG.md` matches release notes
 
 ### 7. User install command (send to testers)
 
 ```powershell
-code --install-extension i-mrded.iCline-<version>.vsix --force
+code --install-extension i-mrdedchai.iCline-<version>.vsix --force
 ```
 
 Then **Developer: Reload Window**.
 
 ## Extension identity
 
-- **ID:** `i-mrded.iCline`
-- **Publisher:** `i-mrded` (GitHub owner remains `i-mrDed`)
+- **ID:** `i-mrdedchai.iCline`
+- **Publisher:** `i-mrdedchai` (Marketplace, `mr.dedchai@hotmail.com`)
+- **GitHub org:** `i-mrDedchai/iCline`
 - **Settings prefix:** `iCline.*` (legacy `icline.icline` used `icline.*`)
 - **Upstream remote:** `upstream` → `cline/cline`
-- **Origin remote:** `origin` → `i-mrDed/iCline`
+- **Origin remote:** `origin` → `i-mrDedchai/iCline`
 
 ## What is NOT auto-updated today
 
@@ -99,9 +100,6 @@ Then **Developer: Reload Window**.
 
 ## Agent session bootstrap
 
-When continuing iCline work in a new chat:
-
-1. Read this file: `.clinerules/workflows/icline-release.md`
-2. Read `apps/vscode/CHANGELOG.md` for current version
-3. Check `git status` and `git log -1` on `origin/main`
-4. Ask user installed VSIX version if debugging runtime behavior
+1. Read this file + `icline-marketplace.md`
+2. Check `apps/vscode/package.json` version vs latest GitHub Release
+3. Run `npm run sync:docs` before any package/publish step

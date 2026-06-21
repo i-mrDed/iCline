@@ -1,16 +1,16 @@
 # iCline
 
 <!-- icline:version -->
-> 📦 **เวอร์ชันปัจจุบัน:** `0.1.9` · [Releases](https://github.com/i-mrDed/iCline/releases) · [Repo](https://github.com/i-mrDed/iCline)
+> 📦 **เวอร์ชันปัจจุบัน:** `0.1.10` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Repo](https://github.com/i-mrDedchai/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
-🔗 **GitHub:** [i-mrDed/iCline](https://github.com/i-mrDed/iCline)
+🔗 **GitHub:** [i-mrDedchai/iCline](https://github.com/i-mrDedchai/iCline)
 <!-- /icline:repo -->
 
 🌐 **ภาษา:** ภาษาไทย (หน้านี้) · [English](README.md)
 
-**iCline** คือ fork ของ [Cline](https://github.com/cline/cline) ที่แพ็กเป็น extension แยก (`i-mrded.iCline`) — ติดตั้งคู่กับ Cline official (`saoudrizwan.claude-dev`) ได้โดยไม่ทับกัน
+**iCline** คือ fork ของ [Cline](https://github.com/cline/cline) ที่แพ็กเป็น extension แยก (`i-mrdedchai.iCline`) — ติดตั้งคู่กับ Cline official (`saoudrizwan.claude-dev`) ได้โดยไม่ทับกัน
 
 ---
 
@@ -18,7 +18,7 @@
 
 | | Cline official | iCline |
 |---|---|---|
-| Extension ID | `saoudrizwan.claude-dev` | `i-mrded.iCline` |
+| Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
 | 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
 | ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
 | 🌐 ZenMux (100+ models) | ❌ | ✅ |
@@ -42,10 +42,10 @@
 
 ## 📥 ติดตั้งจาก VSIX
 
-ดาวน์โหลด `.vsix` ล่าสุดจาก [GitHub Releases](https://github.com/i-mrDed/iCline/releases) แล้วรัน:
+ดาวน์โหลด `.vsix` ล่าสุดจาก [GitHub Releases](https://github.com/i-mrDedchai/iCline/releases) แล้วรัน:
 
 ```bash
-code --install-extension i-mrded.iCline-0.1.9.vsix --force
+code --install-extension i-mrdedchai.iCline-0.1.10.vsix --force
 ```
 
 หรือ build เอง:
@@ -54,7 +54,7 @@ code --install-extension i-mrded.iCline-0.1.9.vsix --force
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrded.iCline-0.1.9.vsix --force
+code --install-extension dist/i-mrdedchai.iCline-0.1.10.vsix --force
 ```
 
 ---
@@ -92,7 +92,7 @@ code --install-extension dist/i-mrded.iCline-0.1.9.vsix --force
 | Setting | คำอธิบาย | ค่าเริ่มต้น |
 |---|---|---|
 | `iCline.updates.enabled` | เปิดตรวจอัปเดต | `true` |
-| `iCline.updates.releasesUrl` | URL GitHub Releases API | `https://api.github.com/repos/i-mrDed/iCline/releases/latest` |
+| `iCline.updates.releasesUrl` | URL GitHub Releases API | `https://api.github.com/repos/i-mrDedchai/iCline/releases/latest` |
 | `iCline.updates.notifyUpstreamCline` | แจ้ง Cline upstream | `true` |
 | `iCline.updates.checkIntervalHours` | ช่วงตรวจ (ชั่วโมง) | `24` |
 

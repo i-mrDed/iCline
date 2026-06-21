@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.10] - 2026-06-21
+
+### Changed
+- 🏪 Marketplace publisher **`i-mrdedchai`** — extension ID **`i-mrdedchai.iCline`**
+- 🐙 GitHub moved to org **[i-mrDedchai/iCline](https://github.com/i-mrDedchai/iCline)** (`i-mrDed` account kept for other projects)
+
 ## [0.1.9] - 2026-06-21
 
 ### Changed

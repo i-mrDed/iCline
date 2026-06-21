@@ -3,12 +3,18 @@ import { HostProvider } from "./hosts/host-provider"
 
 /** True for iCline fork builds (any package name / publisher variant). */
 export function isIclineBuild(): boolean {
-	return name === "icline" || name === "iCline" || publisher === "i-mrDed" || publisher === "i-mrded"
+	return (
+		name === "icline" ||
+		name === "iCline" ||
+		publisher === "i-mrDed" ||
+		publisher === "i-mrded" ||
+		publisher === "i-mrdedchai"
+	)
 }
 
-/** Command/view/settings prefix. `i-mrded.iCline` uses `iCline.*` to avoid colliding with legacy `icline.icline`. */
+/** Command/view/settings prefix. `i-mrdedchai.iCline` uses `iCline.*` to avoid colliding with legacy `icline.icline`. */
 function iclinePrefix(): string {
-	if (publisher === "i-mrDed" || publisher === "i-mrded") {
+	if (publisher === "i-mrDed" || publisher === "i-mrded" || publisher === "i-mrdedchai") {
 		return "iCline"
 	}
 	return "icline"

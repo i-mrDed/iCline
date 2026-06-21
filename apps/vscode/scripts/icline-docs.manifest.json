@@ -1,10 +1,10 @@
 {
-	"extensionId": "i-mrded.iCline",
-	"vsixFileName": "i-mrded.iCline",
+	"extensionId": "i-mrdedchai.iCline",
+	"vsixFileName": "i-mrdedchai.iCline",
 	"github": {
-		"owner": "i-mrDed",
+		"owner": "i-mrDedchai",
 		"repo": "iCline",
-		"url": "https://github.com/i-mrDed/iCline"
+		"url": "https://github.com/i-mrDedchai/iCline"
 	},
 	"description": "🤖 iCline — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.",
 	"keywords": [

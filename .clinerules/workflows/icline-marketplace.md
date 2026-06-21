@@ -1,18 +1,20 @@
 # iCline — VS Marketplace Publish
 
-Extension ID: **`i-mrded.iCline`** · Publisher: **`i-mrded`**
+Extension ID: **`i-mrdedchai.iCline`** · Publisher: **`i-mrdedchai`**
+
+GitHub: **[i-mrDedchai/iCline](https://github.com/i-mrDedchai/iCline)** (org) · personal **`i-mrDed`** kept for other projects
 
 ## Prerequisites (one-time, maintainer)
 
-1. **Create publisher** at [Marketplace Publisher Management](https://marketplace.visualstudio.com/manage)
-   - Publisher ID must be exactly: `i-mrded` (matches `package.json` → `"publisher"`)
-2. **Personal Access Token** (Azure DevOps):
+1. **Create publisher** at [Marketplace Publisher Management](https://marketplace.visualstudio.com/manage) under **`mr.dedchai@hotmail.com`**
+   - Publisher ID must be exactly: `i-mrdedchai` (matches `package.json` → `"publisher"`)
+2. **Personal Access Token** (Azure DevOps — free org on hotmail account):
    - https://dev.azure.com → User settings → Personal access tokens
    - Scopes: **Marketplace** → **Manage**
 3. **Login vsce** (once per machine):
    ```powershell
    cd apps/vscode
-   npx vsce login i-mrded
+   npx vsce login i-mrdedchai
    ```
    Paste the PAT when prompted.
 
@@ -46,23 +48,24 @@ npm run publish:marketplace:prerelease
 ### iCline GitHub update checker (always active)
 
 - Code: `apps/vscode/src/icline/updates/UpdateService.ts`
-- Default URL: `https://api.github.com/repos/i-mrDed/iCline/releases/latest`
+- Default URL: `https://api.github.com/repos/i-mrDedchai/iCline/releases/latest`
 - Settings: `iCline.updates.enabled`, `checkIntervalHours` (default 24h)
 - On startup + interval: compares installed version vs GitHub latest → toast **View Release**
 - Does **not** download or install — user must update via Marketplace (after publish) or reinstall VSIX
 
 ## Checklist before first publish
 
-- [ ] Publisher `i-mrded` created and owns extension name `iCline`
+- [ ] Publisher `i-mrdedchai` created and owns extension name `iCline`
 - [ ] `README.marketplace.md` is iCline-specific (not Cline default)
 - [ ] `package.json` version matches latest release
 - [ ] No duplicate legacy `icline.icline` folders on maintainer machine
 - [ ] Icon, license, repository URL set in `package.json`
+- [ ] GitHub repo lives at `i-mrDedchai/iCline`
 
 ## Troubleshooting
 
 | Error | Fix |
 |-------|-----|
-| `ERROR Publisher 'i-mrded' is not authorized` | Run `vsce login i-mrded` with Marketplace PAT |
+| `ERROR Publisher 'i-mrdedchai' is not authorized` | Run `vsce login i-mrdedchai` with Marketplace PAT (hotmail account) |
 | `Extension name already taken` | Publisher must own the extension or use a different name |
-| Duplicate view/settings registration | Uninstall **all** `icline.icline-*` and old `i-mrDed.iCline` versions; keep only `i-mrded.iCline` |
+| Duplicate view/settings registration | Uninstall **all** `icline.icline-*` and old `i-mrDed.iCline` / `i-mrded.iCline` versions; keep only `i-mrdedchai.iCline` |

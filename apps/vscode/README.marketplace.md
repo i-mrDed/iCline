@@ -2,7 +2,7 @@
 
 🤖 **iCline** — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.
 
-Install alongside official Cline (`saoudrizwan.claude-dev`) — separate extension ID: **`i-mrded.iCline`**.
+Install alongside official Cline (`saoudrizwan.claude-dev`) — separate extension ID: **`i-mrdedchai.iCline`**.
 
 ## Features
 
@@ -21,13 +21,13 @@ Install alongside official Cline (`saoudrizwan.claude-dev`) — separate extensi
 ## Updates
 
 - **From VS Marketplace:** VS Code / Cursor auto-check the Marketplace for new versions (after this extension is published).
-- **GitHub Releases:** [github.com/i-mrDed/iCline/releases](https://github.com/i-mrDed/iCline/releases)
+- **GitHub Releases:** [github.com/i-mrDedchai/iCline/releases](https://github.com/i-mrDedchai/iCline/releases)
 
 ## Links
 
-- 📦 [GitHub](https://github.com/i-mrDed/iCline)
-- 📋 [Changelog](https://github.com/i-mrDed/iCline/blob/main/apps/vscode/CHANGELOG.md)
-- 🔧 [Build from source](https://github.com/i-mrDed/iCline#build-from-source)
+- 📦 [GitHub](https://github.com/i-mrDedchai/iCline)
+- 📋 [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md)
+- 🔧 [Build from source](https://github.com/i-mrDedchai/iCline#build-from-source)
 
 ## License
 

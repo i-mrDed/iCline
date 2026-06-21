@@ -4,7 +4,7 @@ Thank you for your interest in iCline!
 
 ## Who can change `main`?
 
-This repository is **public**, but direct pushes to `main` are limited to the maintainer ([@i-mrDed](https://github.com/i-mrDed)) and invited collaborators.
+This repository is **public** at [i-mrDedchai/iCline](https://github.com/i-mrDedchai/iCline). Direct pushes to `main` are limited to the maintainer ([@i-mrDed](https://github.com/i-mrDed)) and org collaborators.
 
 Everyone else should:
 
@@ -49,4 +49,4 @@ npm run package:vsix
 
 ## Questions
 
-Open a [GitHub Discussion](https://github.com/i-mrDed/iCline/discussions) or file an issue.
+Open a [GitHub Discussion](https://github.com/i-mrDedchai/iCline/discussions) or file an issue.
