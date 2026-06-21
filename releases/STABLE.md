@@ -9,7 +9,6 @@
 | **GitHub** | https://github.com/i-mrDedchai/iCline/releases/tag/v0.1.14 |
 | **Marketplace** | https://marketplace.visualstudio.com/items?itemName=i-mrdedchai.iCline |
 | **Extension ID** | `i-mrdedchai.iCline` |
-| **Handoff doc** | [MAINTAINER-HANDOFF.md](./MAINTAINER-HANDOFF.md) |
 
 ## วิธีรู้ว่าเวอร์ชันนี้ “พร้อมใช้งานสาธารณะ”
 

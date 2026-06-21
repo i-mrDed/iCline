@@ -76,10 +76,6 @@ Repo นี้เป็น fork ของ [cline/cline](https://github.com/cline
 
 อ่าน [SECURITY.md](SECURITY.md) — ห้าม commit API key, `.env`, หรือ `~/.grok/auth.json`
 
-## Maintainer
-
-เอกสารส่งต่องาน / workflow / แก้ปัญหา: **[releases/MAINTAINER-HANDOFF.md](releases/MAINTAINER-HANDOFF.md)**
-
 ## License
 
 [Apache-2.0](LICENSE) — อิงจาก [Cline](https://github.com/cline/cline)
