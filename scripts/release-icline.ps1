@@ -134,6 +134,9 @@ console.log(body);
         $releaseBody = "## iCline v$ver`n`nSee [CHANGELOG](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md)."
     }
 
+    $bodyFile = Join-Path $env:TEMP "icline-release-body-$ver.md"
+    Set-Content -Path $bodyFile -Value $releaseBody -Encoding UTF8NoBOM
+
     $credText = "protocol=https`nhost=github.com`n`n" | git -C $RepoRoot credential fill 2>$null
     if (-not $credText) { throw "GitHub credentials not found." }
     $token = ($credText -split "`n" | Where-Object { $_ -like "password=*" }) -replace "password=",""
@@ -143,19 +146,25 @@ console.log(body);
         Accept = "application/vnd.github+json"
         "X-GitHub-Api-Version" = "2022-11-28"
     }
-    $payload = @{
+    $payloadObj = @{
         tag_name = "v$ver"
+        target_commitish = "main"
         name = "iCline v$ver"
-        body = $releaseBody
+        body = (Get-Content $bodyFile -Raw)
         draft = $false
         prerelease = $isPrerelease
-    } | ConvertTo-Json
+    }
+    $payload = $payloadObj | ConvertTo-Json -Depth 5 -Compress
 
     try {
-        $release = Invoke-RestMethod -Uri "https://api.github.com/repos/i-mrDedchai/iCline/releases" -Method Post -Headers $headers -Body $payload -ContentType "application/json; charset=utf-8"
+        $release = Invoke-RestMethod -Uri "https://api.github.com/repos/i-mrDedchai/iCline/releases" -Method Post -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($payload)) -ContentType "application/json; charset=utf-8"
     } catch {
-        Write-Host "Release may already exist - uploading asset to v$ver..."
-        $release = Invoke-RestMethod -Uri "https://api.github.com/repos/i-mrDedchai/iCline/releases/tags/v$ver" -Headers $headers
+        Write-Host "Create release failed, trying existing tag v$ver..."
+        try {
+            $release = Invoke-RestMethod -Uri "https://api.github.com/repos/i-mrDedchai/iCline/releases/tags/v$ver" -Headers $headers
+        } catch {
+            throw "GitHub Release v$ver failed: $($_.Exception.Message)"
+        }
     }
 
     $uploadUrl = $release.upload_url -replace "\{.*\}", "?name=i-mrdedchai.iCline-$ver.vsix"

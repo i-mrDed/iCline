@@ -1,5 +1,7 @@
-﻿version: 0.1.12
+version: 0.1.12
 channel: Stable
-approved_at: 2026-06-21 10:40:01 +07:00
-approval: Release 0.1.12 Stable - Grok smoke passed
+approved_at: 2026-06-21 10:40:00 +07:00
+approval: โอเค ครับ ปล่อย 0.1.12 เป็น Stable release ได้เลย พร้อมอัพเดทเอกสารที่เกี่ยวข้องทั้งหมดด้วย — ทดสอบ Grok (Composer 2.5 Fast, Grok 4.3, Grok Build) ผ่านแล้ว หลัง clean install
 skip_smoke_check: True
+published_github: 2026-06-21
+published_marketplace: 2026-06-21
