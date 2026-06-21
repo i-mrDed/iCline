@@ -14,6 +14,8 @@ iCline lives under org **`i-mrDedchai`**: https://github.com/i-mrDedchai/iCline
 After transfer:
 - Old URL `i-mrDed/iCline` redirects to `i-mrDedchai/iCline`
 - Releases, tags, and commit history are preserved
+- **Fix About sidebar link** (does not auto-update): repo **Settings** → **General** → **Website** → `https://github.com/i-mrDedchai/iCline`  
+  Or API: `PATCH /repos/i-mrDedchai/iCline` with `"homepage": "https://github.com/i-mrDedchai/iCline"`
 
 ## Update local git remote
 

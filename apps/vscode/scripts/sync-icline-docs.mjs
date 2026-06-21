@@ -169,6 +169,7 @@ function patchIclineMd(source, { version, manifest, releasesUrl, vsixName }) {
 	next = next.replace(/i-mrDed\.iCline/g, manifest.extensionId || "i-mrdedchai.iCline")
 	next = next.replace(/i-mrded\.iCline/g, manifest.extensionId || "i-mrdedchai.iCline")
 	next = next.replace(/https:\/\/github\.com\/i-mrDed\/iCline/g, url)
+	next = next.replace(/github\.com\/i-mrDed\/iCline/g, `github.com/${manifest.github.owner}/${manifest.github.repo}`)
 	next = next.replace(/https:\/\/api\.github\.com\/repos\/i-mrDed\/iCline\/releases\/latest/g, releasesUrl)
 	next = next.replace(/Marketplace publisher `i-mrded`/g, "Marketplace publisher `i-mrdedchai`")
 	next = patchVsixInstallCommands(next, vsixName)
