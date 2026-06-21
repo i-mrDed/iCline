@@ -19,11 +19,30 @@
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| ⚡ เมนูด่วนเลือก Provider / Model บนแชท | ❌ | ✅ |
 | 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
 | ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
 | 🌐 ZenMux (100+ models) | ❌ | ✅ |
 | 🛡️ Harness guardrails (verify-before-claim) | ❌ | ✅ |
 | 🔄 Dual-channel updates (iCline + upstream) | ❌ | ✅ |
+
+### ⚡ เมนูด่วนเลือก Provider & Model (บนแชท)
+
+| | Cline official | iCline |
+|---|---|---|
+| ⚡ เมนูด่วนเลือก Provider / Model บนแชท | ❌ | ✅ |
+
+สลับ Provider และโมเดลได้ **โดยไม่ต้องออกจากหน้าแชท** — ค้นหาได้ทุก Provider ยุบ/ขยายรายการโมเดล ตั้ง **Thinking / Effort รายโมเดล** เมื่อ hover และ refresh รายการโมเดลแบบ dynamic
+
+<p align="center">
+  <img src="assets/docs/Preview-Settings-iCline-menu-Providers-Models.jpg" alt="เมนูด่วนเลือก Provider และ Model บนช่องแชท iCline" width="720" />
+</p>
+
+รายการ Provider เต็มและการตั้งค่าโมเดลแบบละเอียดยังอยู่ที่ **Settings → API Configuration**:
+
+<p align="center">
+  <img src="assets/docs/Preview-Settings-iCline-Providers-Models.jpg" alt="iCline Settings — Providers และ Models" width="720" />
+</p>
 
 ---
 

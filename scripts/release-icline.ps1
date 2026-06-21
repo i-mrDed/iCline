@@ -25,9 +25,71 @@ $PackageJson = Join-Path $ExtRoot "package.json"
 $Changelog = Join-Path $ExtRoot "CHANGELOG.md"
 $SyncScript = Join-Path $ExtRoot "scripts\sync-icline-docs.mjs"
 $SmokeScript = Join-Path $RepoRoot "scripts\icline-smoke-checklist.ps1"
+$DevBuildStatePath = Join-Path $RepoRoot ".icline\dev-build.json"
 
 function Get-PackageVersion {
     return (Get-Content $PackageJson -Raw | ConvertFrom-Json).version
+}
+
+function Set-PackageVersion {
+    param([string]$NewVersion)
+    node -e @"
+const fs = require('fs');
+const p = process.argv[1];
+const pkg = JSON.parse(fs.readFileSync(p, 'utf8'));
+pkg.version = process.argv[2];
+fs.writeFileSync(p, JSON.stringify(pkg, null, '\t') + '\n', 'utf8');
+"@ $PackageJson $NewVersion
+    if ($LASTEXITCODE -ne 0) { throw "Failed to set package.json version to $NewVersion" }
+}
+
+function Get-BaseReleaseVersion {
+    param([string]$Ver)
+    if ($Ver -match '^(.+?)-dev\.\d+$') { return $Matches[1] }
+    return $Ver
+}
+
+function Read-DevBuildState {
+    if (-not (Test-Path $DevBuildStatePath)) {
+        return [pscustomobject]@{ releaseVersion = ""; buildNumber = 0 }
+    }
+    return Get-Content $DevBuildStatePath -Raw | ConvertFrom-Json
+}
+
+function Write-DevBuildState {
+    param($State)
+    $dir = Split-Path $DevBuildStatePath
+    New-Item -ItemType Directory -Force -Path $dir | Out-Null
+    $json = [pscustomobject]@{
+        releaseVersion = $State.releaseVersion
+        buildNumber = [int]$State.buildNumber
+    } | ConvertTo-Json -Compress
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllText($DevBuildStatePath, $json, $utf8NoBom)
+}
+
+function Bump-DevPackageVersion {
+    $pkg = Get-Content $PackageJson -Raw | ConvertFrom-Json
+    $base = Get-BaseReleaseVersion $pkg.version
+    $state = Read-DevBuildState
+    if ($state.releaseVersion -ne $base) {
+        $state.releaseVersion = $base
+        $state.buildNumber = 0
+    }
+    $state.buildNumber = [int]$state.buildNumber + 1
+    Write-DevBuildState $state
+    $newVer = "$base-dev.$($state.buildNumber)"
+    Set-PackageVersion -NewVersion $newVer
+    Write-Host "Dev build: $newVer (build #$($state.buildNumber) for release $base)" -ForegroundColor Green
+}
+
+function Reset-DevBuildCounter {
+    param([string]$ReleaseVersion)
+    $state = Read-DevBuildState
+    $state.releaseVersion = $ReleaseVersion
+    $state.buildNumber = 0
+    Write-DevBuildState $state
+    Write-Host "Dev build counter reset for release $ReleaseVersion"
 }
 
 function Assert-VersionMatchesChannel {
@@ -54,10 +116,18 @@ if ($Channel -in @("Beta", "Stable") -and -not $SkipSmokeCheck) {
 }
 
 if ($Version) {
-    $pkg = Get-Content $PackageJson -Raw | ConvertFrom-Json
-    $pkg.version = $Version
-    $pkg | ConvertTo-Json -Depth 100 | Set-Content $PackageJson -Encoding UTF8
+    Set-PackageVersion -NewVersion $Version
     Write-Host "Bumped package.json version to $Version"
+} elseif ($Channel -eq "Dev") {
+    Bump-DevPackageVersion
+} elseif ($Channel -eq "Stable") {
+    $current = Get-PackageVersion
+    $base = Get-BaseReleaseVersion $current
+    if ($current -ne $base) {
+        Set-PackageVersion -NewVersion $base
+        Write-Host "Stable: normalized package.json version to $base"
+    }
+    Reset-DevBuildCounter -ReleaseVersion $base
 }
 
 $ver = Get-PackageVersion

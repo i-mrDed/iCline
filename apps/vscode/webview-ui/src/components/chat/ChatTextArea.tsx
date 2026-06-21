@@ -42,6 +42,9 @@ import {
 	validateSlashCommand,
 } from "@/utils/slash-commands"
 import ClineRulesToggleModal from "../cline-rules/ClineRulesToggleModal"
+import ChatModelPicker from "./ChatModelPicker"
+import { getModelThinkingStatus } from "./chatModelPickerUtils"
+import { ModelThinkingStatusIcons } from "./ModelThinkingStatusIcons"
 import ServersToggleModal from "./ServersToggleModal"
 
 const { MAX_IMAGES_AND_FILES_PER_MESSAGE } = CHAT_CONSTANTS
@@ -188,9 +191,9 @@ const ModelDisplayButton = styled.a<{ isActive?: boolean; disabled?: boolean }>`
 const ModelButtonContent = styled.div`
 	width: 100%;
 	min-width: 0;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	gap: 4px;
 `
 
 const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
@@ -221,7 +224,6 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 			globalWorkflowToggles,
 			remoteWorkflowToggles,
 			remoteConfigSettings,
-			navigateToSettingsModelPicker,
 			mcpServers,
 		} = useExtensionState()
 		const [isTextAreaFocused, setIsTextAreaFocused] = useState(false)
@@ -1082,10 +1084,6 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 			updateHighlights()
 		}, [inputValue, handleInputChange, updateHighlights])
 
-		const handleModelButtonClick = () => {
-			navigateToSettingsModelPicker({ targetSection: "api-config" })
-		}
-
 		// Get model display name
 		const modelDisplayName = useMemo(() => {
 			const { selectedProvider, selectedModelId } = normalizeApiConfiguration(apiConfiguration, mode)
@@ -1130,6 +1128,25 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 				default:
 					return `${selectedProvider}:${selectedModelId}`
 			}
+		}, [apiConfiguration, mode])
+
+		const activeThinkingStatus = useMemo(() => {
+			const { selectedProvider, selectedModelId, selectedModelInfo } = normalizeApiConfiguration(
+				apiConfiguration,
+				mode,
+			)
+			const { reasoningEffort, thinkingBudgetTokens } = getModeSpecificFields(apiConfiguration, mode)
+			if (!selectedModelId) {
+				return null
+			}
+			return getModelThinkingStatus(
+				selectedProvider,
+				selectedModelId,
+				selectedModelInfo,
+				true,
+				reasoningEffort,
+				thinkingBudgetTokens,
+			)
 		}, [apiConfiguration, mode])
 
 		// Function to show error message for unsupported files for drag and drop
@@ -1600,14 +1617,20 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 
 							<ModelContainer>
 								<ModelButtonWrapper>
-									<ModelDisplayButton
-										disabled={false}
-										onClick={handleModelButtonClick}
-										role="button"
-										tabIndex={0}
-										title="Open API Settings">
-										<ModelButtonContent className="text-xs">{modelDisplayName}</ModelButtonContent>
-									</ModelDisplayButton>
+									<ChatModelPicker modelDisplayName={modelDisplayName}>
+										<ModelDisplayButton
+											disabled={false}
+											role="button"
+											tabIndex={0}
+											title="Select model">
+											<ModelButtonContent className="text-xs">
+												<span className="truncate min-w-0 flex-1">{modelDisplayName}</span>
+												{activeThinkingStatus ? (
+													<ModelThinkingStatusIcons status={activeThinkingStatus} />
+												) : null}
+											</ModelButtonContent>
+										</ModelDisplayButton>
+									</ChatModelPicker>
 								</ModelButtonWrapper>
 							</ModelContainer>
 						</ButtonGroup>

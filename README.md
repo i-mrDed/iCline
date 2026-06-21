@@ -45,9 +45,16 @@ code --install-extension dist/i-mrdedchai.iCline-0.1.13.vsix --force
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| ⚡ Quick Provider & Model picker on chat | ❌ | ✅ |
 | xAI OAuth & subscription models | ❌ | ✅ |
 | ZenMux provider | ❌ | ✅ |
 | Dual-channel safe updates | ❌ | ✅ |
+
+<p align="center">
+  <img src="apps/vscode/assets/docs/Preview-Settings-iCline-menu-Providers-Models.jpg" alt="iCline quick model picker on chat" width="640" />
+</p>
+
+See **[apps/vscode/README.md](apps/vscode/README.md)** for screenshots and full feature list.
 
 Both extensions can run side by side — updates to one do not remove the other.
 

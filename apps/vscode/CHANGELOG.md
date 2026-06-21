@@ -3,7 +3,10 @@
 ## [0.1.13] - 2026-06-21
 
 ### Added
+- ⚡ **Chat quick Provider & Model picker** — switch providers/models from the chat bar; search, collapse/expand provider groups, per-model Thinking/Effort on hover, status icons on chat + list rows, refresh dynamic catalogs
+- 🔢 **Dev build numbering** — `release-icline.ps1 -Channel Dev` bumps `0.1.13-dev.N`; About shows `v0.1.13 · dev build N · timestamp`
 - ⚙️ **Settings → About** — iCline + Cline (Official) sections; shows upstream Cline version synced in this fork
+- 📸 **README previews** — chat picker & Settings screenshots under **Why iCline?** (`assets/docs/`)
 - 🔗 Root **README** — Changelog link beside Releases
 - 🏷️ **GitHub repo topics** script — `scripts/set-github-repo-topics.ps1`
 

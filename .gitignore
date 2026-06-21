@@ -34,6 +34,9 @@ coverage-unit
 
 .worktrees
 
+# Local dev build counter (incremented by release-icline.ps1 -Channel Dev)
+.icline/
+
 ## Generated files ##
 apps/vscode/src/generated/
 apps/vscode/src/shared/proto/

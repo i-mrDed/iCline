@@ -21,6 +21,14 @@ const ICLINE_FEATURE_HIGHLIGHTS = [
 	"Dual-channel updates — iCline releases and Cline upstream notifications",
 ]
 
+function formatAboutVersionTitle(version: string): string {
+	const { releaseVersion, devBuildNumber, devBuildLabel, builtAt } = ICLINE_BUILD_METADATA
+	if (devBuildNumber != null && devBuildLabel) {
+		return `iCline v${releaseVersion} · ${devBuildLabel} · ${builtAt}`
+	}
+	return `iCline v${releaseVersion || version}`
+}
+
 const AboutSection = ({ version, renderSectionHeader }: AboutSectionProps) => {
 	return (
 		<div>
@@ -29,7 +37,7 @@ const AboutSection = ({ version, renderSectionHeader }: AboutSectionProps) => {
 				<div className="flex px-4 flex-col gap-4">
 					{/* iCline (this extension) */}
 					<div className="flex flex-col gap-2">
-						<h2 className="text-lg font-semibold">iCline v{version}</h2>
+						<h2 className="text-lg font-semibold">{formatAboutVersionTitle(version)}</h2>
 						<p className="text-description text-sm">
 							Extension ID: <code className="text-foreground">{ICLINE_EXTENSION_ID}</code>
 							<br />

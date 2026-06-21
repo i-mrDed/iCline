@@ -19,11 +19,30 @@
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| ⚡ Quick Provider & Model picker on chat | ❌ | ✅ |
 | 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
 | ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
 | 🌐 ZenMux (100+ models) | ❌ | ✅ |
 | 🛡️ Harness guardrails (verify-before-claim) | ❌ | ✅ |
 | 🔄 Dual-channel updates (iCline + upstream) | ❌ | ✅ |
+
+### ⚡ Quick Provider & Model picker (chat)
+
+| | Cline official | iCline |
+|---|---|---|
+| ⚡ Quick Provider & Model picker on chat | ❌ | ✅ |
+
+Switch providers and models **without leaving the chat** — search all providers, collapse/expand model lists, set **Thinking / Effort per model** on hover, and refresh dynamic catalogs.
+
+<p align="center">
+  <img src="assets/docs/Preview-Settings-iCline-menu-Providers-Models.jpg" alt="iCline quick model picker on the chat input" width="720" />
+</p>
+
+The full provider catalog and deep model settings remain in **Settings → API Configuration**:
+
+<p align="center">
+  <img src="assets/docs/Preview-Settings-iCline-Providers-Models.jpg" alt="iCline Settings — Providers and Models" width="720" />
+</p>
 
 ---
 

@@ -45,9 +45,16 @@ code --install-extension dist/i-mrdedchai.iCline-0.1.13.vsix --force
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| ⚡ เมนูด่วนเลือก Provider / Model บนแชท | ❌ | ✅ |
 | xAI OAuth & subscription models | ❌ | ✅ |
 | ZenMux provider | ❌ | ✅ |
 | อัปเดตแบบ dual-channel ปลอดภัย | ❌ | ✅ |
+
+<p align="center">
+  <img src="apps/vscode/assets/docs/Preview-Settings-iCline-menu-Providers-Models.jpg" alt="เมนูด่วนเลือก Provider และ Model บนแชท iCline" width="640" />
+</p>
+
+ดูภาพและรายละเอียดเต็มที่ **[apps/vscode/README.th.md](apps/vscode/README.th.md)**
 
 ติดตั้งคู่กันได้ — อัปเดตฝั่งหนึ่งจะไม่ลบอีกฝั่ง
 
