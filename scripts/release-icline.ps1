@@ -227,23 +227,19 @@ if (-not $SkipRelease) {
     Write-Host "==> Creating GitHub Release v$ver (prerelease=$prLabel)..."
     $isPrerelease = $Channel -eq "Beta"
 
+    $bodyFile = Join-Path $env:TEMP "icline-release-body-$ver.md"
     $extractScript = Join-Path $RepoRoot "scripts\extract-release-notes.mjs"
     Push-Location $RepoRoot
     try {
-        $releaseBody = (& node $extractScript $ver 2>$null | Out-String).Trim()
-        if ($LASTEXITCODE -ne 0 -or -not $releaseBody) {
-            $releaseBody = ""
+        & node $extractScript $ver --out-file $bodyFile 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0 -or -not (Test-Path $bodyFile)) {
+            $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+            $fallback = "## iCline v$ver`n`nSee [CHANGELOG](https://github.com/$($gh.Owner)/$($gh.Repo)/blob/main/apps/vscode/CHANGELOG.md)."
+            [System.IO.File]::WriteAllText($bodyFile, $fallback, $utf8NoBom)
         }
     } finally {
         Pop-Location
     }
-    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
-    if (-not $releaseBody) {
-        $releaseBody = "## iCline v$ver`n`nSee [CHANGELOG](https://github.com/$($gh.Owner)/$($gh.Repo)/blob/main/apps/vscode/CHANGELOG.md)."
-    }
-
-    $bodyFile = Join-Path $env:TEMP "icline-release-body-$ver.md"
-    [System.IO.File]::WriteAllText($bodyFile, $releaseBody, $utf8NoBom)
 
     $token = Get-GitHubReleaseToken
     if (-not $token) {
@@ -265,7 +261,13 @@ if (-not $SkipRelease) {
     $env:GITHUB_TOKEN = $token
     try {
         Push-Location $RepoRoot
-        $releaseUrl = & node @publishArgs 2>&1 | ForEach-Object { $_.ToString() }
+        $prevEap = $ErrorActionPreference
+        $ErrorActionPreference = "Continue"
+        try {
+            $releaseUrl = & node @publishArgs 2>&1 | ForEach-Object { $_.ToString() }
+        } finally {
+            $ErrorActionPreference = $prevEap
+        }
         if ($LASTEXITCODE -ne 0) {
             throw @"
 GitHub Release v$ver failed.

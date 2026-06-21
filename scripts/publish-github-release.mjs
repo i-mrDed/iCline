@@ -39,6 +39,7 @@ function apiHeaders(token) {
 		Authorization: `Bearer ${token}`,
 		Accept: "application/vnd.github+json",
 		"X-GitHub-Api-Version": "2022-11-28",
+		"User-Agent": "icline-release-publish",
 	}
 }
 
@@ -78,10 +79,11 @@ async function main() {
 	const body = fs.readFileSync(args.bodyFile, "utf8")
 	const releasesApi = `https://api.github.com/repos/${args.owner}/${args.repo}/releases`
 	const tagName = `v${args.version}`
+	const releaseName = `iCline v${args.version}`
 	const payload = {
 		tag_name: tagName,
 		target_commitish: "main",
-		name: `iCline v${args.version}`,
+		name: releaseName,
 		body,
 		draft: false,
 		prerelease: args.prerelease,
@@ -96,21 +98,46 @@ async function main() {
 
 	if (createRes.ok) {
 		release = await createRes.json()
-	} else {
-		const createError = await readError(createRes)
-		console.error(`Create release failed (${createRes.status}):\n${createError}`)
+		console.log(`Created release ${tagName}.`)
+	} else if (createRes.status === 422) {
 		const lookupRes = await fetch(`${releasesApi}/tags/${tagName}`, {
 			headers: apiHeaders(token),
 		})
 		if (!lookupRes.ok) {
+			console.error(`Create release failed (${createRes.status}):\n${await readError(createRes)}`)
 			console.error(`Lookup release failed (${lookupRes.status}):\n${await readError(lookupRes)}`)
 			process.exit(1)
 		}
 		release = await lookupRes.json()
-		console.error(`Using existing release for ${tagName}.`)
+		console.log(`Release ${tagName} already exists — updating notes and checking VSIX.`)
+
+		const patchRes = await fetch(`${releasesApi}/${release.id}`, {
+			method: "PATCH",
+			headers: { ...apiHeaders(token), "Content-Type": "application/json; charset=utf-8" },
+			body: JSON.stringify({
+				name: releaseName,
+				body,
+				prerelease: args.prerelease,
+			}),
+		})
+		if (!patchRes.ok) {
+			console.error(`Update release body failed (${patchRes.status}):\n${await readError(patchRes)}`)
+			process.exit(1)
+		}
+		release = await patchRes.json()
+	} else {
+		console.error(`Create release failed (${createRes.status}):\n${await readError(createRes)}`)
+		process.exit(1)
 	}
 
 	const vsixName = `i-mrdedchai.iCline-${args.version}.vsix`
+	const existingAsset = (release.assets ?? []).find((asset) => asset.name === vsixName)
+	if (existingAsset) {
+		console.log(`VSIX already uploaded: ${vsixName}`)
+		console.log(release.html_url)
+		return
+	}
+
 	const uploadUrl = release.upload_url.replace(/\{.*\}/, `?name=${encodeURIComponent(vsixName)}`)
 	const vsixBytes = fs.readFileSync(args.vsix)
 
@@ -128,6 +155,7 @@ async function main() {
 		process.exit(1)
 	}
 
+	console.log(`Uploaded ${vsixName}.`)
 	console.log(release.html_url)
 }
 
