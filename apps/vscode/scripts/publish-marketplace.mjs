@@ -51,11 +51,15 @@ try {
 	}
 	run("npx", ["vsce", ...vsceArgs])
 
-	const ovsxArgs = ["ovsx", "publish"]
+	// Open VSX is optional (Cursor can use VS Marketplace). Don't fail the release if ovsx errors.
+	const ovsxArgs = ["ovsx", "publish", "--no-dependencies"]
 	if (isPrerelease) {
 		ovsxArgs.push("--pre-release")
 	}
-	run("npx", ovsxArgs)
+	const ovsx = spawnSync("npx", ovsxArgs, spawnOpts)
+	if (ovsx.status !== 0) {
+		console.warn("publish-marketplace: ovsx publish skipped or failed (VS Marketplace publish may still have succeeded)")
+	}
 } finally {
 	if (!interrupted && !result.skipped) {
 		restore()

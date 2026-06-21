@@ -409,7 +409,7 @@
 	"scripts": {
 		"vscode:prepublish": "node scripts/sync-icline-docs.mjs && npm run package",
 		"sync:docs": "node scripts/sync-icline-docs.mjs",
-		"package:vsix": "node scripts/sync-icline-docs.mjs && npm run package && vsce package --no-dependencies --out dist/i-mrdedchai.iCline-${npm_package_version}.vsix",
+		"package:vsix": "node scripts/sync-icline-docs.mjs && npm run package && node scripts/package-vsix.mjs",
 		"compile": "npm run check-types && npm run lint && node esbuild.mjs",
 		"compile-standalone": "npm run check-types && npm run lint && node esbuild.mjs --standalone",
 		"postcompile-standalone": "node scripts/package-standalone.mjs",
