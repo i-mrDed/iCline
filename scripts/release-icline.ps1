@@ -230,8 +230,8 @@ if (-not $SkipRelease) {
     $extractScript = Join-Path $RepoRoot "scripts\extract-release-notes.mjs"
     Push-Location $RepoRoot
     try {
-        $releaseBody = & node $extractScript $ver 2>&1 | Out-String
-        if ($LASTEXITCODE -ne 0) {
+        $releaseBody = (& node $extractScript $ver 2>$null | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or -not $releaseBody) {
             $releaseBody = ""
         }
     } finally {
@@ -250,57 +250,45 @@ if (-not $SkipRelease) {
         throw "GitHub token not found. Set GITHUB_TOKEN (or GH_TOKEN), or configure git credentials for github.com."
     }
 
-    $headers = @{
-        Authorization = "Bearer $token"
-        Accept = "application/vnd.github+json"
-        "X-GitHub-Api-Version" = "2022-11-28"
-    }
-    $payloadObj = @{
-        tag_name = "v$ver"
-        target_commitish = "main"
-        name = "iCline v$ver"
-        body = (Get-Content $bodyFile -Raw)
-        draft = $false
-        prerelease = $isPrerelease
-    }
-    $payload = $payloadObj | ConvertTo-Json -Depth 5 -Compress
+    $publishScript = Join-Path $RepoRoot "scripts\publish-github-release.mjs"
+    $publishArgs = @(
+        $publishScript,
+        "--version", $ver,
+        "--body-file", $bodyFile,
+        "--vsix", $vsixPath,
+        "--owner", $gh.Owner,
+        "--repo", $gh.Repo
+    )
+    if ($isPrerelease) { $publishArgs += "--prerelease" }
 
-    $release = $null
+    $previousToken = $env:GITHUB_TOKEN
+    $env:GITHUB_TOKEN = $token
     try {
-        $release = Invoke-RestMethod -Uri $releasesApi -Method Post -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($payload)) -ContentType "application/json; charset=utf-8"
-    } catch {
-        $createError = Get-GitHubApiErrorMessage $_
-        Write-Host "Create release failed: $createError" -ForegroundColor Yellow
-        Write-Host "Trying existing release for tag v$ver..."
-        try {
-            $release = Invoke-RestMethod -Uri "$releasesApi/tags/v$ver" -Headers $headers
-        } catch {
-            $lookupError = Get-GitHubApiErrorMessage $_
+        Push-Location $RepoRoot
+        $releaseUrl = & node @publishArgs 2>&1 | ForEach-Object { $_.ToString() }
+        if ($LASTEXITCODE -ne 0) {
             throw @"
 GitHub Release v$ver failed.
 
-Create error:
-$createError
-
-Lookup error:
-$lookupError
+$($releaseUrl -join "`n")
 
 Tips:
-- Ensure the token has 'repo' scope and org SSO is authorized for $($gh.Owner).
-- Or create the release manually: https://github.com/$($gh.Owner)/$($gh.Repo)/releases/new
-- Then upload: $vsixPath
+- Classic PAT: scope 'repo' + authorize SSO for $($gh.Owner)
+- Fine-grained PAT: repository '$($gh.Repo)' with Contents Read and write
+- Or create manually: https://github.com/$($gh.Owner)/$($gh.Repo)/releases/new
+- VSIX: $vsixPath
 "@
         }
+        $releaseUrl = ($releaseUrl | Where-Object { $_ -match "^https://" }) | Select-Object -Last 1
+        Write-Host "Release: $releaseUrl" -ForegroundColor Green
+    } finally {
+        Pop-Location
+        if ($null -eq $previousToken) {
+            Remove-Item Env:GITHUB_TOKEN -ErrorAction SilentlyContinue
+        } else {
+            $env:GITHUB_TOKEN = $previousToken
+        }
     }
-
-    $uploadUrl = $release.upload_url -replace "\{.*\}", "?name=i-mrdedchai.iCline-$ver.vsix"
-    $uploadHeaders = @{
-        Authorization = "Bearer $token"
-        Accept = "application/vnd.github+json"
-        "Content-Type" = "application/octet-stream"
-    }
-    Invoke-RestMethod -Uri $uploadUrl -Method Post -Headers $uploadHeaders -InFile $vsixPath | Out-Null
-    Write-Host "Release: $($release.html_url)"
 }
 
 if ($PublishMarketplace) {
