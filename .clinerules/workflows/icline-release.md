@@ -1,105 +1,106 @@
-# iCline Release Workflow
+# iCline Release Workflow (Dev / Beta / Stable)
 
-Standard release process for the **iCline** VS Code extension (`i-mrdedchai.iCline`).
-Use this checklist every time — new agent sessions should read this file first.
+Standard release process for **iCline** (`i-mrdedchai.iCline`).  
+New agent sessions: read this file + `icline-marketplace.md` first.
 
-## Important: how updates reach users
+## Release channels
 
-| Channel | Auto-install? | Notes |
-|---------|---------------|-------|
-| VS Code Marketplace | Published under publisher `i-mrdedchai` | Auto-update after first publish |
-| GitHub Releases `.vsix` | **No** | User downloads VSIX and runs `code --install-extension` |
-| iCline update toast | **Notify only** | `View Release` opens GitHub — does not install |
+| Channel | Command | GitHub | Marketplace | Smoke gate |
+|---------|---------|--------|-------------|------------|
+| **Dev** | `-Channel Dev` | No | No | No |
+| **Beta** | `-Channel Beta` | Pre-release + VSIX | Optional `-PublishMarketplace` | Required |
+| **Stable** | `-Channel Stable` | Release + VSIX | `-PublishMarketplace` (explicit) | Required (stricter) |
 
-Installed version in VS Code = **last VSIX installed**, not GitHub latest.
+**Rule:** Never publish Stable to Marketplace without passing the smoke checklist and real-world Grok/xAI testing.
 
-## Single-command release (maintainer)
+## Single-command release
 
 From repo root (`cline-temp/`):
 
 ```powershell
-.\scripts\release-icline.ps1
+# Dev — VSIX only (default)
+.\scripts\release-icline.ps1 -Channel Dev
+
+# Beta — after local VSIX testing
+.\scripts\release-icline.ps1 -Channel Beta -Version 0.1.11-beta.1 -PublishMarketplace
+
+# Stable — after Beta soak
+.\scripts\release-icline.ps1 -Channel Stable -Version 0.1.11 -PublishMarketplace
 ```
 
-Optional flags: `-Version 0.1.10`, `-SkipPush`, `-SkipRelease`, `-SkipBuild`
+Flags: `-Version`, `-SkipBuild`, `-SkipPush`, `-SkipRelease`, `-SkipSmokeCheck` (not recommended)
 
-## Manual checklist (same order every time)
+## Smoke test gate
+
+```powershell
+.\scripts\icline-smoke-checklist.ps1 -Channel Beta   # or Stable
+```
+
+Beta/Stable releases run this automatically unless `-SkipSmokeCheck`.
+
+Key checks:
+- xAI Grok OAuth / subscription works
+- Composer 2.5 Fast (or similar) chats without repeated `attempt_completion without result` warnings
+- No duplicate legacy extensions (`icline.icline`, old publisher IDs)
+- Stable: file edit tools + longer soak period
+
+## Manual checklist (every release)
 
 ### 1. Code + version
 
-- [ ] Fix/feature complete and tested locally
-- [ ] Bump `apps/vscode/package.json` → `"version"`
-- [ ] Add section to `apps/vscode/CHANGELOG.md` under `## [x.y.z]`
+- [ ] Fix/feature complete
+- [ ] Bump `apps/vscode/package.json` version
+- [ ] Add `apps/vscode/CHANGELOG.md` section
 
-### 2. Sync all docs (single source of truth: `package.json` version)
+### 2. Sync docs
 
 ```powershell
 cd apps/vscode
 npm run sync:docs
 ```
 
-Updates automatically:
-
-- `apps/vscode/README.md` + `README.th.md` (VS Code Details tab)
-- `README.md` + `README.th.md` (repo root)
-- `ICLINE.md` (workspace notes, if present)
-- `package.json` description / releases URL
-- Provider labels in `providers.json`
-
-### 3. Build VSIX
+### 3. Dev build + local install
 
 ```powershell
-cd apps/vscode
-npm run package:vsix -- --out dist/i-mrdedchai.iCline-<version>.vsix
+cd ../..
+.\scripts\release-icline.ps1 -Channel Dev
+code --install-extension apps\vscode\dist\i-mrdedchai.iCline-<version>.vsix --force
 ```
 
-### 4. Git commit + push
+Reload Window → run smoke checklist mentally or via script.
 
-```powershell
-cd ../..   # cline-temp root
-git add -A
-git commit -m "release(icline): v<version> — <short summary>"
-git push origin main
-```
+### 4. Beta / Stable
 
-### 5. GitHub Release
+Script handles: commit, push, GitHub Release, optional Marketplace.
 
-- Tag: `v<version>` (must match `package.json`)
-- Attach: `dist/i-mrdedchai.iCline-<version>.vsix`
-- Body: copy from `CHANGELOG.md` section for that version
-- Or run `.\scripts\release-icline.ps1` (creates release via API)
+### 5. Verify before "done"
 
-### 6. Verify sync (before telling user "done")
+- [ ] https://github.com/i-mrDedchai/iCline/releases
+- [ ] Marketplace version (if published)
+- [ ] Test from **Marketplace install**, not only local VSIX
 
-- [ ] https://github.com/i-mrDedchai/iCline — root README shows correct version
-- [ ] https://github.com/i-mrDedchai/iCline/releases — latest tag + VSIX asset
-- [ ] `apps/vscode/CHANGELOG.md` matches release notes
+## How updates reach users
 
-### 7. User install command (send to testers)
-
-```powershell
-code --install-extension i-mrdedchai.iCline-<version>.vsix --force
-```
-
-Then **Developer: Reload Window**.
+| Channel | Auto-install? |
+|---------|---------------|
+| VS Code Marketplace (`i-mrdedchai`) | Yes |
+| GitHub Releases `.vsix` | No — manual reinstall |
+| iCline update toast | Notify only |
 
 ## Extension identity
 
 - **ID:** `i-mrdedchai.iCline`
-- **Publisher:** `i-mrdedchai` (Marketplace, `mr.dedchai@hotmail.com`)
-- **GitHub org:** `i-mrDedchai/iCline`
-- **Settings prefix:** `iCline.*` (legacy `icline.icline` used `icline.*`)
-- **Upstream remote:** `upstream` → `cline/cline`
-- **Origin remote:** `origin` → `i-mrDedchai/iCline`
+- **Publisher:** `i-mrdedchai`
+- **GitHub:** `i-mrDedchai/iCline`
+- **Settings:** `iCline.*`
 
-## What is NOT auto-updated today
+## CI guidance
 
-- VS Code installed extension version (manual VSIX reinstall)
-- GitHub Release notes (unless release script / API step runs)
-- Root README if `npm run sync:docs` was skipped
+- **Green gate:** `ext-vscode-test-e2e` (Playwright)
+- **Known debt:** `ext-vscode-test` — triage incrementally; do not block Beta on it
 
 ## Agent session bootstrap
 
 1. Read this file + `icline-marketplace.md`
-2. Check `apps/vscode/package.json` version vs latest GitHub Release
-3. Run `npm run sync:docs` before any package/publish step
+2. Check `package.json` version vs latest GitHub Release
+3. Dev build first; Beta/Stable only after smoke passes

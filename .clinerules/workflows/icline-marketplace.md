@@ -20,22 +20,28 @@ GitHub: **[i-mrDedchai/iCline](https://github.com/i-mrDedchai/iCline)** (org) ·
 
 ## Publish command
 
-After a normal release build (`npm run sync:docs` + `npm run package:vsix`):
+**Prefer the gated release script** (runs smoke + build + optional publish):
+
+```powershell
+# Beta (pre-release on Marketplace)
+.\scripts\release-icline.ps1 -Channel Beta -Version 0.1.11-beta.1 -PublishMarketplace
+
+# Stable (only after Beta soak + smoke)
+.\scripts\release-icline.ps1 -Channel Stable -Version 0.1.11 -PublishMarketplace
+```
+
+Manual publish (after `npm run sync:docs` + `npm run package:vsix`):
 
 ```powershell
 cd apps/vscode
-npm run publish:marketplace
+npm run publish:marketplace              # stable
+npm run publish:marketplace:prerelease   # beta
 ```
 
-This runs `scripts/publish-marketplace.mjs` which:
+`scripts/publish-marketplace.mjs`:
 - Swaps `README.marketplace.md` for publishing
 - `vsce publish` → VS Marketplace
-- `ovsx publish` → Open VSX (optional registry)
-
-Pre-release channel:
-```powershell
-npm run publish:marketplace:prerelease
-```
+- `ovsx publish` → Open VSX (optional; failure is non-fatal)
 
 ## How auto-update works after Marketplace publish
 

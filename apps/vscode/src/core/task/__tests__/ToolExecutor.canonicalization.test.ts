@@ -12,7 +12,7 @@ describe("ToolExecutor canonicalization", () => {
 			params: {
 				response: "final answer from response field",
 				task_progress: "- [x] done",
-			},
+			} as ToolUse["params"],
 			partial: false,
 		}
 
@@ -38,6 +38,22 @@ describe("ToolExecutor canonicalization", () => {
 
 		assert.equal(didCanonicalize, false)
 		assert.equal(block.params.result, "already canonical")
+	})
+
+	it("canonicalizes attempt_completion message alias into result", () => {
+		const block: ToolUse = {
+			type: "tool_use",
+			name: ClineDefaultTool.ATTEMPT,
+			params: {
+				message: "สวัสดีครับ ทดสอบ",
+			} as ToolUse["params"],
+			partial: false,
+		}
+
+		const didCanonicalize = canonicalizeAttemptCompletionParams(block)
+
+		assert.equal(didCanonicalize, true)
+		assert.equal(block.params.result, "สวัสดีครับ ทดสอบ")
 	})
 
 	it("does not canonicalize non-attempt tools", () => {

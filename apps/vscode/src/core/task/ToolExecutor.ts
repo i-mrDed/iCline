@@ -31,10 +31,26 @@ import { createUIHelpers } from "./tools/types/UIHelpers"
 import { ToolDisplayUtils } from "./tools/utils/ToolDisplayUtils"
 import { ToolResultUtils } from "./tools/utils/ToolResultUtils"
 
+const ATTEMPT_COMPLETION_RESULT_ALIASES = ["response", "message", "summary", "content", "text", "answer"] as const
+
 export function canonicalizeAttemptCompletionParams(block: ToolUse): boolean {
-	if (block.name === ClineDefaultTool.ATTEMPT && !block.params?.result && typeof block.params?.response === "string") {
-		block.params.result = block.params.response
-		return true
+	if (block.name !== ClineDefaultTool.ATTEMPT) {
+		return false
+	}
+
+	const existing = block.params?.result
+	if (typeof existing === "string" && existing.trim().length > 0) {
+		return false
+	}
+
+	// Models may use non-standard keys; params is typed narrowly but native JSON can include aliases.
+	const params = block.params as Record<string, string | undefined>
+	for (const alias of ATTEMPT_COMPLETION_RESULT_ALIASES) {
+		const value = params[alias]
+		if (typeof value === "string" && value.trim().length > 0) {
+			block.params.result = value
+			return true
+		}
 	}
 
 	return false

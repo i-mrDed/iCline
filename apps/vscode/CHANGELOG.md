@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.11] - 2026-06-21
+
+### Fixed
+- 🐛 **xAI / Grok (Composer 2.5 Fast, subscription)** — handle Responses API `function_call_arguments` streaming; stop emitting empty `attempt_completion` tool calls that caused `without value for required parameter 'result'. Retrying...`
+- 🐛 **attempt_completion** — canonicalize alias fields (`message`, `response`, `summary`, etc.) into `result` for models that use non-standard parameter names
+
+### Added
+- 🚦 **Release gates** — Dev / Beta / Stable channels with interactive smoke checklist (`scripts/icline-smoke-checklist.ps1`, `scripts/release-icline.ps1 -Channel`)
+
 ## [0.1.10] - 2026-06-21
 
 ### Changed

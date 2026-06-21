@@ -198,19 +198,81 @@ export class XAIHandler implements ApiHandler {
 		stream: AsyncIterable<OpenAI.Responses.ResponseStreamEvent>,
 		modelInfo: ModelInfo,
 	): ApiStream {
+		const functionCallByItemId = new Map<string, { call_id?: string; name?: string; id?: string }>()
+
 		for await (const chunk of stream) {
 			if (chunk.type === "response.output_item.added") {
 				const item = chunk.item
 				if (item.type === "function_call" && item.id) {
+					functionCallByItemId.set(item.id, { call_id: item.call_id, name: item.name, id: item.id })
+					if (item.arguments) {
+						yield {
+							type: "tool_calls",
+							id: item.id,
+							tool_call: {
+								call_id: item.call_id,
+								function: {
+									id: item.id,
+									name: item.name,
+									arguments: item.arguments,
+								},
+							},
+						}
+					}
+				}
+			}
+
+			if (chunk.type === "response.output_item.done") {
+				const item = chunk.item
+				if (item.type === "function_call") {
+					if (item.id) {
+						functionCallByItemId.set(item.id, { call_id: item.call_id, name: item.name, id: item.id })
+					}
+					// Skip empty arguments — xAI often sends done before argument deltas finish.
+					// Rely on response.function_call_arguments.{delta,done} for the final payload.
+					if (item.arguments && item.arguments !== "{}") {
+						yield {
+							type: "tool_calls",
+							id: item.id || item.call_id,
+							tool_call: {
+								call_id: item.call_id,
+								function: {
+									id: item.id,
+									name: item.name,
+									arguments: item.arguments,
+								},
+							},
+						}
+					}
+				}
+			}
+
+			if (chunk.type === "response.function_call_arguments.delta") {
+				const pendingCall = functionCallByItemId.get(chunk.item_id)
+				yield {
+					type: "tool_calls",
+					tool_call: {
+						call_id: pendingCall?.call_id,
+						function: {
+							id: pendingCall?.id || chunk.item_id,
+							name: pendingCall?.name,
+							arguments: chunk.delta,
+						},
+					},
+				}
+			}
+
+			if (chunk.type === "response.function_call_arguments.done") {
+				if (chunk.item_id && chunk.name && chunk.arguments) {
+					const pendingCall = functionCallByItemId.get(chunk.item_id)
 					yield {
 						type: "tool_calls",
-						id: item.id,
 						tool_call: {
-							call_id: item.call_id,
+							call_id: pendingCall?.call_id,
 							function: {
-								id: item.id,
-								name: item.name,
-								arguments: item.arguments,
+								id: pendingCall?.id || chunk.item_id,
+								name: chunk.name,
+								arguments: chunk.arguments,
 							},
 						},
 					}
