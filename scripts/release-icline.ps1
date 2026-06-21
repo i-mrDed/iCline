@@ -205,7 +205,8 @@ console.log(body);
     }
 
     $bodyFile = Join-Path $env:TEMP "icline-release-body-$ver.md"
-    Set-Content -Path $bodyFile -Value $releaseBody -Encoding UTF8NoBOM
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllText($bodyFile, $releaseBody, $utf8NoBom)
 
     $credText = "protocol=https`nhost=github.com`n`n" | git -C $RepoRoot credential fill 2>$null
     if (-not $credText) { throw "GitHub credentials not found." }
