@@ -62,6 +62,32 @@ function Get-GitHubReleaseToken {
     return (($credText -split "`n" | Where-Object { $_ -like "password=*" }) -replace "password=","").Trim()
 }
 
+function Push-SyncedReadmeDocs {
+    param([string]$Version)
+    $docPaths = @(
+        "README.md",
+        "README.th.md",
+        "apps/vscode/README.md",
+        "apps/vscode/README.th.md",
+        "apps/vscode/README.marketplace.md",
+        "apps/vscode/webview-ui/src/icline/build-metadata.ts"
+    ) | ForEach-Object { Join-Path $RepoRoot $_ }
+    Push-Location $RepoRoot
+    try {
+        git add @docPaths 2>$null
+        $status = git status --porcelain
+        if (-not $status) {
+            Write-Host "README/docs already up to date on git."
+            return
+        }
+        git commit -m "docs(icline): sync README version badges to v$Version"
+        git push origin main
+        Write-Host "Pushed synced README/docs to GitHub." -ForegroundColor Green
+    } finally {
+        Pop-Location
+    }
+}
+
 function Get-PackageVersion {
     return (Get-Content $PackageJson -Raw | ConvertFrom-Json).version
 }
@@ -218,6 +244,9 @@ if (-not $SkipPush) {
         Write-Host "Nothing to commit."
     }
     Pop-Location
+} elseif ($Channel -ne "Dev") {
+    Write-Host "==> Pushing synced README to GitHub (-SkipPush, docs only)..."
+    Push-SyncedReadmeDocs -Version $ver
 }
 
 if (-not $SkipRelease) {
