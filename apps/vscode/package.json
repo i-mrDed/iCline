@@ -2,7 +2,7 @@
 	"name": "iCline",
 	"displayName": "%extension.displayName%",
 	"description": "🤖 iCline — Cline fork with xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.",
-	"version": "0.1.12",
+	"version": "0.1.13",
 	"icon": "assets/icons/icon.png",
 	"engines": {
 		"vscode": "^1.84.0"
@@ -33,6 +33,12 @@
 		"xai",
 		"zenmux",
 		"composer",
+		"composer-2.5-fast",
+		"grok-build",
+		"grok-4",
+		"grok-code",
+		"grok-cli",
+		"supergrok",
 		"mcp",
 		"openrouter",
 		"coding",

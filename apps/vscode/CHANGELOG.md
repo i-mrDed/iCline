@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.13] - 2026-06-21
+
+### Changed
+- 🏷️ VS Marketplace search tags — `grok-build`, `composer-2.5-fast`, `grok-4`, `grok-code`, `grok-cli`, `supergrok` (plus existing `composer`, `grok`, `xai`)
+
 ## [0.1.12] - 2026-06-21
 
 **Stable release** — GitHub Release + VS Marketplace (`i-mrdedchai.iCline`). ทดสอบ Grok: Composer 2.5 Fast, Grok 4.3, Grok Build.
