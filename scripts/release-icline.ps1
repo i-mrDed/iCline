@@ -26,6 +26,41 @@ $Changelog = Join-Path $ExtRoot "CHANGELOG.md"
 $SyncScript = Join-Path $ExtRoot "scripts\sync-icline-docs.mjs"
 $SmokeScript = Join-Path $RepoRoot "scripts\icline-smoke-checklist.ps1"
 $DevBuildStatePath = Join-Path $RepoRoot ".icline\dev-build.json"
+$ManifestPath = Join-Path $ExtRoot "scripts\icline-docs.manifest.json"
+
+function Get-GitHubRepoCoordinates {
+    $manifest = Get-Content $ManifestPath -Raw | ConvertFrom-Json
+    return @{
+        Owner = $manifest.github.owner
+        Repo = $manifest.github.repo
+    }
+}
+
+function Get-GitHubApiErrorMessage {
+    param($ErrorRecord)
+    if (-not $ErrorRecord.Exception.Response) {
+        return $ErrorRecord.Exception.Message
+    }
+    try {
+        $stream = $ErrorRecord.Exception.Response.GetResponseStream()
+        if (-not $stream) { return $ErrorRecord.Exception.Message }
+        $reader = New-Object System.IO.StreamReader($stream)
+        $body = $reader.ReadToEnd()
+        $reader.Close()
+        if ($body.Trim()) { return $body }
+    } catch {
+        # fall through
+    }
+    return $ErrorRecord.Exception.Message
+}
+
+function Get-GitHubReleaseToken {
+    if ($env:GITHUB_TOKEN) { return $env:GITHUB_TOKEN.Trim() }
+    if ($env:GH_TOKEN) { return $env:GH_TOKEN.Trim() }
+    $credText = "protocol=https`nhost=github.com`n`n" | git -C $RepoRoot credential fill 2>$null
+    if (-not $credText) { return $null }
+    return (($credText -split "`n" | Where-Object { $_ -like "password=*" }) -replace "password=","").Trim()
+}
 
 function Get-PackageVersion {
     return (Get-Content $PackageJson -Raw | ConvertFrom-Json).version
@@ -186,31 +221,36 @@ if (-not $SkipPush) {
 }
 
 if (-not $SkipRelease) {
+    $gh = Get-GitHubRepoCoordinates
+    $releasesApi = "https://api.github.com/repos/$($gh.Owner)/$($gh.Repo)/releases"
     $prLabel = if ($Channel -eq "Beta") { "yes" } else { "no" }
     Write-Host "==> Creating GitHub Release v$ver (prerelease=$prLabel)..."
     $isPrerelease = $Channel -eq "Beta"
 
-    $extractJs = @'
-import { extractChangelogSection } from './apps/vscode/scripts/sync-icline-docs.mjs';
-import fs from 'fs';
-const ver = 'VER_PLACEHOLDER';
-const changelog = fs.readFileSync('./apps/vscode/CHANGELOG.md','utf8');
+    $extractScript = Join-Path $env:TEMP "icline-release-notes-$ver.mjs"
+    $extractSource = @"
+import { extractChangelogSection } from '$($SyncScript.Replace('\', '/'))';
+import fs from 'node:fs';
+const ver = process.argv[2];
+const changelog = fs.readFileSync('$($Changelog.Replace('\', '/'))', 'utf8');
 const section = extractChangelogSection(changelog, ver) ?? 'See CHANGELOG.md';
 const body = '## iCline v' + ver + '\n\n' + section + '\n\n### Install\n```powershell\ncode --install-extension i-mrdedchai.iCline-' + ver + '.vsix --force\n```\nThen **Developer: Reload Window**.';
-console.log(body);
-'@ -replace 'VER_PLACEHOLDER', $ver
-    $releaseBody = node -e $extractJs 2>$null
+process.stdout.write(body);
+"@
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllText($extractScript, $extractSource, $utf8NoBom)
+    $releaseBody = node $extractScript $ver 2>$null
     if (-not $releaseBody) {
-        $releaseBody = "## iCline v$ver`n`nSee [CHANGELOG](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md)."
+        $releaseBody = "## iCline v$ver`n`nSee [CHANGELOG](https://github.com/$($gh.Owner)/$($gh.Repo)/blob/main/apps/vscode/CHANGELOG.md)."
     }
 
     $bodyFile = Join-Path $env:TEMP "icline-release-body-$ver.md"
-    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
     [System.IO.File]::WriteAllText($bodyFile, $releaseBody, $utf8NoBom)
 
-    $credText = "protocol=https`nhost=github.com`n`n" | git -C $RepoRoot credential fill 2>$null
-    if (-not $credText) { throw "GitHub credentials not found." }
-    $token = ($credText -split "`n" | Where-Object { $_ -like "password=*" }) -replace "password=",""
+    $token = Get-GitHubReleaseToken
+    if (-not $token) {
+        throw "GitHub token not found. Set GITHUB_TOKEN (or GH_TOKEN), or configure git credentials for github.com."
+    }
 
     $headers = @{
         Authorization = "Bearer $token"
@@ -227,14 +267,31 @@ console.log(body);
     }
     $payload = $payloadObj | ConvertTo-Json -Depth 5 -Compress
 
+    $release = $null
     try {
-        $release = Invoke-RestMethod -Uri "https://api.github.com/repos/i-mrDedchai/iCline/releases" -Method Post -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($payload)) -ContentType "application/json; charset=utf-8"
+        $release = Invoke-RestMethod -Uri $releasesApi -Method Post -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($payload)) -ContentType "application/json; charset=utf-8"
     } catch {
-        Write-Host "Create release failed, trying existing tag v$ver..."
+        $createError = Get-GitHubApiErrorMessage $_
+        Write-Host "Create release failed: $createError" -ForegroundColor Yellow
+        Write-Host "Trying existing release for tag v$ver..."
         try {
-            $release = Invoke-RestMethod -Uri "https://api.github.com/repos/i-mrDedchai/iCline/releases/tags/v$ver" -Headers $headers
+            $release = Invoke-RestMethod -Uri "$releasesApi/tags/v$ver" -Headers $headers
         } catch {
-            throw "GitHub Release v$ver failed: $($_.Exception.Message)"
+            $lookupError = Get-GitHubApiErrorMessage $_
+            throw @"
+GitHub Release v$ver failed.
+
+Create error:
+$createError
+
+Lookup error:
+$lookupError
+
+Tips:
+- Ensure the token has 'repo' scope and org SSO is authorized for $($gh.Owner).
+- Or create the release manually: https://github.com/$($gh.Owner)/$($gh.Repo)/releases/new
+- Then upload: $vsixPath
+"@
         }
     }
 
