@@ -2,13 +2,15 @@
 # Usage:
 #   .\scripts\release-icline.ps1 -Channel Dev              # build VSIX only
 #   .\scripts\release-icline.ps1 -Channel Beta -Version 0.1.11-beta.1
-#   .\scripts\release-icline.ps1 -Channel Stable -Version 0.1.11 -PublishMarketplace
+#   .\scripts\release-icline.ps1 -Channel Stable -Version 0.1.12 -PublishMarketplace
+#   .\scripts\release-icline.ps1 -Channel Stable -SkipSmokeCheck -MaintainerApproval "ปล่อย 0.1.12 เป็น Stable ได้เลย"
 
 param(
     [Parameter(Mandatory = $false)]
     [ValidateSet("Dev", "Beta", "Stable")]
     [string]$Channel = "Dev",
     [string]$Version = "",
+    [string]$MaintainerApproval = "",
     [switch]$SkipBuild,
     [switch]$SkipPush,
     [switch]$SkipRelease,
@@ -40,6 +42,10 @@ function Assert-VersionMatchesChannel {
 
 Write-Host "==> iCline release channel: $Channel" -ForegroundColor Cyan
 
+if ($Channel -eq "Stable" -and $SkipSmokeCheck -and -not $MaintainerApproval.Trim()) {
+    throw 'Stable + -SkipSmokeCheck requires -MaintainerApproval with approval text'
+}
+
 if ($Channel -in @("Beta", "Stable") -and -not $SkipSmokeCheck) {
     $smokeChannel = if ($Channel -eq "Beta") { "Beta" } else { "Stable" }
     Write-Host "==> Running smoke test gate ($smokeChannel)..."
@@ -56,6 +62,21 @@ if ($Version) {
 
 $ver = Get-PackageVersion
 Assert-VersionMatchesChannel -Ver $ver -Ch $Channel
+
+if ($MaintainerApproval.Trim()) {
+    $approvalsDir = Join-Path $RepoRoot "releases\approvals"
+    New-Item -ItemType Directory -Force -Path $approvalsDir | Out-Null
+    $approvalFile = Join-Path $approvalsDir "v$ver-$Channel.txt"
+    $approvalText = @(
+        "version: $ver"
+        "channel: $Channel"
+        "approved_at: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss K')"
+        "approval: $MaintainerApproval"
+        "skip_smoke_check: $SkipSmokeCheck"
+    ) -join "`n"
+    Set-Content -Path $approvalFile -Value $approvalText -Encoding UTF8
+    Write-Host "==> Maintainer approval recorded: $approvalFile" -ForegroundColor Green
+}
 
 Write-Host "==> Syncing docs..."
 Push-Location $ExtRoot
@@ -86,7 +107,7 @@ if (-not $SkipPush) {
     git add -A
     $status = git status --porcelain
     if ($status) {
-        git commit -m "release(icline): v$ver — $Channel channel"
+        git commit -m "release(icline): v$ver - $Channel channel"
         git push origin main
     } else {
         Write-Host "Nothing to commit."
@@ -95,7 +116,8 @@ if (-not $SkipPush) {
 }
 
 if (-not $SkipRelease) {
-    Write-Host "==> Creating GitHub Release v$ver (pre-release: $($Channel -eq 'Beta'))..."
+    $prLabel = if ($Channel -eq "Beta") { "yes" } else { "no" }
+    Write-Host "==> Creating GitHub Release v$ver (prerelease=$prLabel)..."
     $isPrerelease = $Channel -eq "Beta"
 
     $extractJs = @'
@@ -132,7 +154,7 @@ console.log(body);
     try {
         $release = Invoke-RestMethod -Uri "https://api.github.com/repos/i-mrDedchai/iCline/releases" -Method Post -Headers $headers -Body $payload -ContentType "application/json; charset=utf-8"
     } catch {
-        Write-Host "Release may already exist — uploading asset to v$ver..."
+        Write-Host "Release may already exist - uploading asset to v$ver..."
         $release = Invoke-RestMethod -Uri "https://api.github.com/repos/i-mrDedchai/iCline/releases/tags/v$ver" -Headers $headers
     }
 

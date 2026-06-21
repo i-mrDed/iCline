@@ -1,0 +1,5 @@
+﻿version: 0.1.12
+channel: Stable
+approved_at: 2026-06-21 10:40:01 +07:00
+approval: Release 0.1.12 Stable - Grok smoke passed
+skip_smoke_check: True

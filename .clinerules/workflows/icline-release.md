@@ -11,7 +11,9 @@ New agent sessions: read this file + `icline-marketplace.md` first.
 | **Beta** | `-Channel Beta` | Pre-release + VSIX | Optional `-PublishMarketplace` | Required |
 | **Stable** | `-Channel Stable` | Release + VSIX | `-PublishMarketplace` (explicit) | Required (stricter) |
 
-**Rule:** Never publish Stable to Marketplace without passing the smoke checklist and real-world Grok/xAI testing.
+**Current Stable:** `0.1.12` — see `releases/STABLE.md`
+
+**Rule:** Never publish Stable to Marketplace without passing the smoke checklist **or** documented maintainer approval (`-MaintainerApproval` writes to `releases/approvals/`).
 
 ## Single-command release
 
@@ -28,7 +30,17 @@ From repo root (`cline-temp/`):
 .\scripts\release-icline.ps1 -Channel Stable -Version 0.1.11 -PublishMarketplace
 ```
 
-Flags: `-Version`, `-SkipBuild`, `-SkipPush`, `-SkipRelease`, `-SkipSmokeCheck` (not recommended)
+Flags: `-Version`, `-SkipBuild`, `-SkipPush`, `-SkipRelease`, `-MaintainerApproval`, `-SkipSmokeCheck` (Stable requires `-MaintainerApproval` when skipping smoke)
+
+### Maintainer approval (alternative to interactive smoke)
+
+When real-world testing is already done (e.g. clean VSIX install + Grok models verified), maintainer explicit approval counts:
+
+```powershell
+.\scripts\release-icline.ps1 -Channel Stable -Version 0.1.12 -PublishMarketplace `
+  -SkipSmokeCheck `
+  -MaintainerApproval "Release 0.1.12 Stable — Grok smoke passed manually"
+```
 
 ## Smoke test gate
 
