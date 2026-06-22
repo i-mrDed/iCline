@@ -1,0 +1,5 @@
+﻿version: 0.1.16
+channel: Stable
+approved_at: 2026-06-22 23:35:24 +07:00
+approval: ทดสอบ 0.1.16-dev.7 ผ่านทุกข้อ — ปล่อย Stable 0.1.16 ปิดรอบ dev
+skip_smoke_check: True

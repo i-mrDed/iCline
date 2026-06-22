@@ -41,22 +41,27 @@
 ### Changed
 - 📄 Docs auto-synced from `scripts/sync-icline-docs.mjs`
 
-## [0.1.16] - Unreleased
-
-### Changed
-- 🏪 **Marketplace copy** — displayName `iCline — Standalone Coding Agent` (EN) / `iCline — เอเจนต์เขียนโค้ด (standalone)` (TH); description leads with “Cline fork” + provider line (Grok, ZenMux, OpenRouter, …); remove Grok-only signal from title
+## [0.1.16] - 2026-06-22
 
 ### Added
-- 🏠 **Welcome home — Phase 1** — iCline branding on welcome screen, provider/model chip, twelve quick-start prompts (explain, refactor, tests, debug, review, architecture, security, CI, docs, plan, performance, dependencies); task history stays visible alongside iCline quick starts (unlike Cline hosted quick wins)
+- 🏠 **Welcome home — Phase 1** — iCline branding on welcome screen, provider/model chip, twelve quick-start prompts; subtitle `Autonomous coding agent · in your IDE`; task history stays visible alongside iCline quick starts
+- ✏️ **Quick Start prompt editor** — click ⋯ or ✎ on a quick-start card to edit, save, reset, or start with a custom prompt (localStorage)
+- 📦 **History export** — export selected tasks or all history to a `.zip` archive from the History footer
+- 📥 **History import** — import tasks from an iCline `.zip` archive; duplicate task IDs are reassigned automatically
 
 ### Changed
-- 🏠 **Quick Starts layout** — two-column grid for iCline templates (single column below 300px); welcome scroll includes quick starts so cards are not hidden behind Auto-approve / chat input
-- 🎨 **iCline icon branding** — add `i` mark beside left ear on Activity Bar SVG (`icon.svg`) and Welcome compact icon; refresh 128×128 marketplace PNG; retrace sleepy logo from updated artwork (`sleepy-cline.svg`, `ClineLogoTired`); update panel robot PNGs (dark/light)
+- 🏪 **Marketplace copy** — displayName `iCline — Standalone Coding Agent` (EN) / `iCline — เอเจนต์เขียนโค้ด (standalone)` (TH); description leads with “Cline fork” + provider line (Grok, ZenMux, OpenRouter, …)
+- 🏷️ **Agent branding in chat** — runtime tool labels, grouped summaries, approval prompts, and notifications say **iCline** instead of Cline during task execution
+- 🏠 **Quick Starts layout** — two-column grid (single column below 300px); welcome scroll includes quick starts so cards are not hidden behind Auto-approve / chat input
+- 🎨 **iCline icon branding** — `i` mark on Activity Bar SVG and Welcome compact icon; refreshed marketplace PNG and panel robot assets
+- 🏠 **Review quick start** — read-only review wording; PowerShell-safe directory guidance (`Set-Location` instead of `cd /d`)
 
 ### Fixed
-- 🐛 **Open VSX screenshots** — keep relative `assets/docs/` paths in packaged README (`vsce --no-rewrite-relative-links`; Open VSX blocks external GitHub URLs); `package-vsix.mjs` swaps marketplace README before `vsce package` so dev and publish builds match
-- 🛡️ **Harness epistemic discipline** — do not echo user factual claims (e.g. wrong weekday in greetings); check `# Current Time` in environment_details before affirming date/time; politely correct conflicts instead of mirroring
-- 🛡️ **ACT MODE conversational replies** — harness overlay now requires `attempt_completion` or `ask_followup_question` for chat-only turns (avoids plain-text replies that trigger “did not use a tool” loops)
+- 🐛 **Auto-approved commands stuck on Running** — stream command output without blocking; managed timeouts; mark command UI completed when orchestration returns
+- 🏠 **iCline Quick Starts** — keep the 12-card grid on welcome home even when task history has 3+ items
+- 🐛 **Open VSX screenshots** — keep relative `assets/docs/` paths in packaged README (`vsce --no-rewrite-relative-links`)
+- 🛡️ **Harness epistemic discipline** — do not echo user factual claims; check `# Current Time` in environment_details before affirming date/time
+- 🛡️ **ACT MODE conversational replies** — harness overlay requires `attempt_completion` or `ask_followup_question` for chat-only turns
 
 ## [0.1.15] - 2026-06-22
 
