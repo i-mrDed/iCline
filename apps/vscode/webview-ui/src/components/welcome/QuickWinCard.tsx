@@ -1,5 +1,4 @@
 import React from "react"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { QuickWinTask } from "./quickWinTasks"
 
 interface QuickWinCardProps {
@@ -98,28 +97,15 @@ const QuickWinCard: React.FC<QuickWinCardProps> = ({ task, onExecute, variant = 
 		</>
 	)
 
-	if (!isGrid) {
-		return (
-			<div className={cardClassName} onClick={() => onExecute()}>
-				{cardBody}
-			</div>
-		)
-	}
+	const CardTag = isGrid ? "button" : "div"
+	const cardProps = isGrid
+		? { type: "button" as const, onClick: () => onExecute() }
+		: { onClick: () => onExecute() }
 
 	return (
-		<HoverCard closeDelay={100} openDelay={250}>
-			<HoverCardTrigger asChild>
-				<button className={cardClassName} onClick={() => onExecute()} type="button">
-					{cardBody}
-				</button>
-			</HoverCardTrigger>
-			<HoverCardContent align="start" className="w-72" side="top">
-				<div className="space-y-1">
-					<h4 className="text-sm font-semibold text-(--vscode-editor-foreground) leading-snug">{task.title}</h4>
-					<p className="text-xs text-(--vscode-descriptionForeground) leading-relaxed">{task.description}</p>
-				</div>
-			</HoverCardContent>
-		</HoverCard>
+		<CardTag className={cardClassName} {...cardProps}>
+			{cardBody}
+		</CardTag>
 	)
 }
 
