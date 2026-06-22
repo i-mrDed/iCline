@@ -7,6 +7,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import { ensureChangelogVersion as ensureReleaseChangelogVersion } from "../../../scripts/changelog-release.mjs"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const extRoot = path.join(__dirname, "..")
@@ -43,29 +44,6 @@ function releasesApiUrl(manifest) {
 function vsixFileName(manifest, version) {
 	const base = manifest.vsixFileName || manifest.extensionId || "i-mrdedchai.iCline"
 	return `${base}-${version}.vsix`
-}
-
-function todayIso() {
-	return new Date().toISOString().slice(0, 10)
-}
-
-function ensureChangelogVersion(changelog, version) {
-	const header = `## [${version}]`
-	if (changelog.includes(header)) {
-		return changelog
-	}
-	const entry = `# Changelog
-
-${header} - ${todayIso()}
-
-### Changed
-- 📄 Docs auto-synced from \`scripts/sync-icline-docs.mjs\`
-
-`
-	if (changelog.startsWith("# Changelog")) {
-		return changelog.replace("# Changelog\n\n", entry.replace("# Changelog\n\n", "# Changelog\n\n"))
-	}
-	return entry + changelog
 }
 
 /** Extract the latest changelog section for GitHub Release notes. */
@@ -322,7 +300,7 @@ function sync() {
 
 	if (fs.existsSync(CHANGELOG_PATH)) {
 		let changelog = fs.readFileSync(CHANGELOG_PATH, "utf-8")
-		changelog = ensureChangelogVersion(changelog, version)
+		changelog = ensureReleaseChangelogVersion(changelog, version)
 		fs.writeFileSync(CHANGELOG_PATH, changelog, "utf-8")
 	}
 

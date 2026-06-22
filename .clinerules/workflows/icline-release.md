@@ -61,8 +61,8 @@ Key checks:
 ### 1. Code + version
 
 - [ ] Fix/feature complete
-- [ ] Bump `apps/vscode/package.json` version
-- [ ] Add `apps/vscode/CHANGELOG.md` section
+- [ ] Add bullets under `## [x.y.z] - Unreleased` in `apps/vscode/CHANGELOG.md` during dev (never `## [x.y.z-dev.N]` sections)
+- [ ] On Stable: `release-icline.ps1` finalizes Unreleased → dated release, blocks leftover dev sections, seeds next Unreleased
 
 ### 2. Sync docs
 

@@ -23,6 +23,7 @@ $RepoRoot = Split-Path -Parent $PSScriptRoot
 $ExtRoot = Join-Path $RepoRoot "apps\vscode"
 $PackageJson = Join-Path $ExtRoot "package.json"
 $Changelog = Join-Path $ExtRoot "CHANGELOG.md"
+$ChangelogReleaseScript = Join-Path $RepoRoot "scripts\changelog-release.mjs"
 $SyncScript = Join-Path $ExtRoot "scripts\sync-icline-docs.mjs"
 $SmokeScript = Join-Path $RepoRoot "scripts\icline-smoke-checklist.ps1"
 $DevBuildStatePath = Join-Path $RepoRoot ".icline\dev-build.json"
@@ -163,6 +164,26 @@ function Assert-VersionMatchesChannel {
     }
 }
 
+function Invoke-ChangelogRelease {
+    param(
+        [string]$Command,
+        [string]$Version = ""
+    )
+    $changelogRel = (Resolve-Path $ChangelogReleaseScript).Path
+    $changelogFile = (Resolve-Path $Changelog).Path
+    $args = @($changelogRel, $Command, "--file", $changelogFile)
+    if ($Version) { $args += @("--version", $Version) }
+    Push-Location $RepoRoot
+    try {
+        & node @args
+        if ($LASTEXITCODE -ne 0) {
+            throw "changelog-release $Command failed (exit $LASTEXITCODE)"
+        }
+    } finally {
+        Pop-Location
+    }
+}
+
 Write-Host "==> iCline release channel: $Channel" -ForegroundColor Cyan
 
 if ($Channel -eq "Stable" -and $SkipSmokeCheck -and -not $MaintainerApproval.Trim()) {
@@ -193,6 +214,20 @@ if ($Version) {
 
 $ver = Get-PackageVersion
 Assert-VersionMatchesChannel -Ver $ver -Ch $Channel
+
+if ($Channel -eq "Dev") {
+    Write-Host "==> Changelog gate (Dev)..."
+    Invoke-ChangelogRelease -Command "validate-dev"
+} elseif ($Channel -eq "Stable") {
+    Write-Host "==> Finalizing CHANGELOG Unreleased -> dated release..."
+    Invoke-ChangelogRelease -Command "finalize" -Version (Get-BaseReleaseVersion $ver)
+    Write-Host "==> Changelog gate (Stable)..."
+    Invoke-ChangelogRelease -Command "validate-stable" -Version (Get-BaseReleaseVersion $ver)
+} elseif ($Channel -eq "Beta") {
+    Write-Host "==> Changelog gate (Beta)..."
+    Invoke-ChangelogRelease -Command "validate-dev"
+    Invoke-ChangelogRelease -Command "validate-stable" -Version (Get-BaseReleaseVersion $ver)
+}
 
 if ($MaintainerApproval.Trim()) {
     $approvalsDir = Join-Path $RepoRoot "releases\approvals"
@@ -337,6 +372,11 @@ if ($PublishMarketplace) {
 } elseif ($Channel -eq "Stable") {
     Write-Host ""
     Write-Host "Stable release on GitHub is done. Marketplace NOT published (add -PublishMarketplace after final verification)." -ForegroundColor Yellow
+}
+
+if ($Channel -eq "Stable") {
+    Write-Host "==> Seeding next CHANGELOG Unreleased stub..."
+    Invoke-ChangelogRelease -Command "seed-next"
 }
 
 Write-Host ""
