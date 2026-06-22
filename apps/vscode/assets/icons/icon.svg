@@ -10,6 +10,7 @@
                 </g>
                 <rect id="Rectangle-Copy" stroke="#24292F" stroke-width="8" x="31" y="44.5" width="5" height="22" rx="2.5"></rect>
                 <rect id="Rectangle-Copy-2" stroke="#24292F" stroke-width="8" x="55" y="44.5" width="5" height="22" rx="2.5"></rect>
+                <text id="icline-mark" x="5" y="43.5" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13.5" font-weight="700" fill="#24292F">i</text>
             </g>
         </g>
     </g>

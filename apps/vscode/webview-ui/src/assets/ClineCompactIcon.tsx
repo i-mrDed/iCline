@@ -5,6 +5,14 @@ export const ClineCompactIcon = () => (
 			<ellipse cx="45.7349843" cy="11" rx="12" ry="14" />
 			<ellipse cx="33.5" cy="55.5" rx="8" ry="9" />
 			<ellipse cx="57.5" cy="55.5" rx="8" ry="9" />
+			<text
+				x="5"
+				y="43.5"
+				fontFamily="system-ui, -apple-system, Segoe UI, sans-serif"
+				fontSize="13.5"
+				fontWeight="700">
+				i
+			</text>
 		</g>
 	</svg>
 )

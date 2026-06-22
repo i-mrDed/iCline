@@ -13,6 +13,9 @@
 ### Added
 - 🏠 **Welcome home — Phase 1** — iCline branding on welcome screen, provider/model chip, twelve quick-start prompts (explain, refactor, tests, debug, review, architecture, security, CI, docs, plan, performance, dependencies); task history stays visible alongside iCline quick starts (unlike Cline hosted quick wins)
 
+### Changed
+- 🎨 **iCline icon branding** — add `i` mark beside left ear on Activity Bar SVG (`icon.svg`) and Welcome compact icon; refresh 128×128 marketplace PNG; retrace sleepy logo from updated artwork (`sleepy-cline.svg`, `ClineLogoTired`); update panel robot PNGs (dark/light)
+
 ### Fixed
 - 🐛 **Open VSX screenshots** — keep relative `assets/docs/` paths in packaged README (`vsce --no-rewrite-relative-links`; Open VSX blocks external GitHub URLs); `package-vsix.mjs` swaps marketplace README before `vsce package` so dev and publish builds match
 - 🛡️ **Harness epistemic discipline** — do not echo user factual claims (e.g. wrong weekday in greetings); check `# Current Time` in environment_details before affirming date/time; politely correct conflicts instead of mirroring
