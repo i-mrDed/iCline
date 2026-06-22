@@ -1,7 +1,7 @@
 # iCline — Cline Fork
 
 <!-- icline:version -->
-> 📦 **Current version:** `0.1.16` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
+> 📦 **Current version:** `0.1.17` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -33,8 +33,6 @@ Standalone Cline fork for VS Code — extension ID **`i-mrdedchai.iCline`**. **N
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
-| Verified publisher | `saoudrizwan` | `i-mrdedchai` ✅ |
-| Open VSX (Cursor, VSCodium, …) | ❌ | ✅ |
 | ⚡ Quick Provider & Model picker on chat | ❌ | ✅ |
 | 🏠 Welcome Quick Starts (12 templates, editable prompts) | ❌ | ✅ |
 | 📦 History export / import (`.zip`) | ❌ | ✅ |
@@ -49,15 +47,11 @@ Standalone Cline fork for VS Code — extension ID **`i-mrdedchai.iCline`**. **N
 
 Switch providers and models **without leaving the chat** — search all providers, collapse/expand model lists, set **Thinking / Effort per model** on hover, and refresh dynamic catalogs.
 
-<p align="center">
-  <img src="assets/docs/Preview-Settings-iCline-menu-Providers-Models.jpg" alt="iCline quick model picker on the chat input" width="720" />
-</p>
+![iCline quick model picker on the chat input](assets/docs/Preview-Settings-iCline-menu-Providers-Models.jpg)
 
 The full provider catalog and deep model settings remain in **Settings → API Configuration**:
 
-<p align="center">
-  <img src="assets/docs/Preview-Settings-iCline-Providers-Models.jpg" alt="iCline Settings — Providers and Models" width="720" />
-</p>
+![iCline Settings — Providers and Models](assets/docs/Preview-Settings-iCline-Providers-Models.jpg)
 
 ---
 

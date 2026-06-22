@@ -14,7 +14,7 @@
 
 <!-- icline:version -->
 <p align="center">
-  <strong>เวอร์ชัน</strong> <code>0.1.16</code> ·
+  <strong>เวอร์ชัน</strong> <code>0.1.17</code> ·
   <a href="https://github.com/i-mrDedchai/iCline/releases">Releases</a> ·
   <a href="https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md">Changelog</a> ·
   Extension ID <code>i-mrdedchai.iCline</code>
@@ -41,7 +41,7 @@
 **หรือติดตั้งจาก VSIX:**
 
 1. ดาวน์โหลด `.vsix` ล่าสุดจาก [Releases](https://github.com/i-mrDedchai/iCline/releases)
-2. `code --install-extension i-mrdedchai.iCline-0.1.16.vsix --force`
+2. `code --install-extension i-mrdedchai.iCline-0.1.17.vsix --force`
 3. **Developer: Reload Window**
 
 เอกสาร extension เต็ม: **[apps/vscode/README.th.md](apps/vscode/README.th.md)** · English: **[apps/vscode/README.md](apps/vscode/README.md)**
@@ -52,7 +52,7 @@
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrdedchai.iCline-0.1.16.vsix --force
+code --install-extension dist/i-mrdedchai.iCline-0.1.17.vsix --force
 ```
 
 ## iCline vs Cline official
@@ -60,9 +60,6 @@ code --install-extension dist/i-mrdedchai.iCline-0.1.16.vsix --force
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
-| Publisher namespace ยืนยันแล้ว | `saoudrizwan` | `i-mrdedchai` ✅ |
-| VS Marketplace | ✅ | ✅ |
-| Open VSX (Cursor, VSCodium, …) | ❌ | ✅ |
 | ⚡ เมนูด่วนเลือก Provider / Model บนแชท | ❌ | ✅ |
 | 🏠 Quick Start 12 แบบ (แก้ prompt ได้) | ❌ | ✅ |
 | 📦 Export / Import history (`.zip`) | ❌ | ✅ |

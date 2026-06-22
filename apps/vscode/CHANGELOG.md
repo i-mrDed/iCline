@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.17] - 2026-06-22
+
+### Fixed
+- 🖼️ **Marketplace icon** — restore high-contrast `icon.png` (white robot on dark tile) so the extension logo is visible on store listing pages
+- 📸 **Marketplace screenshots** — fix preview images on VS Marketplace (GitHub `baseImagesUrl` rewrite) and Open VSX (relative `assets/docs/` paths in VSIX); use Markdown image syntax
+- 📋 **Comparison table** — remove store/distribution rows from README tables (not a meaningful Cline vs iCline differentiator)
+
 ## [0.1.16-dev.7] - 2026-06-22
 
 ### Added

@@ -151,7 +151,9 @@ function ensurePackagedReadmeImages(readme, manifest) {
 	const escapedBase = base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 	return readme
 		.replace(new RegExp(`src="${escapedBase}/assets/docs/([^"]+)"`, "g"), 'src="assets/docs/$1"')
+		.replace(new RegExp(`\\]\\(${escapedBase}/assets/docs/([^)]+)\\)`, "g"), "](assets/docs/$1)")
 		.replace(/src="assets\/docs\/([^"]+)"/g, 'src="assets/docs/$1"')
+		.replace(/\]\(assets\/docs\/([^)]+)\)/g, "](assets/docs/$1)")
 }
 
 function patchRootReadme(readme, { version, manifest, vsixName, isThai = false }) {

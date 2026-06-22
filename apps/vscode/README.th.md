@@ -1,7 +1,7 @@
 # iCline
 
 <!-- icline:version -->
-> 📦 **เวอร์ชันปัจจุบัน:** `0.1.16` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
+> 📦 **เวอร์ชันปัจจุบัน:** `0.1.17` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -31,8 +31,6 @@
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
-| Publisher ยืนยันแล้ว | `saoudrizwan` | `i-mrdedchai` ✅ |
-| VS Marketplace · Open VSX | Marketplace อย่างเดียว | ✅ ทั้งคู่ |
 | ⚡ เมนูด่วนเลือก Provider / Model บนแชท | ❌ | ✅ |
 | 🏠 Quick Start 12 แบบ (แก้ prompt ได้) | ❌ | ✅ |
 | 📦 Export / Import history (`.zip`) | ❌ | ✅ |
@@ -45,21 +43,13 @@
 
 ### ⚡ เมนูด่วนเลือก Provider & Model (บนแชท)
 
-| | Cline official | iCline |
-|---|---|---|
-| ⚡ เมนูด่วนเลือก Provider / Model บนแชท | ❌ | ✅ |
-
 สลับ Provider และโมเดลได้ **โดยไม่ต้องออกจากหน้าแชท** — ค้นหาได้ทุก Provider ยุบ/ขยายรายการโมเดล ตั้ง **Thinking / Effort รายโมเดล** เมื่อ hover และ refresh รายการโมเดลแบบ dynamic
 
-<p align="center">
-  <img src="assets/docs/Preview-Settings-iCline-menu-Providers-Models.jpg" alt="เมนูด่วนเลือก Provider และ Model บนช่องแชท iCline" width="720" />
-</p>
+![เมนูด่วนเลือก Provider และ Model บนช่องแชท iCline](assets/docs/Preview-Settings-iCline-menu-Providers-Models.jpg)
 
 รายการ Provider เต็มและการตั้งค่าโมเดลแบบละเอียดยังอยู่ที่ **Settings → API Configuration**:
 
-<p align="center">
-  <img src="assets/docs/Preview-Settings-iCline-Providers-Models.jpg" alt="iCline Settings — Providers และ Models" width="720" />
-</p>
+![iCline Settings — Providers และ Models](assets/docs/Preview-Settings-iCline-Providers-Models.jpg)
 
 ---
 
@@ -87,7 +77,7 @@
 ดาวน์โหลด `.vsix` ล่าสุดจาก [GitHub Releases](https://github.com/i-mrDedchai/iCline/releases) แล้วรัน:
 
 ```bash
-code --install-extension i-mrdedchai.iCline-0.1.16.vsix --force
+code --install-extension i-mrdedchai.iCline-0.1.17.vsix --force
 ```
 
 หรือ build เอง:
@@ -96,7 +86,7 @@ code --install-extension i-mrdedchai.iCline-0.1.16.vsix --force
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrdedchai.iCline-0.1.16.vsix --force
+code --install-extension dist/i-mrdedchai.iCline-0.1.17.vsix --force
 ```
 
 ---
