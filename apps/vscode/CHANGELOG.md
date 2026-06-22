@@ -11,7 +11,7 @@
 - 🏪 **Marketplace copy** — displayName `iCline — Standalone Coding Agent` (EN) / `iCline — เอเจนต์เขียนโค้ด (standalone)` (TH); description leads with “Cline fork” + provider line (Grok, ZenMux, OpenRouter, …); remove Grok-only signal from title
 
 ### Added
-- 🏠 **Welcome home — Phase 1** — iCline branding on welcome screen, provider/model chip, four quick-start prompts; task history stays visible alongside iCline quick starts (unlike Cline hosted quick wins)
+- 🏠 **Welcome home — Phase 1** — iCline branding on welcome screen, provider/model chip, twelve quick-start prompts (explain, refactor, tests, debug, review, architecture, security, CI, docs, plan, performance, dependencies); task history stays visible alongside iCline quick starts (unlike Cline hosted quick wins)
 
 ### Fixed
 - 🐛 **Open VSX screenshots** — keep relative `assets/docs/` paths in packaged README (`vsce --no-rewrite-relative-links`; Open VSX blocks external GitHub URLs); `package-vsix.mjs` swaps marketplace README before `vsce package` so dev and publish builds match

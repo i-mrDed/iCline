@@ -34,6 +34,30 @@ const renderIcon = (iconName?: string) => {
 		case "DebugIcon":
 			iconClass = "codicon-debug"
 			break
+		case "ReviewIcon":
+			iconClass = "codicon-eye"
+			break
+		case "ArchitectureIcon":
+			iconClass = "codicon-type-hierarchy-sub"
+			break
+		case "SecurityIcon":
+			iconClass = "codicon-shield"
+			break
+		case "CiIcon":
+			iconClass = "codicon-run-errors"
+			break
+		case "DocsIcon":
+			iconClass = "codicon-markdown"
+			break
+		case "PlanIcon":
+			iconClass = "codicon-tasklist"
+			break
+		case "PerformanceIcon":
+			iconClass = "codicon-pulse"
+			break
+		case "DependencyIcon":
+			iconClass = "codicon-package"
+			break
 		default:
 			break
 	}
