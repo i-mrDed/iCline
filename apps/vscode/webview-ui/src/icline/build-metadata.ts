@@ -3,7 +3,7 @@ export const ICLINE_BUILD_METADATA = {
 	releaseVersion: "0.1.17",
 	devBuildNumber: null,
 	devBuildLabel: null,
-	builtAt: "2026-06-23 00:41",
+	builtAt: "2026-06-23 00:43",
 	upstreamClineSyncedVersion: "v3.89.2",
 	upstreamClineSyncedAt: "2026-06-21",
 	upstreamClineRepo: "https://github.com/cline/cline",
