@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.16-dev.5] - 2026-06-22
+
+### Fixed
+- 🏠 **iCline Quick Starts** — keep the 12-card grid on welcome home even when task history has 3+ items (Cline hosted quick wins still hide at threshold as upstream)
+
 ## [0.1.16-dev.4] - 2026-06-22
 
 ### Fixed

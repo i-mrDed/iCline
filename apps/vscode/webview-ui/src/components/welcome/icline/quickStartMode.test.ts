@@ -12,9 +12,13 @@ describe("resolveQuickStartMode", () => {
 		expect(resolveQuickStartMode(false, 1)).toBe("icline")
 	})
 
-	it("hides quick starts when history threshold reached", () => {
+	it("hides Cline quick wins when hosted history threshold is reached", () => {
 		expect(resolveQuickStartMode(true, 3)).toBe("none")
-		expect(resolveQuickStartMode(false, 5)).toBe("none")
+	})
+
+	it("keeps iCline quick starts visible regardless of history length", () => {
+		expect(resolveQuickStartMode(false, 3)).toBe("icline")
+		expect(resolveQuickStartMode(false, 5)).toBe("icline")
 	})
 })
 

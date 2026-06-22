@@ -10,7 +10,8 @@ export function resolveQuickStartMode(
 	if (isProdHostedApp && taskHistoryLength < threshold) {
 		return "cline"
 	}
-	if (!isProdHostedApp && taskHistoryLength < threshold) {
+	// iCline quick starts stay on the welcome home alongside task history (unlike Cline hosted quick wins).
+	if (!isProdHostedApp) {
 		return "icline"
 	}
 	return "none"
