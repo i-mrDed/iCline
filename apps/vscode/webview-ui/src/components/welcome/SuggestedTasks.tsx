@@ -1,6 +1,8 @@
 import { NewTaskRequest } from "@shared/proto/cline/task"
-import React from "react"
+import React, { useState } from "react"
+import { readQuickStartPromptOverrides, type QuickStartPromptOverrides } from "@/icline/quickStartPromptStorage"
 import { TaskServiceClient } from "@/services/grpc-client"
+import IclineQuickStartCard from "./icline/IclineQuickStartCard"
 import { iclineQuickStartTasks } from "./icline/iclineQuickStartTasks"
 import type { QuickStartMode } from "./icline/quickStartMode"
 import QuickWinCard from "./QuickWinCard"
@@ -11,6 +13,8 @@ interface SuggestedTasksProps {
 }
 
 export const SuggestedTasks: React.FC<SuggestedTasksProps> = ({ quickStartMode }) => {
+	const [promptOverrides, setPromptOverrides] = useState<QuickStartPromptOverrides>(() => readQuickStartPromptOverrides())
+
 	const handleExecuteQuickWin = async (prompt: string) => {
 		await TaskServiceClient.newTask(NewTaskRequest.create({ text: prompt, images: [] }))
 	}
@@ -38,11 +42,12 @@ export const SuggestedTasks: React.FC<SuggestedTasksProps> = ({ quickStartMode }
 				</h2>
 				<div className="grid grid-cols-1 min-[300px]:grid-cols-2 gap-2">
 					{iclineQuickStartTasks.map((task: QuickWinTask) => (
-						<QuickWinCard
+						<IclineQuickStartCard
 							key={task.id}
-							onExecute={() => handleExecuteQuickWin(task.prompt)}
+							onExecute={handleExecuteQuickWin}
+							onOverridesChange={setPromptOverrides}
+							overrides={promptOverrides}
 							task={task}
-							variant="grid"
 						/>
 					))}
 				</div>
