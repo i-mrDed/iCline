@@ -1,7 +1,7 @@
 {
 	"name": "iCline",
 	"displayName": "%extension.displayName%",
-	"description": "Standalone Cline-based agent for VS Code — no official Cline required. xAI Grok OAuth & Subscription, ZenMux, dual-channel updates, and hardened agent harness.",
+	"description": "Standalone Cline fork for VS Code — no official Cline required. Supports Grok, ZenMux, OpenRouter, and other providers.",
 	"version": "0.1.16",
 	"icon": "assets/icons/icon.png",
 	"engines": {

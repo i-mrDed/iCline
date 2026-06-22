@@ -2,6 +2,9 @@
 
 ## [0.1.16] - Unreleased
 
+### Changed
+- 🏪 **Marketplace copy** — displayName `iCline — Standalone Coding Agent` (EN) / `iCline — เอเจนต์เขียนโค้ด (standalone)` (TH); description leads with “Cline fork” + provider line (Grok, ZenMux, OpenRouter, …); remove Grok-only signal from title
+
 ### Added
 - 🏠 **Welcome home — Phase 1** — iCline branding on welcome screen, provider/model chip, four quick-start prompts; task history stays visible alongside iCline quick starts (unlike Cline hosted quick wins)
 

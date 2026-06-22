@@ -1,7 +1,7 @@
 # iCline — Cline Fork
 
 <!-- icline:version -->
-> 📦 **Current version:** `0.1.15` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
+> 📦 **Current version:** `0.1.16` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -10,7 +10,7 @@
 
 🌐 **Languages:** English (this page) · [ภาษาไทย](README.th.md)
 
-**Standalone** Cline-based coding agent for VS Code — extension ID **`i-mrdedchai.iCline`**. **No official Cline required.**
+Standalone Cline fork for VS Code — extension ID **`i-mrdedchai.iCline`**. **No official Cline required.** Supports Grok, ZenMux, OpenRouter, and other providers.
 
 🤖 xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.
 
