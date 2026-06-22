@@ -144,10 +144,14 @@ function patchReadme(readme, { version, manifest, releasesUrl, vsixName, isThai 
 	return patchVsixInstallCommands(next, vsixName)
 }
 
-/** Marketplace + extension Details need absolute image URLs; VSIX still ships assets/docs for offline. */
-function patchReadmeImages(readme, manifest) {
+/** Packaged README must use relative asset paths — VS Marketplace and Open VSX resolve
+ *  images from the VSIX. Open VSX blocks external URLs (eclipse/openvsx#1182). */
+function ensurePackagedReadmeImages(readme, manifest) {
 	const base = `${manifest.github.url}/raw/main/apps/vscode`
-	return readme.replace(/src="assets\/docs\/([^"]+)"/g, `src="${base}/assets/docs/$1"`)
+	const escapedBase = base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+	return readme
+		.replace(new RegExp(`src="${escapedBase}/assets/docs/([^"]+)"`, "g"), 'src="assets/docs/$1"')
+		.replace(/src="assets\/docs\/([^"]+)"/g, 'src="assets/docs/$1"')
 }
 
 function patchRootReadme(readme, { version, manifest, vsixName, isThai = false }) {
@@ -309,7 +313,7 @@ function sync() {
 				? patchRootReadme(readme, { ...readmeCtx, isThai: isRootThai })
 				: patchReadme(readme, { ...readmeCtx, isThai: isExtThai })
 		if (isMarketplace) {
-			patched = patchReadmeImages(patched, manifest)
+			patched = ensurePackagedReadmeImages(patched, manifest)
 		}
 		fs.writeFileSync(readmePath, patched, "utf-8")
 	}
