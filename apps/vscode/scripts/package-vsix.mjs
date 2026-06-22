@@ -15,11 +15,15 @@ const out = path.join(extRoot, "dist", `${base}-${pkg.version}.vsix`)
 const swapResult = swapIn()
 let exitCode = 1
 try {
-	const result = spawnSync("npx", ["vsce", "package", "--no-dependencies", "--out", out], {
+	const result = spawnSync(
+		"npx",
+		["vsce", "package", "--no-dependencies", "--no-rewrite-relative-links", "--out", out],
+		{
 		stdio: "inherit",
 		shell: process.platform === "win32",
-		cwd: extRoot,
-	})
+			cwd: extRoot,
+		},
+	)
 	exitCode = result.status ?? 1
 } finally {
 	if (!swapResult.skipped) {

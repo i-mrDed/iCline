@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.16-dev.1] - 2026-06-22
+
+### Changed
+- 📄 Docs auto-synced from `scripts/sync-icline-docs.mjs`
+
 ## [0.1.16] - Unreleased
 
 ### Changed
@@ -9,7 +14,7 @@
 - 🏠 **Welcome home — Phase 1** — iCline branding on welcome screen, provider/model chip, four quick-start prompts; task history stays visible alongside iCline quick starts (unlike Cline hosted quick wins)
 
 ### Fixed
-- 🐛 **Open VSX screenshots** — use relative `assets/docs/` image paths in packaged README (Open VSX blocks external URLs); `package-vsix.mjs` swaps marketplace README before `vsce package` so dev and publish builds match
+- 🐛 **Open VSX screenshots** — keep relative `assets/docs/` paths in packaged README (`vsce --no-rewrite-relative-links`; Open VSX blocks external GitHub URLs); `package-vsix.mjs` swaps marketplace README before `vsce package` so dev and publish builds match
 - 🛡️ **Harness epistemic discipline** — do not echo user factual claims (e.g. wrong weekday in greetings); check `# Current Time` in environment_details before affirming date/time; politely correct conflicts instead of mirroring
 - 🛡️ **ACT MODE conversational replies** — harness overlay now requires `attempt_completion` or `ask_followup_question` for chat-only turns (avoids plain-text replies that trigger “did not use a tool” loops)
 
