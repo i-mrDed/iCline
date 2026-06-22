@@ -50,7 +50,7 @@ import { VscodeDiffViewProvider } from "./hosts/vscode/VscodeDiffViewProvider"
 import { VscodeWebviewProvider } from "./hosts/vscode/VscodeWebviewProvider"
 import { exportVSCodeStorageToSharedFiles } from "./hosts/vscode/vscode-to-file-migration"
 import { UpdateService } from "./icline/updates/UpdateService"
-import { ExtensionContextKeys, ExtensionRegistryInfo, isIclineBuild } from "./registry"
+import { ExtensionContextKeys, ExtensionRegistryInfo, getProductName, isIclineBuild } from "./registry"
 import { AuthService } from "./services/auth/AuthService"
 import { LogoutReason } from "./services/auth/types"
 import { telemetryService } from "./services/telemetry"
@@ -256,6 +256,7 @@ export async function activate(context: vscode.ExtensionContext) {
 					const LINE_COUNT_ADJUSTMENT_FOR_ZERO_INDEXING = 1
 
 					const actions: vscode.CodeAction[] = []
+					const productName = getProductName()
 					const editor = vscode.window.activeTextEditor // Get active editor for selection check
 
 					// Expand range to include surrounding 3 lines or use selection if broader
@@ -286,40 +287,40 @@ export async function activate(context: vscode.ExtensionContext) {
 						)
 					}
 
-					// Add to Cline (Always available)
-					const addAction = new vscode.CodeAction("Add to Cline", vscode.CodeActionKind.QuickFix)
+					// Add to agent (Always available)
+					const addAction = new vscode.CodeAction(`Add to ${productName}`, vscode.CodeActionKind.QuickFix)
 					addAction.command = {
 						command: commands.AddToChat,
-						title: "Add to Cline",
+						title: `Add to ${productName}`,
 						arguments: [expandedRange, context.diagnostics],
 					}
 					actions.push(addAction)
 
-					// Explain with Cline (Always available)
-					const explainAction = new vscode.CodeAction("Explain with Cline", vscode.CodeActionKind.RefactorExtract) // Using a refactor kind
+					// Explain with agent (Always available)
+					const explainAction = new vscode.CodeAction(`Explain with ${productName}`, vscode.CodeActionKind.RefactorExtract) // Using a refactor kind
 					explainAction.command = {
 						command: commands.ExplainCode,
-						title: "Explain with Cline",
+						title: `Explain with ${productName}`,
 						arguments: [expandedRange],
 					}
 					actions.push(explainAction)
 
-					// Improve with Cline (Always available)
-					const improveAction = new vscode.CodeAction("Improve with Cline", vscode.CodeActionKind.RefactorRewrite) // Using a refactor kind
+					// Improve with agent (Always available)
+					const improveAction = new vscode.CodeAction(`Improve with ${productName}`, vscode.CodeActionKind.RefactorRewrite) // Using a refactor kind
 					improveAction.command = {
 						command: commands.ImproveCode,
-						title: "Improve with Cline",
+						title: `Improve with ${productName}`,
 						arguments: [expandedRange],
 					}
 					actions.push(improveAction)
 
-					// Fix with Cline (Only if diagnostics exist)
+					// Fix with agent (Only if diagnostics exist)
 					if (context.diagnostics.length > 0) {
-						const fixAction = new vscode.CodeAction("Fix with Cline", vscode.CodeActionKind.QuickFix)
+						const fixAction = new vscode.CodeAction(`Fix with ${productName}`, vscode.CodeActionKind.QuickFix)
 						fixAction.isPreferred = true
 						fixAction.command = {
 							command: commands.FixWithCline,
-							title: "Fix with Cline",
+							title: `Fix with ${productName}`,
 							arguments: [expandedRange, context.diagnostics],
 						}
 						actions.push(fixAction)
@@ -552,7 +553,7 @@ ${ctx.cellJson || "{}"}
 		void updateService.maybeNotify()
 	}
 
-	const brand = isIclineBuild() ? "iCline" : "Cline"
+	const brand = getProductName()
 	Logger.log(`[${brand}] extension activated in ${performance.now() - activationStartTime} ms`)
 
 	return createClineAPI(webview.controller)

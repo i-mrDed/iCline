@@ -7,6 +7,7 @@ import type { ToolResponse } from "../../index"
 import type { IPartialBlockHandler, IToolHandler } from "../ToolExecutorCoordinator"
 import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
+import { getProductName } from "@/registry"
 
 export class NewTaskHandler implements IToolHandler, IPartialBlockHandler {
 	readonly name = ClineDefaultTool.NEW_TASK
@@ -38,8 +39,8 @@ export class NewTaskHandler implements IToolHandler, IPartialBlockHandler {
 		// Show notification if enabled
 		if (config.autoApprovalSettings.enableNotifications) {
 			showSystemNotification({
-				subtitle: "Cline wants to start a new task...",
-				message: `Cline is suggesting to start a new task with: ${context}`,
+				subtitle: `${getProductName()} wants to start a new task...`,
+				message: `${getProductName()} is suggesting to start a new task with: ${context}`,
 			})
 		}
 

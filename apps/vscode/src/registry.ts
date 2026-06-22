@@ -12,6 +12,11 @@ export function isIclineBuild(): boolean {
 	)
 }
 
+/** User-facing agent name in chat labels, notifications, and code actions. */
+export function getProductName(): string {
+	return isIclineBuild() ? "iCline" : "Cline"
+}
+
 /** Command/view/settings prefix. `i-mrdedchai.iCline` uses `iCline.*` to avoid colliding with legacy `icline.icline`. */
 function iclinePrefix(): string {
 	if (publisher === "i-mrDed" || publisher === "i-mrded" || publisher === "i-mrdedchai") {

@@ -108,6 +108,7 @@ import { ulid } from "ulid";
 import type { SystemPromptContext } from "@/core/prompts/system-prompt";
 import { getSystemPrompt } from "@/core/prompts/system-prompt";
 import { HostProvider } from "@/hosts/host-provider";
+import { getProductName } from "@/registry";
 import { FileEditProvider } from "@/integrations/editor/FileEditProvider";
 import {
 	type CommandExecutionOptions,
@@ -1086,7 +1087,7 @@ export class Task {
 	) {
 		await this.say(
 			"error",
-			`Cline tried to use ${toolName}${
+			`${getProductName()} tried to use ${toolName}${
 				relPath ? ` for '${relPath.toPosix()}'` : ""
 			} without value for required parameter '${paramName}'. Retrying...`,
 		);
@@ -2837,14 +2838,14 @@ export class Task {
 				showSystemNotification({
 					subtitle: "Error",
 					message:
-						"Cline is having trouble. Would you like to continue the task?",
+						`${getProductName()} is having trouble. Would you like to continue the task?`,
 				});
 			}
 			const { response, text, images, files } = await this.ask(
 				"mistake_limit_reached",
 				this.api.getModel().id.includes("claude")
-					? `This may indicate a failure in Cline's thought process or inability to use a tool properly, which can be mitigated with some user guidance (e.g. "Try breaking down the task into smaller steps").`
-					: "Cline uses complex prompts and iterative task execution that may be challenging for less capable models. For best results, it's recommended to use Claude 4.5 Sonnet for its advanced agentic coding capabilities.",
+					? `This may indicate a failure in ${getProductName()}'s thought process or inability to use a tool properly, which can be mitigated with some user guidance (e.g. "Try breaking down the task into smaller steps").`
+					: `${getProductName()} uses complex prompts and iterative task execution that may be challenging for less capable models. For best results, it's recommended to use Claude 4.5 Sonnet for its advanced agentic coding capabilities.`,
 			);
 			if (response === "messageResponse") {
 				// Display the user's message in the chat UI

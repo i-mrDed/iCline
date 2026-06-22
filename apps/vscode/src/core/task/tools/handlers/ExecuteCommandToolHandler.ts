@@ -14,6 +14,7 @@ import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
 import { applyModelContentFixes } from "../utils/ModelContentProcessor"
 import { ToolResultUtils } from "../utils/ToolResultUtils"
+import { getProductName } from "@/registry"
 
 // Default timeout for commands in yolo mode and background exec mode
 const DEFAULT_COMMAND_TIMEOUT_SECONDS = 30
@@ -101,7 +102,7 @@ export class ExecuteCommandToolHandler implements IFullyManagedTool {
 			config.taskState.consecutiveMistakeCount++
 			await config.callbacks.say(
 				"error",
-				"Cline tried to use execute_command without value for required parameter 'command'. Retrying...",
+				`${getProductName()} tried to use execute_command without value for required parameter 'command'. Retrying...`,
 			)
 			return formatResponse.toolError(formatResponse.executeCommandMissingCommandError())
 		}

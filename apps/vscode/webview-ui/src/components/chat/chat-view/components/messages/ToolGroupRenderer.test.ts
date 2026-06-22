@@ -54,6 +54,6 @@ describe("getToolGroupSummaryFromParsedTools", () => {
 			readToolMessage(2, "say", "src/a.ts", { start: 1, end: 20 }),
 		])
 
-		expect(getToolGroupSummaryFromParsedTools(tools.map((tool) => tool.parsedTool))).toBe("Cline read 1 file")
+		expect(getToolGroupSummaryFromParsedTools(tools.map((tool) => tool.parsedTool))).toBe("iCline read 1 file")
 	})
 })

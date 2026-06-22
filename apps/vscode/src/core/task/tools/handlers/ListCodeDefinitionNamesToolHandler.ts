@@ -12,6 +12,7 @@ import type { ToolValidator } from "../ToolValidator"
 import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
 import { ToolResultUtils } from "../utils/ToolResultUtils"
+import { getProductName } from "@/registry"
 
 export class ListCodeDefinitionNamesToolHandler implements IFullyManagedTool {
 	readonly name = ClineDefaultTool.LIST_CODE_DEF
@@ -131,7 +132,7 @@ export class ListCodeDefinitionNamesToolHandler implements IFullyManagedTool {
 			)
 		} else {
 			// Manual approval flow
-			const notificationMessage = `Cline wants to analyze code definitions in ${getWorkspaceBasename(absolutePath, "ListCodeDefinitionNamesToolHandler.notification")}`
+			const notificationMessage = `${getProductName()} wants to analyze code definitions in ${getWorkspaceBasename(absolutePath, "ListCodeDefinitionNamesToolHandler.notification")}`
 
 			// Show notification
 			showNotificationForApproval(notificationMessage, config.autoApprovalSettings.enableNotifications)

@@ -17,6 +17,7 @@ import type { ToolValidator } from "../ToolValidator"
 import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
 import { ToolResultUtils } from "../utils/ToolResultUtils"
+import { getProductName } from "@/registry"
 
 export class SearchFilesToolHandler implements IFullyManagedTool {
 	readonly name = ClineDefaultTool.SEARCH
@@ -346,7 +347,7 @@ export class SearchFilesToolHandler implements IFullyManagedTool {
 			)
 		} else {
 			// Manual approval flow
-			const notificationMessage = `Cline wants to search files for ${regex}`
+			const notificationMessage = `${getProductName()} wants to search files for ${regex}`
 
 			// Show notification
 			showNotificationForApproval(notificationMessage, config.autoApprovalSettings.enableNotifications)

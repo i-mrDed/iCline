@@ -10,6 +10,7 @@ import type { IFullyManagedTool } from "../ToolExecutorCoordinator"
 import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
 import { ToolResultUtils } from "../utils/ToolResultUtils"
+import { getProductName } from "@/registry"
 
 export class AccessMcpResourceHandler implements IFullyManagedTool {
 	readonly name = ClineDefaultTool.MCP_ACCESS
@@ -93,7 +94,7 @@ export class AccessMcpResourceHandler implements IFullyManagedTool {
 			)
 		} else {
 			// Manual approval flow
-			const notificationMessage = `Cline wants to access ${uri || "unknown resource"} on ${server_name || "unknown server"}`
+			const notificationMessage = `${getProductName()} wants to access ${uri || "unknown resource"} on ${server_name || "unknown server"}`
 
 			// Show notification
 			showNotificationForApproval(notificationMessage, config.autoApprovalSettings.enableNotifications)

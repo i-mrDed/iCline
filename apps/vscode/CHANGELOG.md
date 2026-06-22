@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.16-dev.6] - 2026-06-22
+
+### Changed
+- 🏷️ **Agent branding in chat** — runtime tool labels, grouped summaries (`iCline read N files…`), approval prompts, system notifications, and editor code actions now say **iCline** instead of Cline during task execution
+
 ## [0.1.16-dev.5] - 2026-06-22
 
 ### Fixed

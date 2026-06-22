@@ -13,6 +13,7 @@ import type { ToolValidator } from "../ToolValidator"
 import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
 import { ToolResultUtils } from "../utils/ToolResultUtils"
+import { getProductName } from "@/registry"
 
 export class ListFilesToolHandler implements IFullyManagedTool {
 	readonly name = ClineDefaultTool.LIST_FILES
@@ -151,7 +152,7 @@ export class ListFilesToolHandler implements IFullyManagedTool {
 			)
 		} else {
 			// Manual approval flow
-			const notificationMessage = `Cline wants to view directory ${getWorkspaceBasename(absolutePath, "ListFilesToolHandler.notification")}/`
+			const notificationMessage = `${getProductName()} wants to view directory ${getWorkspaceBasename(absolutePath, "ListFilesToolHandler.notification")}/`
 
 			// Show notification
 			showNotificationForApproval(notificationMessage, config.autoApprovalSettings.enableNotifications)

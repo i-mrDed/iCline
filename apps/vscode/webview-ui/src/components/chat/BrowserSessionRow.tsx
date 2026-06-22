@@ -3,6 +3,7 @@ import { BrowserAction, BrowserActionResult, ClineMessage, ClineSayBrowserAction
 import { StringRequest } from "@shared/proto/cline/common"
 import { VSCodeButton } from "@vscode/webview-ui-toolkit/react"
 import deepEqual from "fast-deep-equal"
+import { AGENT_DISPLAY_NAME } from "@/icline/agent-display-name"
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react"
 import React, { CSSProperties, memo, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useSize } from "react-use"
@@ -360,7 +361,9 @@ const BrowserSessionRow = memo((props: BrowserSessionRowProps) => {
 					<span className="codicon codicon-inspect" style={browserIconStyle}></span>
 				)}
 				<span style={approveTextStyle}>
-					{isAutoApproved ? "Cline is using the browser:" : "Cline wants to use the browser:"}
+					{isAutoApproved
+						? `${AGENT_DISPLAY_NAME} is using the browser:`
+						: `${AGENT_DISPLAY_NAME} wants to use the browser:`}
 				</span>
 			</div>
 			<div

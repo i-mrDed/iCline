@@ -10,7 +10,7 @@ import { HookDiscoveryCache } from "./core/hooks/HookDiscoveryCache"
 import { HookProcessRegistry } from "./core/hooks/HookProcessRegistry"
 import { StateManager } from "./core/storage/StateManager"
 import { AgentConfigLoader } from "./core/task/tools/subagent/AgentConfigLoader"
-import { ExtensionRegistryInfo, isIclineBuild } from "./registry"
+import { ExtensionRegistryInfo, getProductName } from "./registry"
 import { ErrorService } from "./services/error"
 import { featureFlagsService } from "./services/feature-flags"
 import { getDistinctId } from "./services/logging/distinctId"
@@ -85,7 +85,7 @@ export async function initialize(storageContext: StorageContext): Promise<Webvie
 async function showVersionUpdateAnnouncement(stateManager: StateManager) {
 	// Version checking for autoupdate notification
 	const currentVersion = ExtensionRegistryInfo.version
-	const productName = isIclineBuild() ? "iCline" : "Cline"
+	const productName = getProductName()
 	const previousVersion = stateManager.getGlobalStateKey("clineVersion")
 	// Perform post-update actions if necessary
 	try {

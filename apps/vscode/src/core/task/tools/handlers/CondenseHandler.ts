@@ -9,6 +9,7 @@ import type { ToolResponse } from "../../index"
 import type { IPartialBlockHandler, IToolHandler } from "../ToolExecutorCoordinator"
 import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
+import { getProductName } from "@/registry"
 
 export class CondenseHandler implements IToolHandler, IPartialBlockHandler {
 	readonly name = ClineDefaultTool.CONDENSE
@@ -33,8 +34,8 @@ export class CondenseHandler implements IToolHandler, IPartialBlockHandler {
 		// Show notification if enabled
 		if (config.autoApprovalSettings.enableNotifications) {
 			showSystemNotification({
-				subtitle: "Cline wants to condense the conversation...",
-				message: `Cline is suggesting to condense your conversation with: ${context}`,
+				subtitle: `${getProductName()} wants to condense the conversation...`,
+				message: `${getProductName()} is suggesting to condense your conversation with: ${context}`,
 			})
 		}
 

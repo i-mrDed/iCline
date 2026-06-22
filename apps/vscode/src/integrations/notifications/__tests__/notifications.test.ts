@@ -78,11 +78,11 @@ describe("notifications", () => {
 			platformStub as unknown as Parameters<typeof notificationsModule.setNotificationPlatformForTesting>[0],
 		)
 
-		await notificationsModule.showSystemNotification({ title: "Cline", subtitle: "Approval Required", message: "test" })
+		await notificationsModule.showSystemNotification({ subtitle: "Approval Required", message: "test" })
 
 		sinon.assert.calledOnce(execaStub)
 		expect(execaStub.firstCall.args[0]).to.equal("notify-send")
-		expect(execaStub.firstCall.args[1]).to.deep.equal(["Cline", "Approval Required\ntest"])
+		expect(execaStub.firstCall.args[1]).to.deep.equal(["iCline", "Approval Required\ntest"])
 	})
 
 	it("creates explicit approval marker only when required", () => {
@@ -120,7 +120,7 @@ describe("notifications", () => {
 		sinon.assert.calledOnce(execaStub)
 		expect(execaStub.firstCall.args[0]).to.equal("notify-send")
 		expect(execaStub.firstCall.args[1]).to.deep.equal([
-			"Cline",
+			"iCline",
 			"Approval Required\nnpm install (explicit approval required)",
 		])
 	})

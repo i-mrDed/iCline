@@ -14,7 +14,7 @@ Standalone Cline fork for VS Code — no official Cline required. Supports Grok,
 
 <!-- icline:version -->
 <p align="center">
-  <strong>Version</strong> <code>0.1.16</code> ·
+  <strong>Version</strong> <code>0.1.16-dev.6</code> ·
   <a href="https://github.com/i-mrDedchai/iCline/releases">Releases</a> ·
   <a href="https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md">Changelog</a> ·
   Extension ID <code>i-mrdedchai.iCline</code>
@@ -26,7 +26,7 @@ Standalone Cline fork for VS Code — no official Cline required. Supports Grok,
 ## Quick start
 
 1. Download the latest `.vsix` from [Releases](https://github.com/i-mrDedchai/iCline/releases)
-2. Install: `code --install-extension i-mrdedchai.iCline-0.1.16.vsix --force`
+2. Install: `code --install-extension i-mrdedchai.iCline-0.1.16-dev.6.vsix --force`
 3. Open iCline from the Activity Bar → Settings → sign in to **xAI · Grok** or add your API key
 
 Full extension docs: **[apps/vscode/README.md](apps/vscode/README.md)** · Thai: **[apps/vscode/README.th.md](apps/vscode/README.th.md)**
@@ -37,7 +37,7 @@ Full extension docs: **[apps/vscode/README.md](apps/vscode/README.md)** · Thai:
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrdedchai.iCline-0.1.16.vsix --force
+code --install-extension dist/i-mrdedchai.iCline-0.1.16-dev.6.vsix --force
 ```
 
 ## iCline vs Cline official

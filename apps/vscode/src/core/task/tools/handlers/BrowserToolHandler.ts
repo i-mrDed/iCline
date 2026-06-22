@@ -8,6 +8,7 @@ import type { IFullyManagedTool } from "../ToolExecutorCoordinator"
 import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
 import { ToolResultUtils } from "../utils/ToolResultUtils"
+import { getProductName } from "@/registry"
 
 export class BrowserToolHandler implements IFullyManagedTool {
 	readonly name = ClineDefaultTool.BROWSER
@@ -95,7 +96,7 @@ export class BrowserToolHandler implements IFullyManagedTool {
 				} else {
 					// Show notification for approval if enabled
 					showNotificationForApproval(
-						`Cline wants to use a browser and launch ${url}`,
+						`${getProductName()} wants to use a browser and launch ${url}`,
 						config.autoApprovalSettings.enableNotifications,
 					)
 					await config.callbacks.removeLastPartialMessageIfExistsWithType("say", "browser_action_launch")

@@ -1,5 +1,6 @@
 import { execa } from "execa"
 import { platform } from "os"
+import { getProductName } from "@/registry"
 import { Logger } from "@/shared/services/Logger"
 
 interface NotificationOptions {
@@ -81,7 +82,7 @@ export function buildWindowsToastNotificationScript(options: NotificationOptions
     $textNodes.Item(1).InnerText = $message
 
     $toast = [Windows.UI.Notifications.ToastNotification]::new($xml)
-    [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Cline').Show($toast)
+    [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('${escapePowerShellSingleQuotedString(getProductName())}').Show($toast)
     `
 }
 
@@ -123,7 +124,7 @@ async function showLinuxNotification(options: NotificationOptions): Promise<void
 
 export async function showSystemNotification(options: NotificationOptions): Promise<void> {
 	try {
-		const { title = "Cline", message } = options
+		const { title = getProductName(), message } = options
 
 		if (!message) {
 			throw new Error("Message is required")

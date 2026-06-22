@@ -5,6 +5,7 @@ import CreditLimitError from "@/components/chat/CreditLimitError"
 import EntitlementError from "@/components/chat/EntitlementError"
 import SpendLimitError from "@/components/chat/SpendLimitError"
 import { Button } from "@/components/ui/button"
+import { AGENT_DISPLAY_NAME } from "@/icline/agent-display-name"
 import { useClineAuth, useClineSignIn } from "@/context/ClineAuthContext"
 import { ClineError, ClineErrorType } from "../../../../src/services/error/ClineError"
 
@@ -153,7 +154,7 @@ const ErrorRow = memo(({ message, errorType, apiRequestFailedMessage, apiReqStre
 				return (
 					<div className="flex flex-col p-2 rounded text-xs opacity-80 bg-quote text-foreground">
 						<div>
-							Cline tried to access <code>{message.text}</code> which is blocked by the <code>.clineignore</code>
+							{AGENT_DISPLAY_NAME} tried to access <code>{message.text}</code> which is blocked by the <code>.clineignore</code>
 							file.
 						</div>
 					</div>

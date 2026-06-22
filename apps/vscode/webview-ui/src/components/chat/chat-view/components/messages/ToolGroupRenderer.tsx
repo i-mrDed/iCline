@@ -2,6 +2,7 @@ import { ClineMessage, ClineSayTool } from "@shared/ExtensionMessage"
 import { StringRequest } from "@shared/proto/cline/common"
 import { memo, useCallback, useMemo, useState } from "react"
 import { TypewriterText } from "@/components/chat/TypewriterText"
+import { AGENT_DISPLAY_NAME } from "@/icline/agent-display-name"
 import { cleanPathPrefix } from "@/components/common/CodeAccordian"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -387,5 +388,5 @@ export function getToolGroupSummaryFromParsedTools(tools: ClineSayTool[]): strin
 		parts.push(`performed ${counts.search} search${counts.search > 1 ? "es" : ""}`)
 	}
 
-	return parts.length === 0 ? "Context" : "Cline" + action + parts.join(", ")
+	return parts.length === 0 ? "Context" : AGENT_DISPLAY_NAME + action + parts.join(", ")
 }

@@ -10,6 +10,7 @@ import { ToolResponse } from "../.."
 import type { IPartialBlockHandler, IToolHandler } from "../ToolExecutorCoordinator"
 import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
+import { getProductName } from "@/registry"
 
 export class AskFollowupQuestionToolHandler implements IToolHandler, IPartialBlockHandler {
 	readonly name = ClineDefaultTool.ASK
@@ -56,7 +57,7 @@ export class AskFollowupQuestionToolHandler implements IToolHandler, IPartialBlo
 		// Show notification if enabled
 		if (config.autoApprovalSettings.enableNotifications) {
 			showSystemNotification({
-				subtitle: "Cline has a question...",
+				subtitle: `${getProductName()} has a question...`,
 				message: question.replace(/\n/g, " "),
 			})
 		}

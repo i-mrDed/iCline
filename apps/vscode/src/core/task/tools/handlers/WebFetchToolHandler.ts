@@ -16,6 +16,7 @@ import type { IFullyManagedTool } from "../ToolExecutorCoordinator"
 import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
 import { ToolResultUtils } from "../utils/ToolResultUtils"
+import { getProductName } from "@/registry"
 
 export class WebFetchToolHandler implements IFullyManagedTool {
 	readonly name = ClineDefaultTool.WEB_FETCH
@@ -55,7 +56,7 @@ export class WebFetchToolHandler implements IFullyManagedTool {
 			const clineWebToolsEnabled = config.services.stateManager.getGlobalSettingsKey("clineWebToolsEnabled")
 			const featureFlagEnabled = featureFlagsService.getWebtoolsEnabled()
 			if (provider !== "cline" || !clineWebToolsEnabled || !featureFlagEnabled) {
-				return formatResponse.toolError("Cline web tools are currently disabled.")
+				return formatResponse.toolError(`${getProductName()} web tools are currently disabled.`)
 			}
 
 			// Validate required parameters
@@ -95,7 +96,7 @@ export class WebFetchToolHandler implements IFullyManagedTool {
 			} else {
 				// Manual approval flow
 				showNotificationForApproval(
-					`Cline wants to fetch content from ${url}`,
+					`${getProductName()} wants to fetch content from ${url}`,
 					config.autoApprovalSettings.enableNotifications,
 				)
 				await config.callbacks.removeLastPartialMessageIfExistsWithType("say", "tool")

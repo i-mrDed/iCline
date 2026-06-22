@@ -19,6 +19,7 @@ import type { TaskConfig } from "../types/TaskConfig"
 import type { StronglyTypedUIHelpers } from "../types/UIHelpers"
 import { getTaskCompletionTelemetry } from "../utils"
 import { ToolResultUtils } from "../utils/ToolResultUtils"
+import { getProductName } from "@/registry"
 
 const TASK_PREVIEW_MAX_CHARS = 8000
 
@@ -178,7 +179,7 @@ export class AttemptCompletionHandler implements IToolHandler, IPartialBlockHand
 			} else {
 				// Manual approval flow - need to ask for approval
 				showNotificationForApproval(
-					`Cline wants to execute a command: ${command}`,
+					`${getProductName()} wants to execute a command: ${command}`,
 					config.autoApprovalSettings.enableNotifications,
 				)
 

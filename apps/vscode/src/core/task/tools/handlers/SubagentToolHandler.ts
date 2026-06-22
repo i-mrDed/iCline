@@ -6,6 +6,7 @@ import {
 	ClineSubagentUsageInfo,
 	SubagentStatusItem,
 } from "@shared/ExtensionMessage"
+import { getProductName } from "@/registry"
 import { telemetryService } from "@/services/telemetry"
 import { ClineDefaultTool } from "@/shared/tools"
 import type { ToolResponse } from "../../index"
@@ -128,8 +129,8 @@ export class UseSubagentsToolHandler implements IFullyManagedTool {
 		} else {
 			showNotificationForApproval(
 				prompts.length === 1
-					? `Cline wants to use ${configuredSubagentName ? `the '${configuredSubagentName}' subagent` : "a subagent"}`
-					: `Cline wants to use ${prompts.length} subagents`,
+					? `${getProductName()} wants to use ${configuredSubagentName ? `the '${configuredSubagentName}' subagent` : "a subagent"}`
+					: `${getProductName()} wants to use ${prompts.length} subagents`,
 				config.autoApprovalSettings.enableNotifications,
 			)
 			const didApprove = await ToolResultUtils.askApprovalAndPushFeedback("use_subagents", approvalBody, config)
