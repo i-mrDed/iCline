@@ -1,0 +1,5 @@
+﻿version: 0.1.14
+channel: Stable
+approved_at: 2026-06-21 19:24:21 +07:00
+approval: approved
+skip_smoke_check: True

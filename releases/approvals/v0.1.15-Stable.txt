@@ -1,0 +1,5 @@
+﻿version: 0.1.15
+channel: Stable
+approved_at: 2026-06-22 08:23:25 +07:00
+approval: 0.1.15 docs-only: standalone install messaging + FAQ
+skip_smoke_check: True

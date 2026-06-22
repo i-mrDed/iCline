@@ -5,7 +5,7 @@
 <h1 align="center">iCline</h1>
 
 <p align="center">
-Fork ของ Cline สำหรับ VS Code พร้อม xAI Grok OAuth, ZenMux และ agent harness ที่แข็งแกร่งขึ้น — ติดตั้งคู่กับ Cline official ได้
+เอเจนต์เขียนโค้ดบน VS Code จากสาย Cline พร้อม xAI Grok OAuth, ZenMux และ agent harness ที่แข็งแกร่งขึ้น — ใช้ iCline อย่างเดียวได้ ไม่ต้องติดตั้ง Cline official
 </p>
 
 <p align="center">
@@ -14,7 +14,7 @@ Fork ของ Cline สำหรับ VS Code พร้อม xAI Grok OAuth, 
 
 <!-- icline:version -->
 <p align="center">
-  <strong>เวอร์ชัน</strong> <code>0.1.14</code> ·
+  <strong>เวอร์ชัน</strong> <code>0.1.15</code> ·
   <a href="https://github.com/i-mrDedchai/iCline/releases">Releases</a> ·
   <a href="https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md">Changelog</a> ·
   Extension ID <code>i-mrdedchai.iCline</code>
@@ -26,7 +26,7 @@ Fork ของ Cline สำหรับ VS Code พร้อม xAI Grok OAuth, 
 ## เริ่มต้นอย่างรวดเร็ว
 
 1. ดาวน์โหลด `.vsix` ล่าสุดจาก [Releases](https://github.com/i-mrDedchai/iCline/releases)
-2. ติดตั้ง: `code --install-extension i-mrdedchai.iCline-0.1.14.vsix --force`
+2. ติดตั้ง: `code --install-extension i-mrdedchai.iCline-0.1.15.vsix --force`
 3. เปิด iCline จาก Activity Bar → Settings → Sign in **xAI · Grok** หรือใส่ API key
 
 เอกสาร extension เต็ม: **[apps/vscode/README.th.md](apps/vscode/README.th.md)** · English: **[apps/vscode/README.md](apps/vscode/README.md)**
@@ -37,7 +37,7 @@ Fork ของ Cline สำหรับ VS Code พร้อม xAI Grok OAuth, 
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrdedchai.iCline-0.1.14.vsix --force
+code --install-extension dist/i-mrdedchai.iCline-0.1.15.vsix --force
 ```
 
 ## iCline vs Cline official

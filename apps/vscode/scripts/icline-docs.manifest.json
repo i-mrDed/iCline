@@ -25,8 +25,8 @@
 			"cursor"
 		]
 	},
-	"description": "Cline fork for VS Code — install alongside official Cline. xAI Grok OAuth & Subscription, ZenMux, dual-channel updates, and hardened agent harness.",
-	"descriptionTh": "Fork ของ Cline สำหรับ VS Code — ติดตั้งคู่กับ Cline official ได้. xAI Grok OAuth & Subscription, ZenMux, อัปเดต dual-channel และ agent harness ที่แข็งแกร่งขึ้น",
+	"description": "Standalone Cline-based agent for VS Code — no official Cline required. xAI Grok OAuth & Subscription, ZenMux, dual-channel updates, and hardened agent harness.",
+	"descriptionTh": "เอเจนต์เขียนโค้ดบน VS Code จากสาย Cline — ใช้ iCline อย่างเดียวได้ ไม่ต้องติดตั้ง Cline official. xAI Grok OAuth & Subscription, ZenMux, อัปเดต dual-channel และ agent harness ที่แข็งแกร่งขึ้น",
 	"keywords": [
 		"icline",
 		"cline",

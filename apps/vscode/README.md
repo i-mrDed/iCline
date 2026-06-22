@@ -1,7 +1,7 @@
 # iCline
 
 <!-- icline:version -->
-> 📦 **Current version:** `0.1.14` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
+> 📦 **Current version:** `0.1.15` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -10,7 +10,19 @@
 
 🌐 **Languages:** English (this page) · [ภาษาไทย](README.th.md)
 
-**iCline** is a fork of [Cline](https://github.com/cline/cline) packaged as a separate VS Code extension (`i-mrdedchai.iCline`) — install it alongside the official Cline extension (`saoudrizwan.claude-dev`) without conflicts.
+**iCline** is a **standalone** VS Code extension based on [Cline](https://github.com/cline/cline) (`i-mrdedchai.iCline`). **You do not need official Cline installed** — install iCline, sign in to Grok (or another provider), and start. Optionally, you can also run [official Cline](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev) side by side (separate extension IDs, no conflicts).
+
+---
+
+## ❓ FAQ
+
+### Do I need official Cline installed first?
+
+**No.** Install iCline from Marketplace or a `.vsix`, open it from the Activity Bar, then sign in to **xAI · Grok** or add an API key.
+
+### Can I use iCline and official Cline together?
+
+**Yes, optionally.** Separate extension IDs — side by side with no conflicts. Many users run **only iCline**.
 
 ---
 
@@ -64,7 +76,7 @@ The full provider catalog and deep model settings remain in **Settings → API C
 Download the latest `.vsix` from [GitHub Releases](https://github.com/i-mrDedchai/iCline/releases), then:
 
 ```bash
-code --install-extension i-mrdedchai.iCline-0.1.14.vsix --force
+code --install-extension i-mrdedchai.iCline-0.1.15.vsix --force
 ```
 
 Or build locally:
@@ -73,7 +85,7 @@ Or build locally:
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrdedchai.iCline-0.1.14.vsix --force
+code --install-extension dist/i-mrdedchai.iCline-0.1.15.vsix --force
 ```
 
 ---

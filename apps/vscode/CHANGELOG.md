@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.15] - 2026-06-22
+
+### Changed
+- 📄 **Install messaging** — clarify that iCline is **standalone** (no official Cline required) across Marketplace description, GitHub README, `README.marketplace.md`, and Settings → About
+- ❓ **FAQ** — add “Do I need official Cline?” / “Can I use both?” sections (EN + TH) on extension README and Marketplace Details
+
+### Fixed
+- 🐛 **User confusion** — replace “install alongside official Cline” one-liner that read like a prerequisite; optional side-by-side install is now explained separately
+
 ## [0.1.14] - 2026-06-21
 
 ### Fixed

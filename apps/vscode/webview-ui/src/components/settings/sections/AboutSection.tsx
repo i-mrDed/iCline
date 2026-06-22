@@ -46,9 +46,11 @@ const AboutSection = ({ version, renderSectionHeader }: AboutSectionProps) => {
 							{" "}(synced {ICLINE_BUILD_METADATA.upstreamClineSyncedAt})
 						</p>
 						<p>
-							iCline is a fork of Cline packaged as a separate VS Code extension. Install it alongside official Cline
-							(<code className="text-foreground">saoudrizwan.claude-dev</code>) without conflicts — each extension
-							updates on its own channel.
+							iCline is a <strong>standalone</strong> VS Code extension based on Cline.{" "}
+							<strong>You do not need official Cline installed</strong> — install iCline and sign in to your provider.
+							Optionally, you can also run official Cline (
+							<code className="text-foreground">saoudrizwan.claude-dev</code>) side by side; separate extension IDs,
+							no conflicts — each updates on its own channel.
 						</p>
 						<h3 className="text-md font-semibold">iCline highlights</h3>
 						<ul className="list-disc pl-5 flex flex-col gap-1">

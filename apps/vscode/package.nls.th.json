@@ -1,4 +1,4 @@
 {
 	"extension.displayName": "iCline — Fork ของ Cline (Grok & ZenMux)",
-	"extension.description": "🤖 Fork ของ Cline สำหรับ VS Code — ติดตั้งคู่กับ Cline official ได้. xAI Grok OAuth & Subscription, ZenMux, อัปเดต dual-channel และ agent harness ที่แข็งแกร่งขึ้น"
+	"extension.description": "🤖 เอเจนต์เขียนโค้ดบน VS Code จากสาย Cline — ใช้ iCline อย่างเดียวได้ ไม่ต้องติดตั้ง Cline official. xAI Grok OAuth & Subscription, ZenMux, อัปเดต dual-channel และ agent harness ที่แข็งแกร่งขึ้น"
 }

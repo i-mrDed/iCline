@@ -1,7 +1,7 @@
 # iCline
 
 <!-- icline:version -->
-> 📦 **เวอร์ชันปัจจุบัน:** `0.1.14` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
+> 📦 **เวอร์ชันปัจจุบัน:** `0.1.15` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -10,7 +10,19 @@
 
 🌐 **ภาษา:** ภาษาไทย (หน้านี้) · [English](README.md)
 
-**iCline** คือ fork ของ [Cline](https://github.com/cline/cline) ที่แพ็กเป็น extension แยก (`i-mrdedchai.iCline`) — ติดตั้งคู่กับ Cline official (`saoudrizwan.claude-dev`) ได้โดยไม่ทับกัน
+**iCline** เป็น extension **ใช้งานได้เอง** บน VS Code จากสาย [Cline](https://github.com/cline/cline) (`i-mrdedchai.iCline`) — **ไม่จำเป็นต้องติดตั้ง Cline official** ติดตั้ง iCline แล้ว sign in Grok (หรือ provider อื่น) ได้เลย ถ้าต้องการใช้ [Cline official](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev) คู่กันก็ได้ (คนละ extension ID ไม่ทับกัน)
+
+---
+
+## ❓ คำถามที่พบบ่อย
+
+### ต้องติดตั้ง Cline official ก่อนไหม?
+
+**ไม่ต้อง** — iCline เป็น extension สมบูรณ์ ติดตั้งจาก Marketplace หรือ `.vsix` จาก [Releases](https://github.com/i-mrDedchai/iCline/releases) แล้วเปิด **iCline** จาก Activity Bar → sign in **xAI · Grok** หรือใส่ API key
+
+### ใช้ iCline กับ Cline official พร้อมกันได้ไหม?
+
+**ได้ (ไม่บังคับ)** — เป็นคนละ extension (`i-mrdedchai.iCline` vs `saoudrizwan.claude-dev`) ใช้คู่กันได้ไม่ชนกัน ผู้ใช้หลายคนใช้แค่ **iCline อย่างเดียว**
 
 ---
 
@@ -64,7 +76,7 @@
 ดาวน์โหลด `.vsix` ล่าสุดจาก [GitHub Releases](https://github.com/i-mrDedchai/iCline/releases) แล้วรัน:
 
 ```bash
-code --install-extension i-mrdedchai.iCline-0.1.14.vsix --force
+code --install-extension i-mrdedchai.iCline-0.1.15.vsix --force
 ```
 
 หรือ build เอง:
@@ -73,7 +85,7 @@ code --install-extension i-mrdedchai.iCline-0.1.14.vsix --force
 cd apps/vscode
 npm install
 npm run package:vsix
-code --install-extension dist/i-mrdedchai.iCline-0.1.14.vsix --force
+code --install-extension dist/i-mrdedchai.iCline-0.1.15.vsix --force
 ```
 
 ---

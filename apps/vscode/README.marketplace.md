@@ -1,7 +1,7 @@
 # iCline — Cline Fork
 
 <!-- icline:version -->
-> 📦 **Current version:** `0.1.14` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
+> 📦 **Current version:** `0.1.15` · [Releases](https://github.com/i-mrDedchai/iCline/releases) · [Changelog](https://github.com/i-mrDedchai/iCline/blob/main/apps/vscode/CHANGELOG.md) · [Repo](https://github.com/i-mrDedchai/iCline)
 <!-- /icline:version -->
 
 <!-- icline:repo -->
@@ -10,9 +10,21 @@
 
 🌐 **Languages:** English (this page) · [ภาษาไทย](README.th.md)
 
-**Cline fork for VS Code** — install alongside official Cline (`saoudrizwan.claude-dev`). Separate extension ID: **`i-mrdedchai.iCline`**.
+**Standalone** Cline-based coding agent for VS Code — extension ID **`i-mrdedchai.iCline`**. **No official Cline required.**
 
 🤖 xAI Grok OAuth & Subscription, ZenMux, safe dual-channel updates, and hardened agent harness.
+
+---
+
+## ❓ FAQ
+
+### Do I need official Cline installed first?
+
+**No.** iCline is a complete extension on its own. Install from Marketplace or a `.vsix` from [Releases](https://github.com/i-mrDedchai/iCline/releases), open **iCline** in the Activity Bar, then sign in to **xAI · Grok** (or add an API key).
+
+### Can I use iCline and official Cline together?
+
+**Yes, optionally.** They are separate extensions (`i-mrdedchai.iCline` vs `saoudrizwan.claude-dev`) and can run side by side without conflicts. Many users run **only iCline**.
 
 ---
 
