@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.16-dev.7] - 2026-06-22
+
+### Added
+- 📦 **History export** — export selected tasks or all history to a `.zip` archive (manifest + task folders) from the History footer
+- 📥 **History import** — import tasks from an iCline `.zip` archive; duplicate task IDs are reassigned automatically
+- ✏️ **Quick Start prompt editor** — click ⋯ or ✎ on a quick-start card to edit, save, reset, or start with a custom prompt (stored in localStorage)
+- 🏠 **Welcome subtitle** — `Autonomous coding agent · in your IDE` under the iCline logo
+
 ## [0.1.16-dev.6] - 2026-06-22
 
 ### Changed
