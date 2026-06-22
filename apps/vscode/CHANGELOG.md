@@ -2,6 +2,9 @@
 
 ## [0.1.16] - Unreleased
 
+### Added
+- 🏠 **Welcome home — Phase 1** — iCline branding on welcome screen, provider/model chip, four quick-start prompts; task history stays visible alongside iCline quick starts (unlike Cline hosted quick wins)
+
 ### Fixed
 - 🛡️ **Harness epistemic discipline** — do not echo user factual claims (e.g. wrong weekday in greetings); check `# Current Time` in environment_details before affirming date/time; politely correct conflicts instead of mirroring
 - 🛡️ **ACT MODE conversational replies** — harness overlay now requires `attempt_completion` or `ask_followup_question` for chat-only turns (avoids plain-text replies that trigger “did not use a tool” loops)

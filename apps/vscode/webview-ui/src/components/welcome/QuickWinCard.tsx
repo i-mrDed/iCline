@@ -22,6 +22,18 @@ const renderIcon = (iconName?: string) => {
 		case "GameIcon":
 			iconClass = "codicon-game"
 			break
+		case "ExplainIcon":
+			iconClass = "codicon-book"
+			break
+		case "RefactorIcon":
+			iconClass = "codicon-wand"
+			break
+		case "TestIcon":
+			iconClass = "codicon-beaker"
+			break
+		case "DebugIcon":
+			iconClass = "codicon-debug"
+			break
 		default:
 			break
 	}

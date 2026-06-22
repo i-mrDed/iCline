@@ -29,6 +29,7 @@ import {
 	useScrollBehavior,
 	WelcomeSection,
 } from "./chat-view"
+import { QUICK_START_HISTORY_THRESHOLD, resolveQuickStartMode } from "@/components/welcome/icline/quickStartMode"
 
 interface ChatViewProps {
 	isHidden: boolean
@@ -39,8 +40,6 @@ interface ChatViewProps {
 
 // Use constants from the imported module
 const MAX_IMAGES_AND_FILES_PER_MESSAGE = CHAT_CONSTANTS.MAX_IMAGES_AND_FILES_PER_MESSAGE
-const QUICK_WINS_HISTORY_THRESHOLD = 3
-
 const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryView }: ChatViewProps) => {
 	const showNavbar = useShowNavbar()
 	const {
@@ -56,7 +55,8 @@ const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryVie
 		hooksEnabled,
 	} = useExtensionState()
 	const isProdHostedApp = userInfo?.apiBaseUrl === "https://app.cline.bot"
-	const shouldShowQuickWins = isProdHostedApp && (!taskHistory || taskHistory.length < QUICK_WINS_HISTORY_THRESHOLD)
+	const taskHistoryLength = taskHistory?.length ?? 0
+	const quickStartMode = resolveQuickStartMode(isProdHostedApp, taskHistoryLength, QUICK_START_HISTORY_THRESHOLD)
 
 	//const task = messages.length > 0 ? (messages[0].say === "task" ? messages[0] : undefined) : undefined) : undefined
 	const task = useMemo(() => messages.at(0), [messages]) // leaving this less safe version here since if the first message is not a task, then the extension is in a bad state and needs to be debugged (see Cline.abort)
@@ -349,7 +349,7 @@ const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryVie
 				) : (
 					<WelcomeSection
 						hideAnnouncement={hideAnnouncement}
-						shouldShowQuickWins={shouldShowQuickWins}
+						quickStartMode={quickStartMode}
 						showAnnouncement={showAnnouncement}
 						showHistoryView={showHistoryView}
 						taskHistory={taskHistory}

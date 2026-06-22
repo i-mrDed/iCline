@@ -10,6 +10,7 @@ import HistoryPreview from "@/components/history/HistoryPreview"
 import { useApiConfigurationHandlers } from "@/components/settings/utils/useApiConfigurationHandlers"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import HomeHeader from "@/components/welcome/HomeHeader"
+import { shouldShowHistoryPreview } from "@/components/welcome/icline/quickStartMode"
 import { SuggestedTasks } from "@/components/welcome/SuggestedTasks"
 import CreateWorktreeModal from "@/components/worktrees/CreateWorktreeModal"
 import { useClineAuth } from "@/context/ClineAuthContext"
@@ -29,7 +30,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 	showHistoryView,
 	version,
 	taskHistory,
-	shouldShowQuickWins,
+	quickStartMode,
 }) => {
 	const { lastDismissedInfoBannerVersion, lastDismissedCliBannerVersion, lastDismissedModelBannerVersion, dismissedBanners } =
 		useExtensionState()
@@ -260,11 +261,13 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 				welcomeBanners={welcomeBanners}
 			/>
 			<div className="overflow-y-auto flex flex-col pb-2.5">
-				<HomeHeader shouldShowQuickWins={shouldShowQuickWins} />
+				<HomeHeader quickStartMode={quickStartMode} />
 				{!showWhatsNewModal && (
 					<>
 						<BannerCarousel banners={activeBanners} />
-						{!shouldShowQuickWins && taskHistory.length > 0 && <HistoryPreview showHistoryView={showHistoryView} />}
+						{shouldShowHistoryPreview(quickStartMode, taskHistory.length) && (
+							<HistoryPreview showHistoryView={showHistoryView} />
+						)}
 						{/* Quick launch worktree button */}
 						{isGitRepo && worktreesEnabled?.featureFlag && worktreesEnabled?.user && (
 							<div className="flex flex-col items-center gap-3 mt-2 mb-4 px-5">
@@ -314,7 +317,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 					</>
 				)}
 			</div>
-			<SuggestedTasks shouldShowQuickWins={shouldShowQuickWins} />
+			<SuggestedTasks quickStartMode={quickStartMode} />
 
 			{/* Quick launch worktree modal */}
 			<CreateWorktreeModal

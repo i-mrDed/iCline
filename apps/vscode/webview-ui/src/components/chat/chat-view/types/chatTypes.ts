@@ -4,6 +4,7 @@
 
 import { ClineAsk, ClineMessage } from "@shared/ExtensionMessage"
 import { ListRange, VirtuosoHandle } from "react-virtuoso"
+import type { QuickStartMode } from "@/components/welcome/icline/quickStartMode"
 import { ButtonActionType } from "../shared/buttonConfig"
 
 /**
@@ -151,7 +152,7 @@ export interface WelcomeSectionProps {
 	telemetrySetting: string
 	version: string
 	taskHistory: any[]
-	shouldShowQuickWins: boolean
+	quickStartMode: QuickStartMode
 }
 
 /**
