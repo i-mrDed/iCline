@@ -23,11 +23,26 @@ Standalone Cline fork for VS Code — no official Cline required. Supports Grok,
 
 ---
 
+## News
+
+- **Open VSX namespace claimed** — publisher `i-mrdedchai` verified ([Eclipse Foundation #11300](https://github.com/EclipseFdn/open-vsx.org/issues/11300) closed as completed)
+- **Open VSX traction** — **116+ installs** within ~12 hours of listing (and growing)
+- **v0.1.16 Stable** — welcome home, editable quick starts, history export/import, iCline chat branding
+
 ## Quick start
 
+**Install from a store (recommended):**
+
+- [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=i-mrdedchai.iCline) — VS Code, Cursor (Marketplace)
+- [Open VSX](https://open-vsx.org/extension/i-mrdedchai/iCline) — Cursor, VSCodium, and other Open VSX IDEs
+
+Then open iCline from the Activity Bar → Settings → sign in to **xAI · Grok** or add your API key.
+
+**Or install from VSIX:**
+
 1. Download the latest `.vsix` from [Releases](https://github.com/i-mrDedchai/iCline/releases)
-2. Install: `code --install-extension i-mrdedchai.iCline-0.1.16.vsix --force`
-3. Open iCline from the Activity Bar → Settings → sign in to **xAI · Grok** or add your API key
+2. `code --install-extension i-mrdedchai.iCline-0.1.16.vsix --force`
+3. **Developer: Reload Window**
 
 Full extension docs: **[apps/vscode/README.md](apps/vscode/README.md)** · Thai: **[apps/vscode/README.th.md](apps/vscode/README.th.md)**
 
@@ -45,9 +60,16 @@ code --install-extension dist/i-mrdedchai.iCline-0.1.16.vsix --force
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| Verified publisher namespace | `saoudrizwan` | `i-mrdedchai` ✅ |
+| VS Marketplace | ✅ | ✅ |
+| Open VSX (Cursor, VSCodium, …) | ❌ | ✅ |
 | ⚡ Quick Provider & Model picker on chat | ❌ | ✅ |
+| 🏠 Welcome Quick Starts (12 templates, editable prompts) | ❌ | ✅ |
+| 📦 History export / import (`.zip`) | ❌ | ✅ |
+| 🏷️ iCline branding in agent chat | ❌ | ✅ |
 | xAI OAuth & subscription models | ❌ | ✅ |
 | ZenMux provider | ❌ | ✅ |
+| Harness guardrails (verify-before-claim) | ❌ | ✅ |
 | Dual-channel safe updates | ❌ | ✅ |
 
 <p align="center">

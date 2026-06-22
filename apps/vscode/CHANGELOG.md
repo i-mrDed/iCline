@@ -44,6 +44,7 @@
 ## [0.1.16] - 2026-06-22
 
 ### Added
+- 🏪 **VS Marketplace & Open VSX** — v0.1.16 published on both stores under verified publisher `i-mrdedchai` ([Open VSX #11300](https://github.com/EclipseFdn/open-vsx.org/issues/11300) namespace claim completed)
 - 🏠 **Welcome home — Phase 1** — iCline branding on welcome screen, provider/model chip, twelve quick-start prompts; subtitle `Autonomous coding agent · in your IDE`; task history stays visible alongside iCline quick starts
 - ✏️ **Quick Start prompt editor** — click ⋯ or ✎ on a quick-start card to edit, save, reset, or start with a custom prompt (localStorage)
 - 📦 **History export** — export selected tasks or all history to a `.zip` archive from the History footer

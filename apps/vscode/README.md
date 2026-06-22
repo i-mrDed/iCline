@@ -31,7 +31,12 @@
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| Verified publisher | `saoudrizwan` | `i-mrdedchai` ✅ |
+| VS Marketplace · Open VSX | Marketplace only | ✅ both |
 | ⚡ Quick Provider & Model picker on chat | ❌ | ✅ |
+| 🏠 Welcome Quick Starts (12 templates, editable prompts) | ❌ | ✅ |
+| 📦 History export / import (`.zip`) | ❌ | ✅ |
+| 🏷️ iCline branding in agent chat | ❌ | ✅ |
 | 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
 | ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
 | 🌐 ZenMux (100+ models) | ❌ | ✅ |
@@ -71,7 +76,13 @@ The full provider catalog and deep model settings remain in **Settings → API C
 
 ---
 
-## 📥 Install from VSIX
+## 📥 Install
+
+- **VS Marketplace:** [i-mrdedchai.iCline](https://marketplace.visualstudio.com/items?itemName=i-mrdedchai.iCline)
+- **Open VSX:** [i-mrdedchai/iCline](https://open-vsx.org/extension/i-mrdedchai/iCline) — Cursor, VSCodium, and other Open VSX IDEs
+- **GitHub Releases:** [download `.vsix`](https://github.com/i-mrDedchai/iCline/releases)
+
+### Install from VSIX
 
 Download the latest `.vsix` from [GitHub Releases](https://github.com/i-mrDedchai/iCline/releases), then:
 
@@ -99,6 +110,18 @@ code --install-extension dist/i-mrdedchai.iCline-0.1.16.vsix --force
 ---
 
 ## 🎯 Features beyond Cline official
+
+### 🏠 Welcome home & Quick Starts
+- Twelve quick-start templates on the welcome screen (always visible, even with 3+ history items)
+- Edit, save, reset, and start with custom prompts (⋯ / ✎ popover)
+- Subtitle: *Autonomous coding agent · in your IDE*
+
+### 📦 History export / import
+- Export selected tasks or all history to a portable `.zip` (manifest + task folders)
+- Import archives; duplicate task IDs are reassigned automatically
+
+### 🏷️ iCline branding in chat
+- Runtime tool labels, grouped summaries, and approval prompts say **iCline** during tasks
 
 ### 🔐 xAI · Grok (OAuth & Subscription)
 - Browser sign-in (PKCE OAuth) — SuperGrok / X Premium

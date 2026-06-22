@@ -31,7 +31,12 @@
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| Publisher ยืนยันแล้ว | `saoudrizwan` | `i-mrdedchai` ✅ |
+| VS Marketplace · Open VSX | Marketplace อย่างเดียว | ✅ ทั้งคู่ |
 | ⚡ เมนูด่วนเลือก Provider / Model บนแชท | ❌ | ✅ |
+| 🏠 Quick Start 12 แบบ (แก้ prompt ได้) | ❌ | ✅ |
+| 📦 Export / Import history (`.zip`) | ❌ | ✅ |
+| 🏷️ branding iCline ในแชท agent | ❌ | ✅ |
 | 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
 | ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
 | 🌐 ZenMux (100+ models) | ❌ | ✅ |
@@ -71,7 +76,13 @@
 
 ---
 
-## 📥 ติดตั้งจาก VSIX
+## 📥 ติดตั้ง
+
+- **VS Marketplace:** [i-mrdedchai.iCline](https://marketplace.visualstudio.com/items?itemName=i-mrdedchai.iCline)
+- **Open VSX:** [i-mrdedchai/iCline](https://open-vsx.org/extension/i-mrdedchai/iCline) — Cursor, VSCodium และ IDE ที่ใช้ Open VSX
+- **GitHub Releases:** [ดาวน์โหลด `.vsix`](https://github.com/i-mrDedchai/iCline/releases)
+
+### ติดตั้งจาก VSIX
 
 ดาวน์โหลด `.vsix` ล่าสุดจาก [GitHub Releases](https://github.com/i-mrDedchai/iCline/releases) แล้วรัน:
 
@@ -99,6 +110,18 @@ code --install-extension dist/i-mrdedchai.iCline-0.1.16.vsix --force
 ---
 
 ## 🎯 ฟีเจอร์เพิ่มจาก Cline official
+
+### 🏠 Welcome home & Quick Starts
+- Quick Start 12 แบบบนหน้า welcome (แสดงตลอด แม้ history มี 3+ รายการ)
+- แก้ บันทึก รีเซ็ต และเริ่มงานด้วย prompt ที่ปรับเอง (popover ⋯ / ✎)
+- Subtitle: *Autonomous coding agent · in your IDE*
+
+### 📦 Export / Import history
+- Export งานที่เลือกหรือทั้งหมดเป็น `.zip` (manifest + โฟลเดอร์ task)
+- Import จาก archive — task ID ซ้ำจะถูกสร้างใหม่อัตโนมัติ
+
+### 🏷️ branding iCline ในแชท
+- ป้าย tool, สรุปกลุ่ม และข้อความอนุมัติแสดง **iCline** ระหว่างรันงาน
 
 ### 🔐 xAI · Grok (OAuth & Subscription)
 - Sign in ผ่าน browser (PKCE OAuth) — SuperGrok / X Premium

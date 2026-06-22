@@ -23,11 +23,26 @@
 
 ---
 
+## ข่าวล่าสุด
+
+- **Claim namespace Open VSX สำเร็จ** — publisher `i-mrdedchai` ยืนยันแล้ว ([Eclipse Foundation #11300](https://github.com/EclipseFdn/open-vsx.org/issues/11300) ปิดเป็น completed)
+- **ยอดติดตั้ง Open VSX** — **116+ installs** ภายใน ~12 ชม. หลังขึ้นลิสต์ (และยังเพิ่มอยู่)
+- **v0.1.16 Stable** — welcome home, แก้ quick start ได้, export/import history, branding iCline ในแชท
+
 ## เริ่มต้นอย่างรวดเร็ว
 
+**ติดตั้งจาก Store (แนะนำ):**
+
+- [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=i-mrdedchai.iCline) — VS Code, Cursor (Marketplace)
+- [Open VSX](https://open-vsx.org/extension/i-mrdedchai/iCline) — Cursor, VSCodium และ IDE ที่ใช้ Open VSX
+
+จากนั้นเปิด iCline จาก Activity Bar → Settings → Sign in **xAI · Grok** หรือใส่ API key
+
+**หรือติดตั้งจาก VSIX:**
+
 1. ดาวน์โหลด `.vsix` ล่าสุดจาก [Releases](https://github.com/i-mrDedchai/iCline/releases)
-2. ติดตั้ง: `code --install-extension i-mrdedchai.iCline-0.1.16.vsix --force`
-3. เปิด iCline จาก Activity Bar → Settings → Sign in **xAI · Grok** หรือใส่ API key
+2. `code --install-extension i-mrdedchai.iCline-0.1.16.vsix --force`
+3. **Developer: Reload Window**
 
 เอกสาร extension เต็ม: **[apps/vscode/README.th.md](apps/vscode/README.th.md)** · English: **[apps/vscode/README.md](apps/vscode/README.md)**
 
@@ -45,9 +60,16 @@ code --install-extension dist/i-mrdedchai.iCline-0.1.16.vsix --force
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| Publisher namespace ยืนยันแล้ว | `saoudrizwan` | `i-mrdedchai` ✅ |
+| VS Marketplace | ✅ | ✅ |
+| Open VSX (Cursor, VSCodium, …) | ❌ | ✅ |
 | ⚡ เมนูด่วนเลือก Provider / Model บนแชท | ❌ | ✅ |
+| 🏠 Quick Start 12 แบบ (แก้ prompt ได้) | ❌ | ✅ |
+| 📦 Export / Import history (`.zip`) | ❌ | ✅ |
+| 🏷️ branding iCline ในแชท agent | ❌ | ✅ |
 | xAI OAuth & subscription models | ❌ | ✅ |
 | ZenMux provider | ❌ | ✅ |
+| Harness guardrails (verify-before-claim) | ❌ | ✅ |
 | อัปเดตแบบ dual-channel ปลอดภัย | ❌ | ✅ |
 
 <p align="center">

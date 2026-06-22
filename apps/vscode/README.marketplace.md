@@ -33,7 +33,12 @@ Standalone Cline fork for VS Code — extension ID **`i-mrdedchai.iCline`**. **N
 | | Cline official | iCline |
 |---|---|---|
 | Extension ID | `saoudrizwan.claude-dev` | `i-mrdedchai.iCline` |
+| Verified publisher | `saoudrizwan` | `i-mrdedchai` ✅ |
+| Open VSX (Cursor, VSCodium, …) | ❌ | ✅ |
 | ⚡ Quick Provider & Model picker on chat | ❌ | ✅ |
+| 🏠 Welcome Quick Starts (12 templates, editable prompts) | ❌ | ✅ |
+| 📦 History export / import (`.zip`) | ❌ | ✅ |
+| 🏷️ iCline branding in agent chat | ❌ | ✅ |
 | 🔐 xAI OAuth (SuperGrok / X Premium) | ❌ | ✅ |
 | ⚡ Composer 2.5 Fast, Grok Build | ❌ | ✅ |
 | 🌐 ZenMux (100+ models) | ❌ | ✅ |
@@ -69,15 +74,19 @@ The full provider catalog and deep model settings remain in **Settings → API C
 
 ## Features
 
+- 🏠 **Welcome home** — 12 quick-start templates with editable prompts; *Autonomous coding agent · in your IDE*
+- 📦 **History transfer** — export/import task history as `.zip` archives
+- 🏷️ **iCline branding** — agent labels and notifications say iCline during tasks
 - 🔐 **xAI · Grok** — OAuth (SuperGrok / X Premium), API key, Grok CLI auth bridge
 - ⚡ **Composer 2.5 Fast**, **Grok Build**, subscription model catalog
 - 🌐 **ZenMux** — 100+ models, multi-protocol
 - 🛡️ Agent harness guardrails (verify-before-claim, post-write verification)
 - 🔄 Dual-channel update notifications (iCline + Cline upstream)
 
-## Updates
+## Install & updates
 
-- **VS Marketplace:** VS Code / Cursor auto-check for new versions
+- **VS Marketplace:** [i-mrdedchai.iCline](https://marketplace.visualstudio.com/items?itemName=i-mrdedchai.iCline)
+- **Open VSX:** [i-mrdedchai/iCline](https://open-vsx.org/extension/i-mrdedchai/iCline) — Cursor, VSCodium, and other Open VSX IDEs
 - **GitHub Releases:** [github.com/i-mrDedchai/iCline/releases](https://github.com/i-mrDedchai/iCline/releases)
 
 ## Links
