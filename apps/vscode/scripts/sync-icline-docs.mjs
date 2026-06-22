@@ -275,7 +275,7 @@ function syncPackageNls(manifest) {
 		const nls = readJson(nlsPath)
 		nls["extension.displayName"] = displayName
 		if (description) {
-			nls["extension.description"] = description.startsWith("🤖") ? description : `🤖 ${description}`
+			nls["extension.description"] = description
 		}
 		writeJson(nlsPath, nls)
 	}
