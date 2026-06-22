@@ -7,47 +7,6 @@
 - 📸 **Marketplace screenshots** — fix preview images on VS Marketplace (GitHub `baseImagesUrl` rewrite) and Open VSX (relative `assets/docs/` paths in VSIX); use Markdown image syntax
 - 📋 **Comparison table** — remove store/distribution rows from README tables (not a meaningful Cline vs iCline differentiator)
 
-## [0.1.16-dev.7] - 2026-06-22
-
-### Added
-- 📦 **History export** — export selected tasks or all history to a `.zip` archive (manifest + task folders) from the History footer
-- 📥 **History import** — import tasks from an iCline `.zip` archive; duplicate task IDs are reassigned automatically
-- ✏️ **Quick Start prompt editor** — click ⋯ or ✎ on a quick-start card to edit, save, reset, or start with a custom prompt (stored in localStorage)
-- 🏠 **Welcome subtitle** — `Autonomous coding agent · in your IDE` under the iCline logo
-
-## [0.1.16-dev.6] - 2026-06-22
-
-### Changed
-- 🏷️ **Agent branding in chat** — runtime tool labels, grouped summaries (`iCline read N files…`), approval prompts, system notifications, and editor code actions now say **iCline** instead of Cline during task execution
-
-## [0.1.16-dev.5] - 2026-06-22
-
-### Fixed
-- 🏠 **iCline Quick Starts** — keep the 12-card grid on welcome home even when task history has 3+ items (Cline hosted quick wins still hide at threshold as upstream)
-
-## [0.1.16-dev.4] - 2026-06-22
-
-### Fixed
-- 🐛 **Auto-approved commands stuck on Running** — stream command output without blocking on `command_output` asks; apply managed timeouts for auto-approved commands; mark command UI completed when orchestration returns (including timeout / proceed-while-running paths)
-
-### Changed
-- 🏠 **Review quick start** — read-only review wording; PowerShell-safe directory guidance (`Set-Location` instead of `cd /d`)
-
-## [0.1.16-dev.3] - 2026-06-22
-
-### Changed
-- 📄 Docs auto-synced from `scripts/sync-icline-docs.mjs`
-
-## [0.1.16-dev.2] - 2026-06-22
-
-### Changed
-- 📄 Docs auto-synced from `scripts/sync-icline-docs.mjs`
-
-## [0.1.16-dev.1] - 2026-06-22
-
-### Changed
-- 📄 Docs auto-synced from `scripts/sync-icline-docs.mjs`
-
 ## [0.1.16] - 2026-06-22
 
 ### Added
