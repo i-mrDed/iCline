@@ -2,7 +2,7 @@ import { BooleanRequest, EmptyRequest, StringArrayRequest } from "@shared/proto/
 import { GetTaskHistoryRequest, TaskFavoriteRequest } from "@shared/proto/cline/task"
 import { VSCodeTextField } from "@vscode/webview-ui-toolkit/react"
 import Fuse, { FuseResult } from "fuse.js"
-import { FunnelIcon } from "lucide-react"
+import { DownloadIcon, FunnelIcon } from "lucide-react"
 import { memo, useCallback, useEffect, useMemo, useState } from "react"
 import { GroupedVirtuoso } from "react-virtuoso"
 import { Button } from "@/components/ui/button"
@@ -45,6 +45,7 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 	const [selectedItems, setSelectedItems] = useState<string[]>([])
 	const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
 	const [showCurrentWorkspaceOnly, setShowCurrentWorkspaceOnly] = useState(false)
+	const [isExporting, setIsExporting] = useState(false)
 
 	// Keep track of pending favorite toggle operations
 	const [pendingFavoriteToggles, setPendingFavoriteToggles] = useState<Record<string, boolean>>({})
@@ -289,6 +290,19 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 		[taskHistorySearchResults],
 	)
 
+	const handleExportHistory = useCallback(async () => {
+		setIsExporting(true)
+		try {
+			await TaskServiceClient.exportTaskHistory(
+				StringArrayRequest.create({ value: selectedItems.length > 0 ? selectedItems : [] }),
+			)
+		} catch (error) {
+			console.error("Error exporting task history:", error)
+		} finally {
+			setIsExporting(false)
+		}
+	}, [selectedItems])
+
 	return (
 		<div className="fixed overflow-hidden inset-0 flex flex-col w-full">
 			{/* HEADER */}
@@ -425,6 +439,17 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 					</Button>
 					<Button className="flex-1" onClick={() => handleBatchHistorySelect(false)} variant="secondary">
 						Select None
+					</Button>
+				</div>
+				<div className="flex gap-2.5 mb-2.5">
+					<Button
+						aria-label={selectedItems.length > 0 ? "Export selected tasks" : "Export all tasks"}
+						className="w-full"
+						disabled={isExporting || taskHistory.length === 0}
+						onClick={handleExportHistory}
+						variant="secondary">
+						<DownloadIcon className="size-3.5" />
+						{selectedItems.length > 0 ? `Export Selected (${selectedItems.length})` : "Export All"}
 					</Button>
 				</div>
 				{selectedItems.length > 0 ? (

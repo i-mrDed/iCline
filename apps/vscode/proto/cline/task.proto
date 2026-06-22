@@ -26,6 +26,10 @@ service TaskService {
   rpc showTaskWithId(StringRequest) returns (TaskResponse);
   // Exports a task with the given ID to markdown
   rpc exportTaskWithId(StringRequest) returns (Empty);
+  // Exports selected tasks (or all when empty) to a .zip archive
+  rpc exportTaskHistory(StringArrayRequest) returns (TaskHistoryTransferResult);
+  // Imports tasks from a user-selected .zip archive
+  rpc importTaskHistory(EmptyRequest) returns (TaskHistoryTransferResult);
   // Toggles the favorite status of a task
   rpc toggleTaskFavorite(TaskFavoriteRequest) returns (Empty);
   // Gets filtered task history
@@ -124,6 +128,13 @@ message ExecuteQuickWinRequest {
 // Results returned when deleting all task history
 message DeleteAllTaskHistoryCount {
   int32 tasks_deleted = 1;
+}
+
+// Results returned when exporting or importing task history archives
+message TaskHistoryTransferResult {
+  int32 count = 1;
+  optional string path = 2;
+  optional string message = 3;
 }
 
 // Request for explaining changes with AI
