@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.16] - Unreleased
+
+### Fixed
+- 🛡️ **Harness epistemic discipline** — do not echo user factual claims (e.g. wrong weekday in greetings); check `# Current Time` in environment_details before affirming date/time; politely correct conflicts instead of mirroring
+- 🛡️ **ACT MODE conversational replies** — harness overlay now requires `attempt_completion` or `ask_followup_question` for chat-only turns (avoids plain-text replies that trigger “did not use a tool” loops)
+
 ## [0.1.15] - 2026-06-22
 
 ### Changed
@@ -8,6 +14,9 @@
 
 ### Fixed
 - 🐛 **User confusion** — replace “install alongside official Cline” one-liner that read like a prerequisite; optional side-by-side install is now explained separately
+
+### Added
+- 🌐 **Open VSX** — publish `i-mrdedchai/iCline` v0.1.15 on [Open VSX](https://open-vsx.org/extension/i-mrdedchai/iCline) so Cursor and other Open VSX–based IDEs can search and install iCline (same VSIX as VS Marketplace; no rebuild)
 
 ## [0.1.14] - 2026-06-21
 
