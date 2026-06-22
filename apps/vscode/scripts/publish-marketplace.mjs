@@ -1,24 +1,21 @@
 #!/usr/bin/env node
 
-// Wraps the marketplace publish flow (vsce + ovsx) so the .vsix gets packaged
-// with the marketplace-flavored README instead of the GitHub-flavored README.
-//
-// vsce reads README.md from the extension root at publish time and there's no
-// flag to point it elsewhere, so we swap README.marketplace.md into place
-// first and restore the original on the way out. The swap helper is
-// idempotent, so this is safe to run nested under another wrapper (e.g., the
-// CI step in .github/workflows/ext-vscode-publish-stable.yml that also packages a .vsix for the
-// GitHub release artifact before invoking this script).
+// Publishes the marketplace-flavored VSIX to VS Marketplace (vsce) and Open VSX (ovsx).
+// Packages via package-vsix.mjs first so README.marketplace.md (relative image paths) is inside the VSIX.
 //
 // Usage:
 //   node scripts/publish-marketplace.mjs                  # release channel
 //   node scripts/publish-marketplace.mjs --pre-release    # pre-release channel
 
 import { spawnSync } from "node:child_process"
-import { restore, swapIn } from "./marketplace-readme.mjs"
+import fs from "node:fs"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const extRoot = path.join(__dirname, "..")
 const isPrerelease = process.argv.includes("--pre-release")
-const spawnOpts = { stdio: "inherit", shell: process.platform === "win32" }
+const spawnOpts = { stdio: "inherit", shell: process.platform === "win32", cwd: extRoot }
 
 function run(cmd, args) {
 	const result = spawnSync(cmd, args, spawnOpts)
@@ -27,41 +24,35 @@ function run(cmd, args) {
 	}
 }
 
-const result = swapIn()
+const pkg = JSON.parse(fs.readFileSync(path.join(extRoot, "package.json"), "utf8"))
+const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, "icline-docs.manifest.json"), "utf8"))
+const base = manifest.vsixFileName || manifest.extensionId || "i-mrdedchai.iCline"
+const vsixPath = path.join(extRoot, "dist", `${base}-${pkg.version}.vsix`)
 
-let interrupted = false
-const cleanupOnSignal = (exitCode) => () => {
-	interrupted = true
-	try {
-		if (!result.skipped) {
-			restore()
-		}
-	} catch (err) {
-		console.error(`marketplace-readme: failed to restore on signal: ${err.message}`)
-	}
-	process.exit(exitCode)
+console.log(`publish-marketplace: packaging ${pkg.version} with marketplace README...`)
+run("node", [path.join(__dirname, "package-vsix.mjs")])
+
+if (!fs.existsSync(vsixPath)) {
+	console.error(`publish-marketplace: VSIX not found at ${vsixPath}`)
+	process.exit(1)
 }
-process.on("SIGINT", cleanupOnSignal(130))
-process.on("SIGTERM", cleanupOnSignal(143))
 
-try {
-	const vsceArgs = ["publish", "--no-dependencies", "--no-rewrite-relative-links", "--allow-package-secrets", "sendgrid"]
-	if (isPrerelease) {
-		vsceArgs.push("--pre-release")
-	}
-	run("npx", ["vsce", ...vsceArgs])
-
-	// Open VSX is optional (Cursor can use VS Marketplace). Don't fail the release if ovsx errors.
-	const ovsxArgs = ["ovsx", "publish", "--no-dependencies"]
-	if (isPrerelease) {
-		ovsxArgs.push("--pre-release")
-	}
-	const ovsx = spawnSync("npx", ovsxArgs, spawnOpts)
-	if (ovsx.status !== 0) {
-		console.warn("publish-marketplace: ovsx publish skipped or failed (VS Marketplace publish may still have succeeded)")
-	}
-} finally {
-	if (!interrupted && !result.skipped) {
-		restore()
-	}
+const vsceArgs = ["publish", "--no-dependencies", "-i", vsixPath, "--allow-package-secrets", "sendgrid"]
+if (isPrerelease) {
+	vsceArgs.push("--pre-release")
 }
+console.log(`publish-marketplace: uploading to VS Marketplace...`)
+run("npx", ["@vscode/vsce", ...vsceArgs])
+
+const ovsxArgs = ["ovsx", "publish", vsixPath]
+if (isPrerelease) {
+	ovsxArgs.push("--pre-release")
+}
+console.log(`publish-marketplace: uploading to Open VSX...`)
+const ovsx = spawnSync("npx", ovsxArgs, spawnOpts)
+if (ovsx.status !== 0) {
+	console.warn("publish-marketplace: ovsx publish skipped or failed (VS Marketplace publish may still have succeeded)")
+	process.exit(ovsx.status ?? 1)
+}
+
+console.log("publish-marketplace: done.")
