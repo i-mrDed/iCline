@@ -27,7 +27,7 @@ const HomeHeader = ({ quickStartMode = "none" }: HomeHeaderProps) => {
 		const heading = lazyTeammateModeEnabled ? "I guess I'm here to help" : "What can we build today?"
 		return (
 			<div className="flex flex-col items-center mb-5">
-				<IclineWelcomeBrand heading={heading} subheading="Standalone agent · Grok & more" />
+				<IclineWelcomeBrand heading={heading} subheading="Autonomous coding agent · in your IDE" />
 				<ProviderModelChip mode={mode} />
 			</div>
 		)
