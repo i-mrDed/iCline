@@ -80,6 +80,11 @@ e2e-build.mjs
 e2e.vsix
 test-results/
 
+# dist/ holds extension.js but also accumulates local VSIX outputs — never nest them
+dist/**/*.vsix
+dist/_vsix*/
+dist/*.zip
+
 # Ignore Storybook files
 **/*.stories.tsx
 *storybook.log
