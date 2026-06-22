@@ -252,7 +252,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 	}, [bannerConfig, banners, clineUser, handleBannerAction, handleBannerDismiss])
 
 	return (
-		<div className="flex flex-col flex-1 w-full h-full p-0 m-0">
+		<div className="flex flex-col flex-1 min-h-0 w-full h-full p-0 m-0">
 			<WhatsNewModal
 				onBannerAction={handleBannerAction}
 				onClose={handleCloseWhatsNewModal}
@@ -260,7 +260,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 				version={version}
 				welcomeBanners={welcomeBanners}
 			/>
-			<div className="overflow-y-auto flex flex-col pb-2.5">
+			<div className="overflow-y-auto flex flex-col flex-1 min-h-0 pb-2.5">
 				<HomeHeader quickStartMode={quickStartMode} />
 				{!showWhatsNewModal && (
 					<>
@@ -316,8 +316,8 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 						)}
 					</>
 				)}
+				<SuggestedTasks quickStartMode={quickStartMode} />
 			</div>
-			<SuggestedTasks quickStartMode={quickStartMode} />
 
 			{/* Quick launch worktree modal */}
 			<CreateWorktreeModal

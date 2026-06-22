@@ -36,9 +36,14 @@ export const SuggestedTasks: React.FC<SuggestedTasksProps> = ({ quickStartMode }
 				<h2 className="text-sm font-medium mb-2.5 text-center text-gray">
 					Quick <span className="text-white">[starts]</span> with iCline
 				</h2>
-				<div className="flex flex-col space-y-1">
+				<div className="grid grid-cols-1 min-[300px]:grid-cols-2 gap-2">
 					{iclineQuickStartTasks.map((task: QuickWinTask) => (
-						<QuickWinCard key={task.id} onExecute={() => handleExecuteQuickWin(task.prompt)} task={task} />
+						<QuickWinCard
+							key={task.id}
+							onExecute={() => handleExecuteQuickWin(task.prompt)}
+							task={task}
+							variant="grid"
+						/>
 					))}
 				</div>
 			</div>
