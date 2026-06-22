@@ -113,11 +113,21 @@ export class ExecuteCommandToolHandler implements IFullyManagedTool {
 
 		config.taskState.consecutiveMistakeCount = 0
 
-		// Handling of timeout while in yolo mode or background exec mode
+		const autoApproveResult = config.autoApprover?.shouldAutoApproveTool(block.name)
+		const [autoApproveSafe, autoApproveAll] = Array.isArray(autoApproveResult)
+			? autoApproveResult
+			: [autoApproveResult, false]
+
+		const willAutoApprove =
+			config.isSubagentExecution ||
+			(!requiresApprovalPerLLM && autoApproveSafe) ||
+			(requiresApprovalPerLLM && autoApproveSafe && autoApproveAll)
+
+		// Apply managed timeouts for yolo/background exec and auto-approved commands.
 		timeoutSeconds = resolveCommandTimeoutSeconds(
 			command,
 			timeoutParam,
-			config.yoloModeToggled || config.vscodeTerminalExecutionMode === "backgroundExec",
+			config.yoloModeToggled || config.vscodeTerminalExecutionMode === "backgroundExec" || willAutoApprove,
 		)
 
 		// Pre-process command for certain models
@@ -190,13 +200,6 @@ export class ExecuteCommandToolHandler implements IFullyManagedTool {
 		}
 
 		let didAutoApprove = false
-
-		// If the model says this command is safe and auto approval for safe commands is true, execute the command
-		// If the model says the command is risky, but *BOTH* auto approve settings are true, execute the command
-		const autoApproveResult = config.autoApprover?.shouldAutoApproveTool(block.name)
-		const [autoApproveSafe, autoApproveAll] = Array.isArray(autoApproveResult)
-			? autoApproveResult
-			: [autoApproveResult, false]
 
 		// Determine workspace context for telemetry
 		const resolvedToNonPrimary = !arePathsEqual(executionDir, config.cwd)
@@ -310,7 +313,9 @@ export class ExecuteCommandToolHandler implements IFullyManagedTool {
 			finalCommand = `cd "${executionDir}" && ${actualCommand}`
 		}
 
-		const [userRejected, result] = await config.callbacks.executeCommandTool(finalCommand, timeoutSeconds)
+		const [userRejected, result] = await config.callbacks.executeCommandTool(finalCommand, timeoutSeconds, {
+			autoProceedCommandOutput: didAutoApprove,
+		})
 
 		if (timeoutId) {
 			clearTimeout(timeoutId)

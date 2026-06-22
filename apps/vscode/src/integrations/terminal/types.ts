@@ -357,6 +357,11 @@ export interface CommandExecutionOptions {
 	 * Command output is still captured and returned as the tool result.
 	 */
 	suppressUserInteraction?: boolean
+	/**
+	 * Stream command output without blocking on command_output asks.
+	 * Used for auto-approved commands so execution does not stall waiting for "Proceed While Running".
+	 */
+	autoProceedCommandOutput?: boolean
 }
 
 /**
@@ -411,6 +416,11 @@ export interface OrchestrationOptions {
 	 * Output is still collected and included in the final result.
 	 */
 	suppressUserInteraction?: boolean
+	/**
+	 * If true, streams command output via say() instead of blocking on command_output asks.
+	 * Auto-approved commands should set this to avoid stalling when the user is not present to click "Proceed While Running".
+	 */
+	autoProceedCommandOutput?: boolean
 }
 
 /**

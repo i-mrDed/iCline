@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.16-dev.4] - 2026-06-22
+
+### Fixed
+- 🐛 **Auto-approved commands stuck on Running** — stream command output without blocking on `command_output` asks; apply managed timeouts for auto-approved commands; mark command UI completed when orchestration returns (including timeout / proceed-while-running paths)
+
+### Changed
+- 🏠 **Review quick start** — read-only review wording; PowerShell-safe directory guidance (`Set-Location` instead of `cd /d`)
+
 ## [0.1.16-dev.3] - 2026-06-22
 
 ### Changed

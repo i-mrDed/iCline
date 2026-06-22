@@ -62,6 +62,7 @@ export async function orchestrateCommandExecution(
 		onProceedWhileRunning,
 		terminalType = "vscode",
 		suppressUserInteraction = false,
+		autoProceedCommandOutput = false,
 	} = options
 
 	const say = async (
@@ -92,11 +93,14 @@ export async function orchestrateCommandExecution(
 
 	// Track command execution state
 	callbacks.updateBackgroundCommandState(true)
+	let commandUiMarkedCompleted = false
 
-	const clearCommandState = async () => {
-		callbacks.updateBackgroundCommandState(false)
+	const markCommandMessageCompleted = async () => {
+		if (commandUiMarkedCompleted) {
+			return
+		}
+		commandUiMarkedCompleted = true
 
-		// Mark the command message as completed
 		const clineMessages = callbacks.getClineMessages()
 		const lastCommandIndex = findLastIndex(clineMessages, (m) => m.ask === "command" || m.say === "command")
 		if (lastCommandIndex !== -1) {
@@ -104,6 +108,11 @@ export async function orchestrateCommandExecution(
 				commandCompleted: true,
 			})
 		}
+	}
+
+	const clearCommandState = async () => {
+		callbacks.updateBackgroundCommandState(false)
+		await markCommandMessageCompleted()
 	}
 
 	process.once("completed", clearCommandState)
@@ -156,6 +165,12 @@ export async function orchestrateCommandExecution(
 		outputBufferSize = 0
 
 		if (!didContinue) {
+			if (autoProceedCommandOutput) {
+				await say("command_output", chunk)
+				didContinue = true
+				return
+			}
+
 			// Start timer to detect if buffer gets stuck
 			bufferStuckTimer = setTimeout(() => {
 				telemetryService.captureTerminalHang(TerminalHangStage.BUFFER_STUCK, terminalType)
@@ -529,6 +544,7 @@ export async function orchestrateCommandExecution(
 						process.continue()
 						// Clean up file-based logging if active before returning
 						cleanupFileBased()
+						await markCommandMessageCompleted()
 						return backgroundTrackingResult
 					}
 
@@ -540,6 +556,7 @@ export async function orchestrateCommandExecution(
 					await setTimeoutPromise(50)
 					const result = terminalManager.processOutput(outputLines)
 
+					await markCommandMessageCompleted()
 					return {
 						userRejected: false,
 						result: `Command execution timed out after ${timeoutSeconds} seconds. ${result.length > 0 ? `\nOutput so far:\n${result}` : ""}`,
@@ -562,6 +579,7 @@ export async function orchestrateCommandExecution(
 	if (backgroundTrackingResult) {
 		// Clean up file-based logging if active before returning
 		cleanupFileBased()
+		await markCommandMessageCompleted()
 		return backgroundTrackingResult
 	}
 
@@ -593,6 +611,7 @@ export async function orchestrateCommandExecution(
 	}
 
 	if (didCancelViaUi) {
+		await markCommandMessageCompleted()
 		return {
 			userRejected: true,
 			result: formatResponse.toolResult(
@@ -614,6 +633,7 @@ export async function orchestrateCommandExecution(
 			fileContentString = await processFilesIntoText(userFeedback.files)
 		}
 
+		await markCommandMessageCompleted()
 		return {
 			userRejected: true,
 			result: formatResponse.toolResult(
@@ -644,6 +664,7 @@ export async function orchestrateCommandExecution(
 				? `Command terminated by signal ${signal}.`
 				: "Command executed."
 
+		await markCommandMessageCompleted()
 		return {
 			userRejected: false,
 			result: `${statusMessage}${result.length > 0 ? `\nOutput:\n${result}` : ""}${logFileMsg}`,
@@ -655,6 +676,7 @@ export async function orchestrateCommandExecution(
 		}
 	}
 	const logFileMsg = largeOutputLogPath ? `\nFull output saved to: ${largeOutputLogPath}` : ""
+	await markCommandMessageCompleted()
 	return {
 		userRejected: false,
 		result: `Command is still running in the user's terminal.${

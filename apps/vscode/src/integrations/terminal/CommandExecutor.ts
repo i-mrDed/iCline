@@ -131,6 +131,7 @@ export class CommandExecutor {
 			command,
 			timeoutSeconds,
 			suppressUserInteraction: options?.suppressUserInteraction,
+			autoProceedCommandOutput: options?.autoProceedCommandOutput,
 			// When "Proceed While Running" is triggered, track the command in the manager
 			// Returns the log file path so the orchestrator can send it to the UI
 			// existingOutput contains all output lines captured so far

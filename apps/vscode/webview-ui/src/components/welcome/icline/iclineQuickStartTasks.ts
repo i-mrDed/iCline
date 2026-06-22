@@ -48,7 +48,7 @@ export const iclineQuickStartTasks: QuickWinTask[] = [
 		icon: "ReviewIcon",
 		actionCommand: "icline/quickStartReview",
 		prompt:
-			"Review this workspace like a senior engineer: inspect recent or high-churn areas, call out bugs, edge cases, style issues, and missing tests. Cite specific files and line areas — no vague praise. Prioritize the top 3 actionable fixes.",
+			"Review this workspace like a senior engineer (read-only — do not edit files): inspect recent or high-churn areas, call out bugs, edge cases, style issues, and missing tests. Cite specific files and line areas — no vague praise. Prioritize the top 3 actionable fixes. On Windows/PowerShell use Set-Location instead of cmd-style cd /d.",
 		buttonText: ">",
 	},
 	{

@@ -209,6 +209,38 @@ describe("CommandOrchestrator command_output ask lifecycle", () => {
 		}
 	})
 
+	it("streams output without blocking when autoProceedCommandOutput is enabled", async () => {
+		const process = new FakeTerminalProcess()
+		let askCalls = 0
+		let sayCalls = 0
+
+		const callbacks = createCallbacks()
+		callbacks.ask = async () => {
+			askCalls++
+			return { response: "messageResponse" }
+		}
+		callbacks.say = async (type) => {
+			if (type === "command_output") {
+				sayCalls++
+			}
+			return undefined
+		}
+
+		const orchestrationPromise = orchestrateCommandExecution(process.asResultPromise(), createTerminalManager(), callbacks, {
+			command: "git log --oneline -20",
+			autoProceedCommandOutput: true,
+		})
+
+		process.emit("line", "line one")
+		await new Promise((resolve) => setTimeout(resolve, CHUNK_DEBOUNCE_MS + 40))
+		assert.equal(askCalls, 0, "auto-proceed should not block on command_output ask")
+		assert.equal(sayCalls, 1, "auto-proceed should stream output via say")
+
+		process.complete({ exitCode: 0, signal: null })
+		const result = await orchestrationPromise
+		assert.equal(result.completed, true)
+	})
+
 	it("does not attempt to resolve the same pending ask twice across lifecycle events", async () => {
 		const process = new FakeTerminalProcess()
 		let askCalls = 0
