@@ -5,42 +5,65 @@ New agent sessions: read this file + `icline-marketplace.md` first.
 
 ## Release channels
 
-| Channel | Command | GitHub | Marketplace | Smoke gate |
-|---------|---------|--------|-------------|------------|
+| Channel | Command | GitHub Release | Marketplace | Smoke gate |
+|---------|---------|----------------|-------------|------------|
 | **Dev** | `-Channel Dev` | No | No | No |
 | **Beta** | `-Channel Beta` | Pre-release + VSIX | Optional `-PublishMarketplace` | Required |
 | **Stable** | `-Channel Stable` | Release + VSIX | `-PublishMarketplace` (explicit) | Required (stricter) |
 
-**Current Stable:** `0.1.12` — see `releases/STABLE.md`
+**Current Stable:** `0.1.17` — see `releases/STABLE.md`
 
-**Rule:** Never publish Stable to Marketplace without passing the smoke checklist **or** documented maintainer approval (`-MaintainerApproval` writes to `releases/approvals/`).
+## Golden rule — ห้าม publish store โดยตรง
 
-## Single-command release
+**อย่า** รัน `npm run publish:marketplace` หรือ `node scripts/publish-marketplace.mjs` เองสำหรับ Stable
 
-From repo root (`cline-temp/`):
+สคริปต์นี้จะ **บล็อก** ถ้ายังไม่มี GitHub Release + VSIX สำหรับเวอร์ชันนั้น (ยกเว้น `--allow-without-github-release`)
+
+ใช้ **`release-icline.ps1` เท่านั้น** สำหรับ Beta/Stable ที่จะขึ้น store
+
+## Golden path — Stable (แนะนำ)
+
+```powershell
+# 1) Dev build + ทดสอบในเครื่อง
+.\scripts\release-icline.ps1 -Channel Dev
+
+# 2) Stable — GitHub Release ก่อน แล้วค่อย Marketplace (คำสั่งเดียว)
+.\scripts\release-icline.ps1 -Channel Stable -Version 0.1.18 `
+  -PublishMarketplace `
+  -SkipSmokeCheck `
+  -MaintainerApproval "Release 0.1.18 Stable — smoke passed manually"
+```
+
+ลำดับที่สคริปต์ทำให้อัตโนมัติ:
+
+1. Finalize CHANGELOG
+2. Build VSIX
+3. Git commit + push (ถ้าไม่ใส่ `-SkipPush`)
+4. **GitHub Release** + แนบ `.vsix` + tag `vX.Y.Z`
+5. **Marketplace + Open VSX** (เมื่อมี `-PublishMarketplace`)
+6. **`release-parity.mjs verify`** — ยืนยันทุกช่องทางตรงกัน
+
+## คำสั่งอื่นที่ใช้บ่อย
 
 ```powershell
 # Dev — VSIX only (default)
 .\scripts\release-icline.ps1 -Channel Dev
 
-# Beta — after local VSIX testing
-.\scripts\release-icline.ps1 -Channel Beta -Version 0.1.11-beta.1 -PublishMarketplace
+# Beta
+.\scripts\release-icline.ps1 -Channel Beta -Version 0.1.18-beta.1 -PublishMarketplace
 
-# Stable — after Beta soak
-.\scripts\release-icline.ps1 -Channel Stable -Version 0.1.11 -PublishMarketplace
+# GitHub Release อย่างเดียว (ย้อนหลัง / store publish ไปแล้ว)
+.\scripts\release-icline.ps1 -Channel Stable -Version 0.1.17 -GitHubOnly `
+  -SkipBuild -SkipPush -SkipSmokeCheck `
+  -MaintainerApproval "retroactive GitHub release — stores already at 0.1.17"
+
+# ตรวจ parity หลัง release
+node scripts/release-parity.mjs verify --version 0.1.17
 ```
 
-Flags: `-Version`, `-SkipBuild`, `-SkipPush`, `-SkipRelease`, `-MaintainerApproval`, `-SkipSmokeCheck` (Stable requires `-MaintainerApproval` when skipping smoke)
+Flags: `-Version`, `-SkipBuild`, `-SkipPush`, `-SkipRelease`, `-GitHubOnly`, `-MaintainerApproval`, `-SkipSmokeCheck`
 
-### Maintainer approval (alternative to interactive smoke)
-
-When real-world testing is already done (e.g. clean VSIX install + Grok models verified), maintainer explicit approval counts:
-
-```powershell
-.\scripts\release-icline.ps1 -Channel Stable -Version 0.1.12 -PublishMarketplace `
-  -SkipSmokeCheck `
-  -MaintainerApproval "Release 0.1.12 Stable — Grok smoke passed manually"
-```
+**ห้าม:** `-PublishMarketplace` + `-SkipRelease` (สคริปต์จะ error)
 
 ## Smoke test gate
 
@@ -49,12 +72,6 @@ When real-world testing is already done (e.g. clean VSIX install + Grok models v
 ```
 
 Beta/Stable releases run this automatically unless `-SkipSmokeCheck`.
-
-Key checks:
-- xAI Grok OAuth / subscription works
-- Composer 2.5 Fast (or similar) chats without repeated `attempt_completion without result` warnings
-- No duplicate legacy extensions (`icline.icline`, old publisher IDs)
-- Stable: file edit tools + longer soak period
 
 ## Manual checklist (every release)
 
@@ -71,6 +88,10 @@ cd apps/vscode
 npm run sync:docs
 ```
 
+### 2b. README screenshots (Marketplace + Open VSX)
+
+Before any `-PublishMarketplace` run, confirm packaged README uses **GitHub absolute** image URLs. `package-vsix.mjs` applies `--baseImagesUrl` automatically — see `icline-marketplace.md` § README screenshots baseline.
+
 ### 3. Dev build + local install
 
 ```powershell
@@ -83,12 +104,14 @@ Reload Window → run smoke checklist mentally or via script.
 
 ### 4. Beta / Stable
 
-Script handles: commit, push, GitHub Release, optional Marketplace.
+Script handles: commit, push, **GitHub Release (บังคับก่อน store)**, optional Marketplace, parity verify.
 
 ### 5. Verify before "done"
 
-- [ ] https://github.com/i-mrDedchai/iCline/releases
-- [ ] Marketplace version (if published)
+- [ ] `node scripts/release-parity.mjs verify --version X.Y.Z` — ทุกช่องทาง OK
+- [ ] https://github.com/i-mrDedchai/iCline/releases — tag + VSIX
+- [ ] Marketplace + Open VSX version (if published)
+- [ ] อัปเดต `releases/STABLE.md`
 - [ ] Test from **Marketplace install**, not only local VSIX
 
 ## How updates reach users
@@ -114,5 +137,6 @@ Script handles: commit, push, GitHub Release, optional Marketplace.
 ## Agent session bootstrap
 
 1. Read this file + `icline-marketplace.md`
-2. Check `package.json` version vs latest GitHub Release
+2. Check `package.json` version vs `releases/STABLE.md` vs `release-parity.mjs verify`
 3. Dev build first; Beta/Stable only after smoke passes
+4. **Never** `publish-marketplace.mjs` alone for Stable — always `release-icline.ps1`

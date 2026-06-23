@@ -1,0 +1,5 @@
+version: 0.1.17
+channel: Stable
+approved_at: 2026-06-23 14:45 +0700
+approval: Retroactive GitHub Release v0.1.17 — VS Marketplace and Open VSX already published 2026-06-22; GitHub Release/tag was missing and created 2026-06-23.
+skip_smoke_check: true

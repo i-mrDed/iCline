@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-// Publishes to Open VSX (relative image paths in VSIX) and VS Marketplace
-// (GitHub-absolute image URLs via vsce link rewriting + monorepo baseImagesUrl).
+// Publishes to Open VSX and VS Marketplace with the same README image baseline:
+// relative assets/docs/ in source → vsce rewrites to GitHub absolute URLs in the VSIX.
+// See scripts/marketplace-images.mjs and บันทึกแชท/2026-06/2026-06-23_01_openvsx-readme-images-root-cause.md
 //
 // Usage:
 //   node scripts/publish-marketplace.mjs                  # release channel
@@ -10,8 +11,11 @@
 import { spawnSync } from "node:child_process"
 import fs from "node:fs"
 import path from "node:path"
-import { fileURLToPath } from "node:url"
+import { fileURLToPath, pathToFileURL } from "node:url"
 import { restore, swapIn } from "./marketplace-readme.mjs"
+import { getVsceImageRewriteArgs } from "./marketplace-images.mjs"
+
+const allowWithoutGithub = process.argv.includes("--allow-without-github-release")
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const extRoot = path.join(__dirname, "..")
@@ -20,9 +24,17 @@ const spawnOpts = { stdio: "inherit", shell: process.platform === "win32", cwd: 
 
 const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, "icline-docs.manifest.json"), "utf8"))
 const pkg = JSON.parse(fs.readFileSync(path.join(extRoot, "package.json"), "utf8"))
+const releaseVersion = pkg.version.replace(/^(.+?)-dev\.\d+$/, "$1")
 const base = manifest.vsixFileName || manifest.extensionId || "i-mrdedchai.iCline"
 const vsixPath = path.join(extRoot, "dist", `${base}-${pkg.version}.vsix`)
-const baseImagesUrl = `${manifest.github.url}/raw/main/apps/vscode`
+
+const { assertGitHubReleaseBeforeMarketplace } = await import(
+	pathToFileURL(path.join(extRoot, "..", "..", "scripts", "release-parity.mjs")).href
+)
+
+if (!allowWithoutGithub && !isPrerelease) {
+	await assertGitHubReleaseBeforeMarketplace(releaseVersion, manifest)
+}
 
 function run(cmd, args) {
 	const result = spawnSync(cmd, args, spawnOpts)
@@ -31,7 +43,7 @@ function run(cmd, args) {
 	}
 }
 
-console.log(`publish-marketplace: packaging ${pkg.version} for Open VSX (relative README images)...`)
+console.log(`publish-marketplace: packaging ${pkg.version} (README images → GitHub via --baseImagesUrl)...`)
 run("node", [path.join(__dirname, "package-vsix.mjs")])
 
 if (!fs.existsSync(vsixPath)) {
@@ -72,10 +84,7 @@ try {
 		"--no-dependencies",
 		"--allow-package-secrets",
 		"sendgrid",
-		"--baseImagesUrl",
-		baseImagesUrl,
-		"--githubBranch",
-		"main",
+		...getVsceImageRewriteArgs(manifest),
 	]
 	if (isPrerelease) {
 		vsceArgs.push("--pre-release")

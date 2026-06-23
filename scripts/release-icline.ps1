@@ -4,6 +4,7 @@
 #   .\scripts\release-icline.ps1 -Channel Beta -Version 0.1.11-beta.1
 #   .\scripts\release-icline.ps1 -Channel Stable -Version 0.1.12 -PublishMarketplace
 #   .\scripts\release-icline.ps1 -Channel Stable -SkipSmokeCheck -MaintainerApproval "ปล่อย 0.1.12 เป็น Stable ได้เลย"
+#   .\scripts\release-icline.ps1 -Channel Stable -Version 0.1.17 -GitHubOnly -SkipBuild -SkipPush -SkipSmokeCheck -MaintainerApproval "retroactive GitHub release"
 
 param(
     [Parameter(Mandatory = $false)]
@@ -15,7 +16,8 @@ param(
     [switch]$SkipPush,
     [switch]$SkipRelease,
     [switch]$SkipSmokeCheck,
-    [switch]$PublishMarketplace
+    [switch]$PublishMarketplace,
+    [switch]$GitHubOnly
 )
 
 $ErrorActionPreference = "Stop"
@@ -164,6 +166,22 @@ function Assert-VersionMatchesChannel {
     }
 }
 
+function Invoke-ReleaseParityVerify {
+    param([string]$Version)
+    $parityScript = Join-Path $RepoRoot "scripts\release-parity.mjs"
+    $baseVer = Get-BaseReleaseVersion $Version
+    Write-Host "==> Verifying release parity (GitHub / stores) for $baseVer..."
+    Push-Location $RepoRoot
+    try {
+        & node $parityScript verify --version $baseVer
+        if ($LASTEXITCODE -ne 0) {
+            throw "Release parity check failed for $baseVer"
+        }
+    } finally {
+        Pop-Location
+    }
+}
+
 function Invoke-ChangelogRelease {
     param(
         [string]$Command,
@@ -185,6 +203,18 @@ function Invoke-ChangelogRelease {
 }
 
 Write-Host "==> iCline release channel: $Channel" -ForegroundColor Cyan
+
+if ($PublishMarketplace -and $SkipRelease) {
+    throw "-PublishMarketplace cannot be combined with -SkipRelease. GitHub Release + VSIX must be created before store publish."
+}
+
+if ($GitHubOnly -and $PublishMarketplace) {
+    throw "-GitHubOnly cannot be combined with -PublishMarketplace."
+}
+
+if ($GitHubOnly) {
+    $SkipRelease = $false
+}
 
 if ($Channel -eq "Stable" -and $SkipSmokeCheck -and -not $MaintainerApproval.Trim()) {
     throw 'Stable + -SkipSmokeCheck requires -MaintainerApproval with approval text'
@@ -369,9 +399,14 @@ if ($PublishMarketplace) {
         npm run publish:marketplace
     }
     Pop-Location
-} elseif ($Channel -eq "Stable") {
+    Invoke-ReleaseParityVerify -Version $ver
+} elseif ($Channel -eq "Stable" -and -not $GitHubOnly) {
     Write-Host ""
     Write-Host "Stable release on GitHub is done. Marketplace NOT published (add -PublishMarketplace after final verification)." -ForegroundColor Yellow
+}
+
+if ($GitHubOnly -or ($Channel -eq "Stable" -and -not $SkipRelease -and -not $PublishMarketplace)) {
+    Invoke-ReleaseParityVerify -Version $ver
 }
 
 if ($Channel -eq "Stable") {

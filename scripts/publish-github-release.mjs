@@ -87,6 +87,7 @@ async function main() {
 		body,
 		draft: false,
 		prerelease: args.prerelease,
+		make_latest: !args.prerelease,
 	}
 
 	let release
