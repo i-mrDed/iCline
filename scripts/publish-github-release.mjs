@@ -119,6 +119,7 @@ async function main() {
 				name: releaseName,
 				body,
 				prerelease: args.prerelease,
+				make_latest: !args.prerelease,
 			}),
 		})
 		if (!patchRes.ok) {
